@@ -1,4 +1,17 @@
 \section{Introduction}
 \label{sec:introduction}
 
-This is the introduction section of the report. It provides an overview of the topic and sets the context for the study.
+In this study, we model a multi-agent system to manage fire-related emergencies in Lloret de Mar, Girona. For this purpose, we have designed five specialized response teams using CrewAI\footnote{\url{https://www.crewai.com/}}: \textbf{medical services}, \textbf{emergency services}, \textbf{firefighters}, \textbf{public communication}, and \textbf{police}.
+
+The report is structured as follows: in \textbf{Section} \ref{sec:environment}, we analyze the environmental characteristics affecting this system. In \textbf{Section} \ref{sec:agents}, we discuss the distinct agent teams and the attributes of their individual members.
+
+\subsection{Related Work}
+
+The increasing capabilities of Large Language Models (LLMs) have sparked greater interest in this area, as these models demonstrate early signs of general intelligence \cite{bubeck2023sparksartificialgeneralintelligence} and adaptability to novel situations \cite{HAUPTMAN2023107451}. These advances have catalyzed various approaches and applications of autonomous agents, as illustrated by Wang et al. \cite{Wang_2024}.
+
+However, new challenges accompany these advancements, including the optimization of \textbf{task allocation} to leverage agents' unique skill sets, enhancing intermediate outcomes through agent discussions, managing complex \textbf{context} layers related to tasks, agents, and shared knowledge, and handling multiple \textbf{memory types} essential for effective multi-agent collaboration \cite{han2024llmmultiagentsystemschallenges}.
+
+While not within the scope of our current study, future work might benefit from exploring related topics such as Berthon et al.'s work on modeling environmental uncertainty \cite{berthon2024naturalstrategicabilitystochastic} and Morales et al.'s research on synthesizing norms for multi-agent systems (MAS) \cite{morales2017synthesisingevolutionarilystablenormative}.
+
+Finally, for the design of our system, we reference key principles in Chapter 2 of \cite{wooldridge2009introduction} and insights from Michael Wooldridge's video on agent properties\footnote{\url{https://www.youtube.com/watch?v=vID-_uIfAvg&feature=youtu.be}}.
+
