@@ -1,0 +1,32 @@
+# Emergency Service Agent System Documentation
+
+## Emergency Service Agent Crew
+This crew is responsible for receiving emergency calls and coordinating response communications with relevant teams.
+
+---
+
+### Agent Descriptions
+
+#### Dispatcher Agent
+- **Description**: The Dispatcher Agent is the primary contact point for incoming emergency calls, responsible for gathering critical information from the caller and determining the severity and type of incident.
+- **Main Task**: To receive, assess, and classify emergency calls, then alert the necessary response units (e.g., Fire and Medical Services).
+- **Tools**: Communication software, data entry interface, incident assessment tool.
+- **Type**: **Interface Agent** – This type emphasizes autonomy and learning to support users. In this case, the Dispatcher Agent acts as a user interface for emergency call handling, gathering caller input and making proactive decisions on incident categorization.
+- **Properties**:
+  - **Reactivity**: The Dispatcher Agent continuously interacts with the environment (incoming calls) and rapidly assesses each situation to provide an appropriate response.
+  - **Proactiveness**: While primarily reactive, the Dispatcher takes initiative by categorizing and prioritizing incidents, ensuring the most urgent cases receive immediate attention.
+  - **Social Ability**: Capable of basic communication with other agents and potentially human responders, using a structured communication protocol for efficient incident coordination.
+  - **Autonomy**: Operates independently once set up, requiring minimal external input to manage call processing and categorization.
+
+#### Communication Relay Agent
+- **Description**: A bridge agent that ensures timely and accurate transmission of information between the Dispatcher Agent and emergency response teams.
+- **Main Task**: To relay details about the incident to the respective emergency teams and manage ongoing updates throughout the response.
+- **Tools**: Communication protocols, notification system, priority queue management system.
+- **Type**: **Facilitator Agent** – This type emphasizes communication and interaction, managing the connections and information flow between agents. The Communication Relay Agent serves as the coordinator in the emergency response communication network.
+- **Properties**:
+  - **Reactivity**: Monitors changes from both Dispatcher inputs and emergency response team feedback, adjusting notifications and updates based on dynamic incident progress.
+  - **Social Ability**: Engages in continuous communication with multiple agents in real-time, ensuring all parties are kept informed and aligned on incident status.
+  - **Temporal Continuity**: Remains active throughout the duration of an incident, managing and providing updates until the situation is resolved.
+  - **Flexibility**: Adapts to various communication protocols and priority levels, adjusting its actions according to the severity of the situation and the availability of response teams.
+
+---
