@@ -1,0 +1,138 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Beamer theme settings
+\usetheme{CambridgeUS}
+\usecolortheme{default}
+
+\title{Emergency Response Multi-Agent System}
+\subtitle{Design Presentation}
+\author{Team Name}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+    \tableofcontents
+\end{frame}
+
+% Introduction
+\section{Introduction}
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item Multi-agent system for fire-related emergencies in Lloret de Mar
+        \item Five specialized response teams using CrewAI:
+        \begin{itemize}
+            \item Emergency services
+            \item Medical services
+            \item Firefighters
+            \item Public communications
+            \item Forensics team
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% City Selection
+\section{City Selection}
+\begin{frame}{City Selection}
+    \begin{itemize}
+        \item Selection criteria
+        \item Candidate cities
+        \item Evaluation metrics
+        \item Final selection: Lloret de Mar
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Map Analysis}
+    \includegraphics[width=0.8\textwidth]{../figures/map_complexity_statistics.png}
+\end{frame}
+
+% Environment
+\section{Environment}
+\begin{frame}{Environment Properties}
+    \begin{itemize}
+        \item Accessibility: Partially Observable
+        \item Determinism: Non-deterministic
+        \item Episodicity: Non-episodic
+        \item Dynamics: Dynamic
+        \item Continuity: Continuous
+    \end{itemize}
+\end{frame}
+
+% Agents
+\section{Agent Crews}
+\begin{frame}{Agent Crews Overview}
+    Five specialized teams:
+    \begin{enumerate}
+        \item Emergency Services
+        \item Medical Services
+        \item Firefighters
+        \item Public Communications
+        \item Forensics Team
+    \end{enumerate}
+\end{frame}
+
+% Emergency Services
+\subsection{Emergency Services}
+\begin{frame}{Emergency Services}
+    \begin{itemize}
+        \item Emergency Call Agent
+        \begin{itemize}
+            \item Main task: Receive and assess calls
+            \item Type: Interface agent
+        \end{itemize}
+        \item Notification Agent
+        \begin{itemize}
+            \item Main task: Relay information
+            \item Type: Facilitator agent
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Medical Services
+\subsection{Medical Services}
+\begin{frame}{Medical Services}
+    \begin{itemize}
+        \item Medical Services Operator
+        \item Hospital Coordinator
+        \item Paramedic Teams
+    \end{itemize}
+\end{frame}
+
+% Firefighters
+\subsection{Firefighters}
+\begin{frame}{Firefighters}
+    \begin{itemize}
+        \item Fire Chief
+        \item Equipment Technician
+        \item Fire Combatant
+    \end{itemize}
+\end{frame}
+
+% Public Communications
+\subsection{Public Communications}
+\begin{frame}{Public Communications}
+    \begin{itemize}
+        \item Facilitator Agent
+        \item Information Agent
+        \item Article Writer
+        \item Mayor
+        \item Social Media Commentator
+    \end{itemize}
+\end{frame}
+
+% References
+\begin{frame}{References}
+    \begin{itemize}
+        \item Key references from bibliography
+    \end{itemize}
+\end{frame}
+
+\end{document}
