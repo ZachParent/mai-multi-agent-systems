@@ -1,0 +1,53 @@
+\subsection{Medical Services Agent Crew}
+This agent crew is responsible for treating those injured in the fires. 
+They manage the available health and first-aid services, such as hospitals and ambulances. 
+The agents that are part of this crew include a \textbf{medical services operator}, one \textbf{hospital coordinator} per hospital, and multiple teams of \textbf{paramedics}.
+
+\subsubsection{Medical Services Operator}
+The medical services operator takes calls from emergency services and reports back.
+
+\begin{itemize}
+    \item \textbf{Main task:} Receives information from other crews and relays the relevant information to the rest of the Medical Services agents. Also gathers information from its own crew and sends it to other crews who might be interested.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Facilitator agent.
+    \item \textbf{Most relevant properties:}
+    \begin{itemize}
+        \item \textit{Reactivity:} This agent is in constant contact with its own crew, as well as with the other crews, reacting to events that occur during the emergency.
+        \item \textit{Proactiveness:} As a facilitator, this agent maintains a two-way communication channel between crews at all times without needing to be called into action.
+        \item \textit{Social Ability:} The primary task of this agent is communication between agents, making it essentially social in nature.
+        \item \textit{Temporal continuity:} The \textit{medical services operator} is constantly receiving and sending messages to update other agents about the current status of the emergency.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Hospital Coordinator}
+The hospital coordinator manages the available resources of its corresponding hospital and coordinates with other \textit{hospital coordinators} to discuss the distribution of resources and patients.
+
+\begin{itemize}
+    \item \textbf{Main task:} Manages knowledge of available beds, ambulances, and paramedics at the hospital. Assesses the hospital's capacity to treat the injured and deploys aid teams to fire sites. Communicates this information to other \textit{hospital coordinators}.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Information agent.
+    \item \textbf{Most relevant properties:}
+    \begin{itemize}
+        \item \textit{Social Ability:} Communication with the \textit{medical services operator} and other \textit{hospital coordinators} is crucial to properly allocate and manage Medical Services resources.
+        \item \textit{Rationality:} This agent understands the limitations of its hospital and will not trigger a call to action if the necessary resources are unavailable.
+        \item \textit{Reasoning:} Real-time knowledge of available resources and communication with other \textit{hospital coordinators} enable sound response plans during emergencies.
+        \item \textit{Learning:} As an information agent, the \textit{hospital coordinator} must continuously update its knowledge based on world changes and performance of emergency response plans.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Paramedic}
+Paramedics provide medical care in the field and transport people to hospitals as needed. They work in teams of multiple \textit{paramedics} to manage emergency site situations.
+
+\begin{itemize}
+    \item \textbf{Main task:} Takes an ambulance to the scene to treat individuals with minor injuries on-site. Decides when critically injured persons need hospital transport. Each \textit{paramedic} has specialized knowledge, applied collaboratively depending on the situation, and reports the health status of treated individuals after deployment.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Collaborative agent.
+    \item \textbf{Most relevant properties:}
+    \begin{itemize}
+        \item \textit{Flexibility:} This agent must adapt to unpredictable issues at the emergency site.
+        \item \textit{Reactivity:} During deployment, this agent continuously reacts to unfolding events and makes decisions in a chaotic environment.
+        \item \textit{Social Ability:} Since \textit{paramedics} are deployed in teams, they must collaborate to manage the situation effectively.
+        \item \textit{Reasoning:} Each \textit{paramedic} leverages specific medical abilities to determine treatment and prioritize patients based on their conditions.
+        \item \textit{Autonomy:} Once in the field, this agent independently decides actions based on the situation.
+    \end{itemize}
+\end{itemize}
