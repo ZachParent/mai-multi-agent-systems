@@ -95,16 +95,14 @@ columns = [
 colors = plt.cm.viridis(np.linspace(0, 1, len(df)))
 color_dict = dict(zip(df.index, colors))
 
-fig, axs = plt.subplots(len(columns) // 2, 2, figsize=(12, 20))
+fig, axs = plt.subplots(2, len(columns) // 2, figsize=(20, 10))
 for ax, col in zip(axs.flatten(), columns):
     sorted_df = df.sort_values(by=col)
     ax.bar(sorted_df.index, sorted_df[col], color=[color_dict[i] for i in sorted_df.index])
     ax.set_title(col)
     ax.set_xticks(sorted_df.index)
     ax.set_xticklabels(sorted_df.index, rotation=45)
-fig.suptitle("Map Statistics", fontsize=20)
 plt.tight_layout()
-fig.subplots_adjust(top=0.95)
 plt.savefig(os.path.join(FIGURES_DIR, "map_complexity_statistics.png"), dpi=300)
 plt.show()
 
@@ -126,7 +124,6 @@ ax.bar(
     inverse_rank_sums.values,
     color=[color_dict[i] for i in inverse_rank_sums.index],
 )
-ax.set_title("Inverse Sum of Rankings of Map Complexity", fontsize=16, fontweight="bold")
 ax.set_xlabel("City", fontsize=14, fontweight="bold")
 ax.set_xticks(range(len(inverse_rank_sums)))
 ax.set_xticklabels(inverse_rank_sums.index, rotation=45, ha="right", fontsize=14)
