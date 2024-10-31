@@ -9,6 +9,9 @@ The medical services operator takes calls from emergency services and reports ba
 \begin{itemize}
     \item \textbf{Main task:} Receives information from other crews and relays the relevant information to the rest of the Medical Services agents. Also gathers information from its own crew and sends it to other crews who might be interested.
     \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Communication Channel}: Is capable of receiving and sending information with the facilitator agents of other crews.
+    \end{itemize}
     \item \textbf{Type:} Facilitator agent.
     \item \textbf{Most relevant properties:}
     \begin{itemize}
@@ -25,6 +28,9 @@ The hospital coordinator manages the available resources of its corresponding ho
 \begin{itemize}
     \item \textbf{Main task:} Manages knowledge of available beds, ambulances, and paramedics at the hospital. Assesses the hospital's capacity to treat the injured and deploys aid teams to fire sites. Communicates this information to other \textit{hospital coordinators}.
     \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Hospital Resource Managment}: Can read a database detailing the resources of the hospital, and modify it to keep track of those available or in use.
+    \end{itemize}
     \item \textbf{Type:} Information agent.
     \item \textbf{Most relevant properties:}
     \begin{itemize}
@@ -41,6 +47,9 @@ Paramedics provide medical care in the field and transport people to hospitals a
 \begin{itemize}
     \item \textbf{Main task:} Takes an ambulance to the scene to treat individuals with minor injuries on-site. Decides when critically injured persons need hospital transport. Each \textit{paramedic} has specialized knowledge, applied collaboratively depending on the situation, and reports the health status of treated individuals after deployment.
     \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Specialized Knowledge}: Has access (read) to a database of specialized medical knowledge.
+    \end{itemize}
     \item \textbf{Type:} Collaborative agent.
     \item \textbf{Most relevant properties:}
     \begin{itemize}
