@@ -1,0 +1,91 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\title{Forensics Team}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Forensics Team}
+This agent crew is responsible for determining the cause of fires. Some actions are taken on-site shortly after the fire, while others occur later, at locations such as the coroner's office or the police station. The agents that are part of this crew are:
+\begin{itemize}
+    \item a \textbf{forensics operator} (facilitator agent),
+    \item a \textbf{forensics coordinator} (information agent),
+    \item a \textbf{coroner} (collaborative agent), and
+    \item an \textbf{investigator} (collaborative agent).
+\end{itemize}
+
+\subsection*{Forensics Operator}
+Takes calls from the emergency services and reports back, providing information about ongoing and finished investigations to the \textit{public announcements} crew.
+\begin{itemize}
+    \item \textbf{Main task:} Receives information from other crews and relays relevant information to the other agents of the Forensics Team. Gathers information from its own crew and sends it to other crews who might be interested.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Facilitator agent.
+    \item \textbf{Properties:}
+    \begin{itemize}
+        \item \textit{Reactivity:} This agent is responsible for communication between the \textit{forensics team} and the rest of the emergency services, reacting to messages from other crews and crew members.
+        \item \textit{Proactiveness:} This agent is not proactive, only relaying information from other agents.
+        \item \textit{Social Ability:} This agent is social, managing communication between the \textit{forensics team} and other crews.
+        \item \textit{Temporal Continuity:} Constantly communicates with other agents of the \textit{forensics team} and the emergency services, thus maintaining temporal continuity.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Forensics Coordinator}
+Manages the team, resources, and knowledge for the forensics team. Communicates with other \textit{forensics coordinators} to discuss resource distribution and ongoing investigations, and stores case files for recent and old fires.
+\begin{itemize}
+    \item \textbf{Main task:} Manages the knowledge of available coroners and investigators, assesses the forensics team's capacity for new cases, and assigns coroners and investigators to fire sites. Also gathers, compiles, and stores case files for current and previous fires, sharing this information with other \textit{forensics coordinators}.
+    \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Case Files Database:} Accesses a database (CSV) of case files, allowing reading and writing capabilities.
+    \end{itemize}
+    \item \textbf{Type:} Information agent.
+    \item \textbf{Properties:}
+    \begin{itemize}
+        \item \textit{Reactivity:} Responds to requests from other \textit{forensics team} agents.
+        \item \textit{Proactiveness:} Responds only to requests from other agents within the \textit{forensics team}.
+        \item \textit{Social Ability:} Manages the \textit{forensics team} resources and information.
+        \item \textit{Rationality:} Allocates resources based on available information and determines which details may be relevant to an investigator's case when responding to requests.
+        \item \textit{Reasoning:} Allocates resources and investigators by reasoning about information, negotiating with other \textit{forensics coordinators}.
+        \item \textit{Learning:} Stores learned information in the case files database, improving future decision-making.
+        \item \textit{Temporal Continuity:} Communicates continuously with agents of this team and other \textit{forensics teams}.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Coroner}
+Retrieves bodies from fire sites, brings them to the morgue, and performs further analysis to assist the investigator.
+\begin{itemize}
+    \item \textbf{Main task:} After a fire is extinguished by the \textit{firefighters crew}, the \textbf{coroner} goes to the fire site with the \textit{investigator} to assess the victims' bodies. After the \textit{investigator} completes on-site forensics, the \textbf{coroner} retrieves bodies and performs further analysis in the morgue to assist the investigation.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Collaborative agent.
+    \item \textbf{Properties:}
+    \begin{itemize}
+        \item \textit{Reactivity:} Responds to requests from the \textit{forensics coordinator} and provides information to the \textit{investigator} at scenes.
+        \item \textit{Social Ability:} Works closely with the \textit{investigator} at scenes and communicates findings to the \textit{forensics coordinator}.
+        \item \textit{Rationality:} Makes decisions on body retrieval and examination procedures based on scene conditions and investigation needs.
+        \item \textit{Reasoning:} Evaluates cause and time of death, injury patterns, and forensic evidence to support the investigation.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Investigator}
+Conducts on-site forensics and off-site research to determine the cause of the fire.
+\begin{itemize}
+    \item \textbf{Main task:} After a fire is extinguished by the \textit{firefighters crew}, the \textbf{investigator} assesses victims' bodies with the \textit{coroner}, interviews witnesses, and collects evidence. Later, the \textbf{investigator} gathers research from the \textit{forensics coordinator} and performs further analysis to determine the cause of the fire. This information is shared with the \textit{forensics coordinator} for storage in case files and with the \textit{forensics operator} to inform other crews.
+    \item \textbf{Tools:}
+    \item \textbf{Type:} Collaborative agent.
+    \item \textbf{Properties:}
+    \begin{itemize}
+        \item \textit{Flexibility:} Adapts to various situations, including new types of fires.
+        \item \textit{Reactivity:} Responds to requests from other \textit{forensics team} agents.
+        \item \textit{Proactiveness:} Takes initiative for further analysis of collected information.
+        \item \textit{Social Ability:} Works in a team with the \textit{coroner} and the \textit{forensics coordinator}.
+        \item \textit{Rationality:} Makes decisions based on the information available and investigation needs.
+        \item \textit{Reasoning:} Makes case decisions by reasoning about available information and investigation requirements.
+        \item \textit{Autonomy:} Once assigned to a case, independently makes decisions about investigation steps.
+    \end{itemize}
+\end{itemize}
+
+\end{document}
