@@ -1,12 +1,12 @@
-# %% [markdown]
-# # Trying out maps suggested by the team
-
 # %%
 import osmnx as ox
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from pypalettes import load_cmap
+
+airnomads = load_cmap("AirNomads")
 
 plt.style.use("default")
 
@@ -92,7 +92,7 @@ columns = [
     "clean_intersection_density_km",
 ]
 
-colors = plt.cm.viridis(np.linspace(0, 1, len(df)))
+colors = airnomads(np.linspace(0, 1, len(df)))
 color_dict = dict(zip(df.index, colors))
 
 fig, axs = plt.subplots(2, len(columns) // 2, figsize=(20, 10))
