@@ -1,17 +1,14 @@
 \subsection{Forensics Team}
-This agent crew is responsible for determining the cause of fires. Some actions are taken on-site shortly after the fire, while others occur later, at locations such as the coroner's office or the police station. The agents that are part of this crew are:
-\begin{itemize}
-    \item a \textbf{forensics operator} (facilitator agent),
-    \item a \textbf{forensics coordinator} (information agent),
-    \item a \textbf{coroner} (collaborative agent), and
-    \item an \textbf{investigator} (collaborative agent).
-\end{itemize}
+This agent crew is responsible for determining the cause of fires. Some actions are taken on-site shortly after the fire, while others occur later, at locations such as the coroner's office or the police station. The agents that are part of this crew are: a \textbf{forensics operator}, a \textbf{forensics coordinator}, a \textbf{coroner}, and an \textbf{investigator}.
 
 \subsubsection{Forensics Operator}
 Takes calls from the emergency services and reports back, providing information about ongoing and finished investigations to the \textit{public announcements} crew.
 \begin{itemize}
     \item \textbf{Main task:} Receives information from other crews and relays relevant information to the other agents of the Forensics Team. Gathers information from its own crew and sends it to other crews who might be interested.
     \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Communication Channel}: Can communicate with the rest of agent crews.
+    \end{itemize}
     \item \textbf{Type:} Facilitator agent.
     \item \textbf{Properties:}
     \begin{itemize}
@@ -47,7 +44,7 @@ Manages the team, resources, and knowledge for the forensics team. Communicates 
 Retrieves bodies from fire sites, brings them to the morgue, and performs further analysis to assist the investigator.
 \begin{itemize}
     \item \textbf{Main task:} After a fire is extinguished by the \textit{firefighters crew}, the \textbf{coroner} goes to the fire site with the \textit{investigator} to assess the victims' bodies. After the \textit{investigator} completes on-site forensics, the \textbf{coroner} retrieves bodies and performs further analysis in the morgue to assist the investigation.
-    \item \textbf{Tools:}
+    \item \textbf{Tools:} Has no special tools.
     \item \textbf{Type:} Collaborative agent.
     \item \textbf{Properties:}
     \begin{itemize}
@@ -63,6 +60,9 @@ Conducts on-site forensics and off-site research to determine the cause of the f
 \begin{itemize}
     \item \textbf{Main task:} After a fire is extinguished by the \textit{firefighters crew}, the \textbf{investigator} assesses victims' bodies with the \textit{coroner}, interviews witnesses, and collects evidence. Later, the \textbf{investigator} gathers research from the \textit{forensics coordinator} and performs further analysis to determine the cause of the fire. This information is shared with the \textit{forensics coordinator} for storage in case files and with the \textit{forensics operator} to inform other crews.
     \item \textbf{Tools:}
+    \begin{itemize}
+        \item \textit{Specialized Knowledge Database}: Has read access to a database holding specialized knowledge about the aparition signs and propagation of fire.
+    \end{itemize}
     \item \textbf{Type:} Collaborative agent.
     \item \textbf{Properties:}
     \begin{itemize}

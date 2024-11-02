@@ -1,6 +1,6 @@
 \subsection{Firefighters}
 This agent crew is responsible to move to the location of a fire and to extinguish the fire.
-\newline The agents that are part of this crew are: a \textbf{fire chief}, one \textbf{equipment technician} and a \textbf{fire combatant}.
+\newline The agents that are part of this crew are: a \textbf{fire chief}, one \textbf{equipment technician} and a team of \textbf{fire combatants}.
 
 \subsubsection{Fire Chief}
 Takes calls from the emergency services and reports back.
@@ -9,8 +9,7 @@ Takes calls from the emergency services and reports back.
     \item \textbf{Main task:} The fire chief receives a call from the emergency service operator and relays the information to its agent crew members. Once the firefighter crew arrives at the fire scene, the fire chief provides updates on the situation back to the emergency service operator.
     \item \textbf{Tools:}
     \begin{itemize}
-        \item \textit{Communication Device}: A device for effective communication with the emergency service operator and crew members.
-        \item \textit{Incident Reporting Software}: A system for logging updates and sharing critical information with the emergency service operator and other responders.
+        \item \textit{Communication Device}: A device for effective communication with the other crews.
     \end{itemize}
     \item \textbf{Type:} Facilitator agent.
     \item \textbf{Most relevant properties:}
@@ -28,7 +27,7 @@ Manages material required to extinguish a fire.
     \item \textbf{Main task:}  Based on the information received from the fire chief, the equipment technician needs to determine which materials are necessary, such as fire hoses, personal protective equipment (PPE), and fire extinguishers, and packs these items and loads them on the fire truck before the agent crew moves to the location of the fire. It is crucial that sufficient materials are packed to ensure a safe and effective response.
     \item \textbf{Tools:}
     \begin{itemize}
-        \item \textit{Tool1}:
+        \item \textit{Material Management Software}: Has a database of all the available material, which can be modified when resources are used for the emergencies.
     \end{itemize}
     \item \textbf{Type:} Information agent.
     \item \textbf{Most relevant properties:}
@@ -46,7 +45,7 @@ Extinguishes the fire.
     \item \textbf{Main task:} The firefighting combatants unload the required equipment from the fire truck at the fire scene. They then assess the most effective strategy to extinguish the fire by coordinating with their fellow firefighters.
     \item \textbf{Tools:}
     \begin{itemize}
-        \item \textit{Tool2}:
+        \item \textit{GPS}: Can access a real-time map of the city to locate the location of the incident and calculate the best route to get there.
     \end{itemize}
     \item \textbf{Type:} Collaborative agent.
     \item \textbf{Most relevant properties:}
