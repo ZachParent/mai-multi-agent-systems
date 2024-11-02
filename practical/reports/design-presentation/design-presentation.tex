@@ -3,6 +3,7 @@
 \usepackage{cite}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{fontawesome}
 
 % Beamer theme settings
 \usetheme{CambridgeUS}
@@ -72,10 +73,17 @@
 % Environment
 \section{Environment}
 \begin{frame}{Environment Properties}
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=2\textwidth]{../figures/diagram_between_agents.png}
-    \end{figure}
+            \vspace{0.5em}
+               \faEye\ Partially observable\\
+\vspace{0.5em}
+               \faQuestionCircle\ Non-deterministic\\
+\vspace{0.5em}
+              \faLink\ Non-episodic\\
+\vspace{0.5em}
+            \faRefresh\ Dinamic\\
+\vspace{0.5em}
+                \faMapMarker\ Continuous\\
+\vspace{0.5em}
 \end{frame}
 
 % Tools
@@ -103,14 +111,10 @@
 % Agents
 \section{Agent Crews}
 \begin{frame}{Agent Crews Overview}
-    Five specialized teams:
-    \begin{enumerate}
-        \item Emergency Services
-        \item Firefighters
-        \item Medical Services
-        \item Forensics Team
-        \item Public Communications
-    \end{enumerate}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\textwidth]{../figures/diagram_between_agents.png}
+    \end{figure}
 \end{frame}
 
 \input{4.1-emergency-services}
