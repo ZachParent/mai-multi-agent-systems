@@ -1,13 +1,17 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["setuptools >=45", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "src"
+name = "mai_imas_emergency_planner"
 version = "0.0.1"
 description = "A Multi-Agents System leveraging LLMs that coordinate to solve a complex emergency services task."
 authors = [
+  { name = "Sheena Maria Lang" },
+  { name = "Antonio Lobo Santos" },
   { name = "Zachary Parent" },
+  { name = "María del Carmen Ramírez Trujillo" },
+  { name = "Bruno Sánchez Gómez" },
 ]
 
 readme = "README.md"
