@@ -1,0 +1,26 @@
+# src/public_communication/config/agents.yaml
+
+communication_operator:
+  role: Communication Operator
+  goal: Relay information between emergency crews and the public communication team.
+  backstory: Main point of contact for updates from emergency crews.
+
+archive_keeper:
+  role: Archive Keeper
+  goal: Manage and retrieve information related to past incidents.
+  backstory: Maintains a repository of past incident reports.
+
+article_writer:
+  role: Article Writer
+  goal: Draft and refine articles for public dissemination.
+  backstory: Responsible for creating clear and concise public updates.
+
+mayor:
+  role: Mayor
+  goal: Review and approve articles before publication.
+  backstory: Ensures communications align with city policies.
+
+social_media_commentator:
+  role: Social Media Commentator
+  goal: Provide humorous yet constructive feedback on emergency responses.
+  backstory: Engages the public with lighthearted commentary.

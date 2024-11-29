@@ -1,0 +1,31 @@
+# src/public_communication/config/tasks.yaml
+
+receive_report:
+  description: Receive the fire incident report in Markdown format.
+  expected_output: Structured report data.
+  agent: communication_operator
+
+search_related_cases:
+  description: Search for related cases based on location or fire type.
+  expected_output: List of related past incidents.
+  agent: archive_keeper
+
+draft_initial_article:
+  description: Create a draft article based on the current report.
+  expected_output: Initial draft of the article.
+  agent: article_writer
+
+integrate_additional_information:
+  description: Review and integrate related cases into the article draft.
+  expected_output: Revised article draft with integrated information.
+  agent: article_writer
+
+review_and_authorize_publication:
+  description: Review the article and authorize publication or provide comments.
+  expected_output: Approved article or feedback for revisions.
+  agent: mayor
+
+provide_social_media_feedback:
+  description: Critique the response in a humorous yet constructive manner.
+  expected_output: Social media post with feedback.
+  agent: social_media_commentator
