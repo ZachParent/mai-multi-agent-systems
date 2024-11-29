@@ -2,12 +2,12 @@ from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
 
 @CrewBase
-class EmergencyServicesCrew:
-    """Emergency Services Crew"""
+class FireFightersCrew:
+    """Fire Fighters Crew"""
 
     @agent
-    def communication_operator(self) -> Agent:
-        return Agent(config=self.agents_config['communication_operator'])
+    def fire_fighter(self) -> Agent:
+        return Agent(config=self.agents_config['fire_fighter'])
 
 
     @task
@@ -15,9 +15,8 @@ class EmergencyServicesCrew:
         return Task(config=self.tasks_config['receive_call'])
     
     @task
-    def dispatch_fire_fighters(self) -> Task:
-        return Task(config=self.tasks_config['dispatch_fire_fighters'])
-
+    def plan_route(self) -> Task:
+        return Task(config=self.tasks_config['plan_route'])
 
     @crew
     def crew(self) -> Crew:
