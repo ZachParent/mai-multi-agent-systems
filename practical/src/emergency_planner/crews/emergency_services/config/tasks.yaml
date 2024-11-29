@@ -1,8 +1,9 @@
-# src/public_communication/config/tasks.yaml
-
-receive_report:
+receive_call:
   description: Receive the fire incident report in Markdown format.
-  expected_output: Structured report data.
+  expected_output: EmergencyCall
   agent: communication_operator
 
-
+dispatch_fire_fighters:
+  description: Dispatch the fire fighters to the incident location.
+  expected_output: FireFighterDispatch
+  agent: communication_operator

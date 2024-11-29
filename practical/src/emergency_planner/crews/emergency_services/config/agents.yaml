@@ -1,5 +1,3 @@
-# src/public_communication/config/agents.yaml
-
 communication_operator:
   role: Communication Operator
   goal: Relay information between emergency crews and the public communication team.
