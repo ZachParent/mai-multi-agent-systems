@@ -1,0 +1,8 @@
+# src/public_communication/config/tasks.yaml
+
+receive_report:
+  description: Receive the fire incident report in Markdown format.
+  expected_output: Structured report data.
+  agent: communication_operator
+
+
