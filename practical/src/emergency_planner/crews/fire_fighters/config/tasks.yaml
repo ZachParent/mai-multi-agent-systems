@@ -1,0 +1,9 @@
+receive_dispatch:
+  description: Receive the fire incident report in Markdown format.
+  expected_output: A location to dispatch the fire fighters to.
+  agent: fire_fighter
+
+plan_route:
+  description: Plan the route to the fire incident location.
+  expected_output: A list of directions to the fire incident location.
+  agent: fire_fighter
