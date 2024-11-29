@@ -38,7 +38,7 @@ class PoemFlow(Flow[PoemState]):
     #     print("Poem generated", result.raw)
     #     self.state.poem = result.raw
 
-    # @listen(generate_poem)
+    @listen(generate_poem)
     def save_poem(self):
         print("Saving poem")
         with open("poem.txt", "w") as f:
