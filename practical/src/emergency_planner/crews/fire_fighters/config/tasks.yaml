@@ -1,6 +1,6 @@
-receive_call:
+receive_dispatch:
   description: Receive the fire incident report in Markdown format.
-  expected_output: EmergencyCall
+  expected_output: A location to dispatch the fire fighters to.
   agent: fire_fighter
 
 plan_route:
