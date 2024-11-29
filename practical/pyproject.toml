@@ -1,36 +1,17 @@
-[build-system]
-requires = ["setuptools >=45", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "mai_imas_emergency_planner"
-version = "0.0.1"
-description = "A Multi-Agents System leveraging LLMs that coordinate to solve a complex emergency services task."
-authors = [
-  { name = "Sheena Maria Lang" },
-  { name = "Antonio Lobo Santos" },
-  { name = "Zachary Parent" },
-  { name = "María del Carmen Ramírez Trujillo" },
-  { name = "Bruno Sánchez Gómez" },
+name = "emergency_planner"
+version = "0.1.0"
+description = "emergency_planner using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<=3.13"
+dependencies = [
+    "crewai[tools]>=0.83.0,<1.0.0",
 ]
 
-readme = "README.md"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    
-]
-requires-python = "~=3.12"
+[project.scripts]
+kickoff = "emergency_planner.main:kickoff"
+plot = "emergency_planner.main:plot"
 
-[tool.black]
-line-length = 99
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.venv
-)/
-'''
-
-[tool.ruff.lint.isort]
-known_first_party = ["emergency_planner"]
-force_sort_within_sections = true
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
