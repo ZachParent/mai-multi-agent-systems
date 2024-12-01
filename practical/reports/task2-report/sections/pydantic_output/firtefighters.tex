@@ -1,0 +1,108 @@
+\subsection{Pydantic Outputs for Firefighter Agent Crew}
+
+Structured outputs ensure effective communication and accountability among team members in the Firefighter Agent Crew. Below are the Pydantic models designed to encapsulate outputs for each task in the firefighting process:
+
+\subsubsection{Receive Fire Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Fire Report Task Output}]
+from pydantic import BaseModel
+
+class FireReportOutput(BaseModel):
+    report_id: str
+    location: str
+    severity: str
+    hazards: list[str]
+    timestamp: str
+\end{lstlisting}
+
+\subsubsection{Analyze Fire Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Analyze Fire Report Task Output}]
+from pydantic import BaseModel
+
+class AnalyzeReportOutput(BaseModel):
+    key_details: str
+    risks_identified: list[str]
+    resource_recommendations: list[str]
+\end{lstlisting}
+
+\subsubsection{Give Instructions Task Output}
+\begin{lstlisting}[caption={Pydantic model for Give Instructions Task Output}]
+from pydantic import BaseModel
+
+class InstructionsOutput(BaseModel):
+    instructions: str
+    assigned_roles: dict
+    additional_notes: str
+\end{lstlisting}
+
+\subsubsection{Gather Materials Task Output}
+\begin{lstlisting}[caption={Pydantic model for Gather Materials Task Output}]
+from pydantic import BaseModel
+
+class MaterialsOutput(BaseModel):
+    materials_list: list[str]
+    readiness_status: str
+\end{lstlisting}
+
+\subsubsection{Determine Fastest Route Task Output}
+\begin{lstlisting}[caption={Pydantic model for Determine Fastest Route Task Output}]
+from pydantic import BaseModel
+
+class RouteOutput(BaseModel):
+    fastest_route: str
+    estimated_arrival_time: str
+    alternate_routes: list[str]
+\end{lstlisting}
+
+\subsubsection{Determine Fire Attack Strategy Task Output}
+\begin{lstlisting}[caption={Pydantic model for Determine Fire Attack Strategy Task Output}]
+from pydantic import BaseModel
+
+class FireAttackStrategyOutput(BaseModel):
+    strategy: str
+    assigned_zones: dict
+    anticipated_risks: list[str]
+\end{lstlisting}
+
+\subsubsection{Combat Fire Task Output}
+\begin{lstlisting}[caption={Pydantic model for Combat Fire Task Output}]
+from pydantic import BaseModel
+
+class CombatFireOutput(BaseModel):
+    progress_status: str
+    resources_used: list[str]
+    obstacles_encountered: list[str]
+\end{lstlisting}
+
+\subsubsection{Notify Medical Services Task Output}
+\begin{lstlisting}[caption={Pydantic model for Notify Medical Services Task Output}]
+from pydantic import BaseModel
+
+class MedicalNotificationOutput(BaseModel):
+    medical_notified: bool
+    reason: str
+    injured_personnel: int
+\end{lstlisting}
+
+\subsubsection{Report Back to Emergency Central Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Back to Emergency Central Task Output}]
+from pydantic import BaseModel
+
+class EmergencyReportOutput(BaseModel):
+    situation_summary: str
+    success_status: bool
+    time_to_containment: str
+    post_incident_notes: str
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Fire Report Task Output:} Captures critical details from the initial fire report, including location, severity, and hazards.
+    \item \textbf{Analyze Fire Report Task Output:} Summarizes the analysis of the fire report with key risks and recommended resources.
+    \item \textbf{Give Instructions Task Output:} Outlines the instructions, role assignments, and additional guidance provided to the crew.
+    \item \textbf{Gather Materials Task Output:} Details the materials prepared and their readiness status.
+    \item \textbf{Determine Fastest Route Task Output:} Specifies the optimal route to the fire and alternative options.
+    \item \textbf{Determine Fire Attack Strategy Task Output:} Documents the firefighting strategy, assigned zones, and risk assessments.
+    \item \textbf{Combat Fire Task Output:} Tracks firefighting progress, resources used, and encountered challenges.
+    \item \textbf{Notify Medical Services Task Output:} Records the details of medical notifications made and injuries encountered.
+    \item \textbf{Report Back to Emergency Central Task Output:} Summarizes the incident status, success metrics, and lessons learned post-response.
+\end{itemize}
