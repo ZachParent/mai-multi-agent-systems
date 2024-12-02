@@ -1,6 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel
-from typing import Optional
+from typing import List, Optional, Tuple
 
 class FireStatus(Enum):
     FIRE_STARTED = "Fire Started"
@@ -20,3 +20,8 @@ class FireFighterDispatch(BaseModel):
 class EmergencyPlannerState(BaseModel):
     emergency_call: Optional[EmergencyCall]
     fire_fighter_dispatch: Optional[FireFighterDispatch]
+
+
+# Public Communication
+
+from dataModels.PublicCommunication import *

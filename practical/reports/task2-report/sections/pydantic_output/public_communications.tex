@@ -4,11 +4,9 @@ Structured outputs are crucial for ensuring clarity, consistency, and seamless i
 
 \subsubsection{Receive Report Task Output}
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
-from pydantic import BaseModel
-
 class ReceiveReportOutput(BaseModel):
     report_id: str
-    location: str
+    location: Tuple[float,float]
     fire_type: str
     timestamp: str
     markdown_content: str
@@ -16,9 +14,6 @@ class ReceiveReportOutput(BaseModel):
 
 \subsubsection{Search Related Cases Task Output}
 \begin{lstlisting}[caption={Pydantic model for Search Related Cases Task Output}]
-from pydantic import BaseModel
-from typing import List
-
 class RelatedCase(BaseModel):
     case_id: str
     location: str
@@ -32,18 +27,13 @@ class SearchRelatedCasesOutput(BaseModel):
 
 \subsubsection{Draft Initial Article Task Output}
 \begin{lstlisting}[caption={Pydantic model for Draft Initial Article Task Output}]
-from pydantic import BaseModel
-
 class DraftArticleOutput(BaseModel):
     title: str
     draft: str
-    author: str
 \end{lstlisting}
 
 \subsubsection{Integrate Additional Information Task Output}
 \begin{lstlisting}[caption={Pydantic model for Integrate Additional Information Task Output}]
-from pydantic import BaseModel
-
 class IntegratedArticleOutput(BaseModel):
     draft: str
     integrated_sources: list[str]
@@ -51,29 +41,25 @@ class IntegratedArticleOutput(BaseModel):
 
 \subsubsection{Review and Authorize Publication Task Output}
 \begin{lstlisting}[caption={Pydantic model for Review and Authorize Publication Task Output}]
-from pydantic import BaseModel
-
 class ReviewOutput(BaseModel):
     approved: bool
     comments: str
-    draft: str
+    report: str
 \end{lstlisting}
 
 \subsubsection{Provide Social Media Feedback Task Output}
 \begin{lstlisting}[caption={Pydantic model for Provide Social Media Feedback Task Output}]
-from pydantic import BaseModel
-
 class SocialMediaFeedbackOutput(BaseModel):
     feedback: str
-    draft: str
+    report: str
     approved: bool
     comments: str
 \end{lstlisting}
 
 \paragraph{Summary of Outputs}
 \begin{itemize}
-    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details.
-    \item \textbf{Search Related Cases Task Output:} Retrieves relevant historical cases for contextualization.
+    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details from \textit{Firefighters} and \textit{Medical Sevices} crews.
+    \item \textbf{Search Related Cases Task Output:} Retrieves relevant historical cases for contextualization and save this case.
     \item \textbf{Draft Initial Article Task Output:} Records the initial draft content.
     \item \textbf{Integrate Additional Information Task Output:} Updates the draft with integrated sources and revisions.
     \item \textbf{Review and Authorize Publication Task Output:} Specifies the review status and comments from the Mayor.
