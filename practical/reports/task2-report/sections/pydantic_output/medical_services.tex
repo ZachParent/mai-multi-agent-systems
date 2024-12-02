@@ -1,0 +1,80 @@
+\subsection{Medical Services Crew}
+
+Structured outputs ensure consistency and facilitate effective collaboration among agents within the Medical Services Crew. Below are the Pydantic models for each task's output:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+from pydantic import BaseModel
+
+class ReceiveReportOutput(BaseModel):
+    report_id: str
+    location: str
+    number_of_injured: int
+    severity_levels: list[str]
+    timestamp: str
+\end{lstlisting}
+
+\subsubsection{Rank Hospitals Task Output}
+\begin{lstlisting}[caption={Pydantic model for Rank Hospitals Task Output}]
+from pydantic import BaseModel
+
+class Hospital(BaseModel):
+    hospital_id: str
+    location: str
+    available_beds: int
+    available_ambulances: int
+    available_paramedics: int
+
+class RankHospitalsOutput(BaseModel):
+    ranked_hospitals: List[Hospital]
+    timestamp: str
+\end{lstlisting}
+
+\subsubsection{Allocate Hospital Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Hospital Resources Task Output}]
+from pydantic import BaseModel
+
+class HospitalResources(BaseModel):
+    hospital_id: str
+    beds_provided: int
+    ambulances_dispatched: int
+    paramedics_deployed: int
+
+class AllocateHospitalResourcesOutput(BaseModel):
+    hospital_resource_allocation = List[HospitalResources]
+    timestamp: str
+\end{lstlisting}
+
+\subsubsection{Deploy Paramedics Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Paramedics Task Output}]
+from pydantic import BaseModel
+from typing import List
+
+class MedicalProcedure(BaseModel):
+    procedure_name: str
+    priority_level: str
+    requires_ambulance_transport: bool
+
+class DeployParamedicsOutput(BaseModel):
+    paramedics_deployed: int
+    estimated_arrival_time: str
+    procedures: List[MedicalProcedure]
+\end{lstlisting}
+
+\subsubsection{Report Medical Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Medical Response Task Output}]
+from pydantic import BaseModel
+
+class MedicalResponseReportOutput(BaseModel):
+    summary: str
+    timestamp: str
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Report Task Output:} Captures the key details of the fire incident, including injury data.
+    \item \textbf{Rank Hospitals Task Output:} Ranks the available hospital based on distance to the emergency site.
+    \item \textbf{Allocate Hospital Resources Task Output:} Summarizes the resources provided by each hospital for emergency medical care.
+    \item \textbf{Deploy Paramedics Task Output:} Reports the deployment plan and medical procedures to be performed.
+    \item \textbf{Report Medical Response Task Output:} Provides an overall response plan.
+\end{itemize}

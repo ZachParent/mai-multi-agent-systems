@@ -4,28 +4,30 @@ The Medical Services Crew operates follows a \textbf{sequential} task structure 
 
 \begin{enumerate}
 	\item \textbf{Receive Report:} The \textit{Medical Services Operator} receives the fire incident report, and parses key information, such as the location, the number of injured, and the severity of injuries.
+	
+	\item \textbf{Rank Hospitals:} The \textit{Hospital Coordinator} ranks the city's hospitals based on distance to the emergency location.
 
-	\item \textbf{Assess Hospital Capacity:} The \textit{Hospital Coordinator} assesses the available resources (beds, ambulances, paramedics) at their respective hospital, and reports how much they can supply. This task depends on the completion of the \textit{Recieve Report} task.
+	\item \textbf{Allocate Hospital Resources:} The \textit{Hospital Coordinator} assesses the available resources (beds, ambulances, paramedics) at the hospitals, and allocates their resources according to the needs of the emergency.
 	
-	\item \textbf{Deploy Paramedics:} Based on the location and the assigned resources to the emergency, \textit{Paramedics} are deployed to the place of the incident, reporting an estimation of the time of arrival and a list of the medical procedures that will have to be performed. This task depends on the completion of both the \textit{Recieve Report} and the \textit{Assess Hospital Capacity} tasks.
+	\item \textbf{Deploy Paramedics:} The \textit{Paramedics} are deployed to the place of the incident, reporting an estimation of the time of arrival and a list of the medical procedures that will have to be performed.
 	
-	\item \textbf{Report Medical Response:} The \textit{Medical Services Operator} reports back a comprehensive summary of the response plan, along with important information, such as whether all the medical needs of the emergency can be fully supplied by its hospital or not. This task depends on the completion of the \textit{Assess Hospital Capacity} and \textit{Deploy Paramedics} tasks.
+	\item \textbf{Report Medical Response:} The \textit{Medical Services Operator} reports back a comprehensive summary of the response plan.
 \end{enumerate}
-
-\textcolor{red}{Remove task dependencies from here. Put the figure after task dependencies. Also, make figure for Medical Services}
-
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=0.9\textwidth]{figures/PC-process.png}
-	\caption{Sequential Process Flow of the Medical Services Crew with Agent Responsibilities}
-	\label{fig:medical_services_flow}
-\end{figure}
-
 
 \paragraph{Task Dependencies}
 The sequential nature of the process requires to establish task dependencies to define the crew's workflow:
 \begin{itemize}
-	\item 
+	\item The \textit{Rank Hospitals} task depends on the completion of the \textit{Recieve Report} task.
+	\item The \textit{Allocate Hospital Resources} task depends on the completion of \textit{Rank Hospitals}.
+	\item The \textit{Deploy Paramedics} task depends on the completion of \textit{Allocate Hospital Resources}.
+	\item The \textit{Report Medical Response} task depends on the completion of \textit{Deploy Paramedics}.
 \end{itemize}
 
 The task dependencies and agents who perform each task can be observed in Figure~\ref{fig:medical_services_flow}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height=0.6\textheight]{figures/Medical_Services_Crew_Flow.png}
+	\caption{Sequential Process Flow of the Medical Services Crew with Agent Responsibilities}
+	\label{fig:medical_services_flow}
+\end{figure}
