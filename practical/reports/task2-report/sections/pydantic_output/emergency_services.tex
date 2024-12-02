@@ -1,40 +1,56 @@
-\section{Emergency Services Crew}
+\subsection{Emergency Services Crew}
 
-Structured outputs ensure accurate information handling and effective communication within the Emergency Services Crew. 
-Below are the Pydantic models designed for each task's output.
+Structured outputs ensure accurate information handling and effective communication within the Emergency Services Crew. Below 
+are the Pydantic models designed for each task's output.
 
-\subsection{Receive and Assess Call Task Output}
+\subsubsection{Receive and Assess Call Task Output}
 
-\begin{verbatim}
+\begin{lstlisting}[caption={Pydantic model for Receive and Assess Call Task Output}] 
+    from pydantic import BaseModel
+    from typing import List, Tuple
 
-class CallAssessmentOutput(BaseModel):
-    fire_type: str  # 'indoor' or 'outdoor'
-    location: Tuple[float, float]  # (x, y) coordinates
-    trapped_people: int  # M (number of trapped individuals)
-    hazards_present: bool  # True or False
-    fire_size: str  # 'small', 'medium', or 'large'
-    injuries: Tuple[int, List[str]]  # (N, [risk levels])
-    timestamp: str
-\end{verbatim}
+    class CallAssessmentOutput(BaseModel): 
 
-\subsection{Assign Fire Priority Level Task Output}
+    fire_type: str # Type of fire (e.g., ordinary, electrical, gas, etc.) 
+    location: Tuple[float, float] # Coordinates (x, y) 
+    injured_details: List[str] # List of risk levels of injured people 
+    fire_severity: str # Severity of fire: low, medium, or high 
+    hazards: List[str] # Hazards present, e.g., gas cylinders, chemicals 
+    indoor: bool # True if fire is indoor, False otherwise 
+    trapped_people: int # Number of people trapped (0 if none) \end{lstlisting}
 
-\begin{verbatim}
+\subsubsection{Notify Other Crews Task Output}
 
-class FirePriorityOutput(BaseModel):
-    priority_level: str  # 'low', 'medium', or 'high'
-    timestamp: str
-\end{verbatim}
+\begin{lstlisting}[caption={Pydantic model for Notify Other Crews Task Output}] 
+    from pydantic import BaseModel 
+    from typing import List, Tuple
 
-\subsection{Notify Other Crews Task Output}
+class fire_report(BaseModel): 
+    location: Tuple[float, float] # Coordinates (x, y) 
+    fire_type: str # Type of fire fire_severity: str # 
+    Severity of fire: low, medium, or high 
+    trapped_people: int # Number of trapped individuals 
+    hazards: List[str] # 
+    Hazards present indoor: bool # True if fire is indoor, False otherwise
 
-\begin{verbatim}
+class medical_report(BaseModel): 
+    location: Tuple[float, float] # Coordinates (x, y) 
+    injured_details: List[str] # Risk levels of injured people 
+    fire_severity: str # Severity of fire: low, medium, or high 
+    hazards: List[str] # Hazards present
 
-class CrewNotificationOutput(BaseModel):
-    fire_fighters_info: dict  # {'location': (x, y), 'priority': str, 'trapped': int}
-    medical_services_info: dict  # {'location': (x, y), 'injured_count': int, 'injury_risks': List[str]}
-    notification_status: bool
-    timestamp: str
-\end{verbatim}
+class CrewNotificationOutput(BaseModel): 
+    firefighters_output: List[fire_report]
+    medical_service_output: List[medical_report]
+    timestamp: str # Timestamp of the notification \end{lstlisting}
 
-This format ensures the clarity and consistency required for seamless integration within the system.
+    \paragraph{Summary of Outputs}
+    The Pydantic outputs for the \textit{Emergency Services Crew} ensure structured data handling and effective communication between agents. Below is a summary of the outputs for each task:
+    
+    \begin{itemize}
+        \item \textbf{Receive and Assess Call Task Output:} Captures critical incident details including fire type, location, injured details, severity, hazards, indoor/outdoor status, and trapped individuals.
+        \item \textbf{Notify Other Crews Task Output:} Communicates the assessed incident details to the Firefighter and Medical Services crews. Includes location, fire type, severity, hazards, and relevant medical data such as injuries.
+    \end{itemize}
+    
+    These structured models enhance precision and ensure clear communication throughout the emergency response processes.
+    

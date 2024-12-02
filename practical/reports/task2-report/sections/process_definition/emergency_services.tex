@@ -1,3 +1,4 @@
+\subsection{Emergency Services Crew}
 \begin{enumerate}
 
     \item \textbf{Receive and Assess Call.} 
@@ -5,70 +6,55 @@
     about the incident. The information that this agent receives answers the following six questions and is saved
     in a report:
     \begin{itemize}
-        \item Is it an indoor or outdoor fire? The answer will be either \textit{outdoor} or \textit{indoor}.
+        \item What type of fire is it? E.g. ordinary, electrical, gas, etc.
         \item Where is it? The location is received as coordinates \((x, y)\).
+        \item Is anyone injured? How badly? The answer will be a list of strings, detailing the risk level of each person. If the list 
+        if empty then there will be no injured people and it will be unnecessary to report it to the \textit{Medical Service Crew.}
+        \item How severe is the fire? It will be considered as low, medium or high.
+        % extra inputs
+        \item Are there hazards? Examples of hazards could include gas cylinders, chemicals, explosions, etc.
+        \item Is it an indoor or outdoor fire? The answer will be either \textit{outdoor} or \textit{indoor}.
         \item Is anyone inside or trapped? The answer will be an integer number $M$ representing the number of trapped people. 
-              If $M > 0$, rescues are needed, and the \textit{Notification Agent} will detail that to the Fire Fighters Crew.
-        \item Are there hazards? The answer will be a boolean: \textit{True} (yes) or \textit{False} (no). Examples of hazards could include 
-              gas cylinders, chemicals, explosions, etc.
-        \item How big is the fire? The fire will be classified as either \textit{large} (e.g., spreading rapidly), \textit{medium} (e.g., smoke visible), 
-              or \textit{small} (e.g., small flame), based on the assessment by the \textit{Emergency Call Agent}.
-        \item Is anyone injured? How badly? The answer will be a tuple containing an integer $N$ representing the number of injured 
-              people and another tuple listing the risk level of each person. They could be classified based on their injuries as \textit{high risk}, 
-              \textit{risk}, or \textit{out of risk}. If there are no victims, then $N = 0$ and the second element of the tuple will be an empty list.
+        If $M > 0$, rescues are needed, and the \textit{Notification Agent} will detail that to the Fire Fighters Crew.
     \end{itemize}
     
-    \item \textbf{Assign Fire Priority Level.} 
-    The \textit{Emergency Call Agent} categorizes the incident and sends initial notifications 
-    to the \textit{Notification Agent}. The emergency can be classified into the following levels:
-    \begin{itemize}
-        \item \textbf{Classifying the Fire Based on the Answers:}  
-        The fire is classified into three levels:
-        \begin{itemize}
-            \item \textbf{High Priority:}
-            \begin{itemize}
-                \item Indoor fire or outdoor fire with significant hazards (e.g., chemicals, gas).
-                \item $M > 0$ (people are trapped inside).
-                \item Large fire spreading rapidly.
-                \item High-risk injuries or multiple victims.
-            \end{itemize}
-            Fires meeting these criteria require immediate and large-scale responses to prevent further harm or fatalities.
-            
-            \item \textbf{Medium Priority:}
-            \begin{itemize}
-                \item Outdoor fire with no hazards or small to medium size fire.
-                \item No trapped people, but some individuals at risk or with moderate injuries.
-                \item Medium-risk injuries or a small number of victims with manageable injuries.
-            \end{itemize}
-            Fires that are moderately dangerous, but not life-threatening, or where injuries are serious but not critical, 
-            fall into this category. These require a quick response but lack the urgency of high-priority fires.
-            
-            \item \textbf{Low Priority:}
-            \begin{itemize}
-                \item Outdoor fire with no hazards and small size.
-                \item No trapped people or minimal injuries.
-                \item Low-risk injuries (minor burns or cuts).
-            \end{itemize}
-            These fires are less dangerous, with no immediate risk to life or property. A single fire engine may be sufficient to manage the situation.
-        \end{itemize}
-    \end{itemize}
 
     \item \textbf{Notify Other Crews.} 
-    The \textit{Notification Agent} receives the report and fire classification, then communicates the information to the appropriate crews 
-    (Medical Services Crew and Fire Fighters Crew):
+    The \textit{Notification Agent} receives the details about the fire then communicates the information to the 
+    appropriate crews (Medical Services Crew and Fire Fighters Crew):
     \begin{itemize}
         \item Information provided to the Fire Fighters:
         \begin{itemize}
             \item Location \((x, y)\)
-            \item Priority level (\textit{low}, \textit{medium}, or \textit{high})
+            \item Type of fire
+            \item How severe is the fire 
             \item Number of trapped people $M$
+            \item Hazards
+            \item If the fire is indoors or outdoors
         \end{itemize}
         \item Information provided to the Medical Services Crew:
         \begin{itemize}
             \item Location \((x, y)\)
-            \item Number of injured people $N$
-            \item A list of the risk levels of each injured person (\textit{out of risk}, \textit{risk}, or \textit{high risk})
+            \item Information about the injured people if any
+            \item How severe is the fire 
+            \item Hazards
         \end{itemize}
     \end{itemize}
 
 \end{enumerate}
+
+\paragraph{Task Dependencies:}
+
+The sequential workflow for the Emergency Services Crew depends on task dependencies to ensure efficiency and coordination:
+\begin{itemize}
+    \item The \textit{Notify Other Crews Task} depends on the completion of the \textit{Receive and Assess Call Task}.
+\end{itemize}
+
+The task dependencies and agents who perform each task can be observed in Figure~\ref{fig:emergency_services_flow}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[height=0.4\textheight]{figures/emergency_services_crew_flow.png}
+	\caption{Sequential Process Flow of the Medical Services Crew with Agent Responsibilities}
+	\label{fig:emergency_services_flow}
+\end{figure}
