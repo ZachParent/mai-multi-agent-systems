@@ -1,0 +1,91 @@
+\subsection{Emergency Services Crew}
+
+The Emergency Services Crew follows a structured \textbf{sequential process} to ensure prompt handling of emergency calls and
+ effective communication with response units. The crew consists of two agents: the \textbf{Emergency Call Agent} and the 
+ \textbf{Notification Agent}. Each task is assigned based on the specific role and capabilities of these agents, as indicated in the 
+ subsequent description.
+
+\begin{enumerate}
+    \item \textbf{Receive and Assess Call.} The \textit{Emergency Call Agent} receives incoming calls and collects relevant details
+     about the incident. The information that this agent receives is the answer of the following six questions, and it saves the information
+     in a report.
+     \begin{itemize}
+        \item Is it an indoor or outdoor fire? The answer will be outdoor or indoor.
+        \item Where is it? The location is received as coordinates (x,y).
+        \item Is anyone inside or trapped? The answer will be an integer number $M$ with the number of trapped people. If $M>0$, then rescues are needed and 
+        the \textit{Notification Agent} will detail that to the Fire Fighters Crew.
+        \item Are there hazards? The answer will be a boolean: True (yes) or False (no). Examples of hazards could be gas cylinders, 
+        chemicals, explosions, etc.
+        \item How big is the fire? The fire will be classified as either large (e.g. spreading rapidly), medium (e.g. smoke visible) or 
+        small (e.g. small flame), depending on the assess of the \textit{Emergency Call Agent.}
+        \item Is anyone injured? How badly? The answer will be a tuple with an integer number $N$ representing the number of injured 
+        people and another tuple with the level of risk of each person. They could be classified based on their injuries as 'high risk',
+         'risk', or 'out of risk'. If there is no victims then $N=0$ and the second element of the tuple will be an empty list.
+    \end{itemize}
+    
+    \item \textbf{Assign fire priority level.} The \textit{Emergency Call Agent} categorizes the incident and sends initial notifications 
+    to the \textit{Notification Agent}. The emergency can be classified in one of the following levels: 
+    \begin{itemize}
+        \item \textbf{Classifying the Fire Based on the Answers:}  
+        The fire is classified into three levels based on the answers:
+        \begin{itemize}
+            \item \textbf{High Priority:}
+            \begin{itemize}
+                \item Indoor fire or outdoor fire with significant hazards (e.g., chemicals, gas).
+                \item $M > 0$ (people are trapped inside).
+                \item Large fire spreading rapidly.
+                \item High risk injuries or multiple victims.
+            \end{itemize}
+            The reason of that is because a fire that is indoors, spreading quickly, with trapped people and significant hazards, 
+            is clearly high priority. This combination requires an immediate and large response to prevent further harm or fatalities.
+            
+        \item \textbf{Medium Priority:}
+            \begin{itemize}
+                \item Outdoor fire with no hazards or small to medium size fire.
+                \item No trapped people, but some people at risk or with moderate injuries.
+                \item Medium risk injuries or a small number of victims with manageable injuries.
+            \end{itemize}
+            It was consider that fires that are moderately dangerous, but not life-threatening, or where injuries are serious but
+             not critical, would fall into medium priority. These need quick response, but they don't have the same urgency as a high 
+             priority fire.
+            
+        \item \textbf{Low Priority:}
+            \begin{itemize}
+                \item Outdoor fire with no hazards and small size.
+                \item No trapped people or minimal injuries.
+                \item Low risk injuries (minor burns or cuts).
+            \end{itemize}
+            This fire is less dangerous, with no immediate risk to life or property. A single fire engine may be enough to contain 
+            and manage the situation. The priority level is low because the fire does not pose significant harm to anyone involved.
+    \end{itemize}
+
+    \item \textbf{Notify other crews.} The \textit{Notification Agent} receives the report and the classification of the fire, and 
+    details the information to the appropriate crews, Medical Services Crew and Fire Fighters Crew.
+    \begin{itemize}
+        \item The following information is provided to the Fire Fighters:
+        \begin{itemize}
+            \item Location (x,y)
+            \item Priority level (low, medium or high).
+            \item Number of trapped people $M$.
+        \end{itemize}
+        \item Regarding the Medical Services, they receive the following information:
+        \begin{itemize}
+            \item Location (x,y)
+            \item Number of injured people $N$.
+            \item A list containing the risk of each injured person (out of risk, risk or high risk).
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Task Dependencies} The Emergency Services Crew operates with interdependent tasks that follow a strict 
+\textbf{sequential process}:
+\begin{itemize}
+    \item \textbf{Assign fire priority level} depends on the completion of \textbf{Receive and Assess Call}.
+    \item \textbf{Notify other crews.} depends on the completion of \textbf{Categorize and Notify Response Units}.
+\end{itemize}
+
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[width=\textwidth]{emergency_services_flow.pdf}
+%    \caption{Sequential Process Flow of the Emergency Services Crew with Agent Responsibilities}
+%\end{figure}

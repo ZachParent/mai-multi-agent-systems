@@ -1,0 +1,40 @@
+\section{Emergency Services Crew}
+
+Structured outputs ensure accurate information handling and effective communication within the Emergency Services Crew. 
+Below are the Pydantic models designed for each task's output.
+
+\subsection{Receive and Assess Call Task Output}
+
+\begin{verbatim}
+
+class CallAssessmentOutput(BaseModel):
+    fire_type: str  # 'indoor' or 'outdoor'
+    location: Tuple[float, float]  # (x, y) coordinates
+    trapped_people: int  # M (number of trapped individuals)
+    hazards_present: bool  # True or False
+    fire_size: str  # 'small', 'medium', or 'large'
+    injuries: Tuple[int, List[str]]  # (N, [risk levels])
+    timestamp: str
+\end{verbatim}
+
+\subsection{Assign Fire Priority Level Task Output}
+
+\begin{verbatim}
+
+class FirePriorityOutput(BaseModel):
+    priority_level: str  # 'low', 'medium', or 'high'
+    timestamp: str
+\end{verbatim}
+
+\subsection{Notify Other Crews Task Output}
+
+\begin{verbatim}
+
+class CrewNotificationOutput(BaseModel):
+    fire_fighters_info: dict  # {'location': (x, y), 'priority': str, 'trapped': int}
+    medical_services_info: dict  # {'location': (x, y), 'injured_count': int, 'injury_risks': List[str]}
+    notification_status: bool
+    timestamp: str
+\end{verbatim}
+
+This format ensures the clarity and consistency required for seamless integration within the system.
