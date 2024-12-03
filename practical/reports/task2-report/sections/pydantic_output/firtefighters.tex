@@ -7,102 +7,79 @@ Structured outputs ensure effective communication and accountability among team 
 from pydantic import BaseModel
 
 class FireReportOutput(BaseModel):
-    report_id: str
-    location: str
-    severity: str
-    hazards: list[str]
-    timestamp: str
+    location: Tuple[float, float] # Coordinates (x, y)
+    fire_type: str # Type of fire fire_severity: str
+    fire_severity: str # Severity of fire: low, medium, or high
+    trapped_people: int # Number of trapped individuals
+    hazards: List[str] # Hazards present
+    hazards_present_indoor: bool # True if fire is indoor, False otherwise
 \end{lstlisting}
 
-\subsubsection{Analyze Fire Report Task Output}
-\begin{lstlisting}[caption={Pydantic model for Analyze Fire Report Task Output}]
+\subsubsection{Give Material Instructions Task Output}
+\begin{lstlisting}[caption={Pydantic model for Material Instructions Task Output}]
 from pydantic import BaseModel
 
-class AnalyzeReportOutput(BaseModel):
-    key_details: str
-    risks_identified: list[str]
-    resource_recommendations: list[str]
+class MaterialInstructionsOutput(BaseModel):
+    material_instructions: str
 \end{lstlisting}
 
-\subsubsection{Give Instructions Task Output}
-\begin{lstlisting}[caption={Pydantic model for Give Instructions Task Output}]
+
+\subsubsection{Give Firefighting Instructions Task Output}
+\begin{lstlisting}[caption={Pydantic model for Firefighting Instructions Task Output}]
 from pydantic import BaseModel
 
-class InstructionsOutput(BaseModel):
-    instructions: str
-    assigned_roles: dict
-    additional_notes: str
+class FirefightingInstructionsOutput(BaseModel):
+    firefighting_instructions: str
 \end{lstlisting}
 
-\subsubsection{Gather Materials Task Output}
-\begin{lstlisting}[caption={Pydantic model for Gather Materials Task Output}]
-from pydantic import BaseModel
 
-class MaterialsOutput(BaseModel):
-    materials_list: list[str]
-    readiness_status: str
+\subsubsection{Allocate Firefighting Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Firefighting Resources Task Output}]
+from pydantic import BaseModel
+from typing import List
+
+class FireFightingMaterial(BaseModel):
+    material_name: str
+    material_quantity: int
+
+class AllocateFirefightingResourcesOutput(BaseModel):
+    resources: List[FireFightingMaterial]
 \end{lstlisting}
 
-\subsubsection{Determine Fastest Route Task Output}
-\begin{lstlisting}[caption={Pydantic model for Determine Fastest Route Task Output}]
+
+\subsubsection{Deploy Fire Combatants Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Fire Combatants Task Output}]
 from pydantic import BaseModel
 
-class RouteOutput(BaseModel):
-    fastest_route: str
+class FirefightingActivity(BaseModel):
+    firefighting_activity: str
+    priority_level: str
+
+class DeployFireCombatantsOutput(BaseModel):
+    firecombatants_deployed: int
     estimated_arrival_time: str
-    alternate_routes: list[str]
+    firefighting_activities: List[FirefightingActivity]
 \end{lstlisting}
 
-\subsubsection{Determine Fire Attack Strategy Task Output}
-\begin{lstlisting}[caption={Pydantic model for Determine Fire Attack Strategy Task Output}]
+
+\subsubsection{Report Firefighting Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Firefighting Response Task Output}]
 from pydantic import BaseModel
 
-class FireAttackStrategyOutput(BaseModel):
-    strategy: str
-    assigned_zones: dict
-    anticipated_risks: list[str]
-\end{lstlisting}
-
-\subsubsection{Combat Fire Task Output}
-\begin{lstlisting}[caption={Pydantic model for Combat Fire Task Output}]
-from pydantic import BaseModel
-
-class CombatFireOutput(BaseModel):
-    progress_status: str
-    resources_used: list[str]
-    obstacles_encountered: list[str]
-\end{lstlisting}
-
-\subsubsection{Notify Medical Services Task Output}
-\begin{lstlisting}[caption={Pydantic model for Notify Medical Services Task Output}]
-from pydantic import BaseModel
-
-class MedicalNotificationOutput(BaseModel):
-    medical_notified: bool
-    reason: str
-    injured_personnel: int
-\end{lstlisting}
-
-\subsubsection{Report Back to Emergency Central Task Output}
-\begin{lstlisting}[caption={Pydantic model for Report Back to Emergency Central Task Output}]
-from pydantic import BaseModel
-
-class EmergencyReportOutput(BaseModel):
-    situation_summary: str
-    success_status: bool
-    time_to_containment: str
-    post_incident_notes: str
+class ReportFirefightingResponseOutput(BaseModel):
+    summary: str
+    timestamp: str
+    success: bool
 \end{lstlisting}
 
 \paragraph{Summary of Outputs}
 \begin{itemize}
-    \item \textbf{Receive Fire Report Task Output:} Captures critical details from the initial fire report, including location, severity, and hazards.
-    \item \textbf{Analyze Fire Report Task Output:} Summarizes the analysis of the fire report with key risks and recommended resources.
-    \item \textbf{Give Instructions Task Output:} Outlines the instructions, role assignments, and additional guidance provided to the crew.
-    \item \textbf{Gather Materials Task Output:} Details the materials prepared and their readiness status.
-    \item \textbf{Determine Fastest Route Task Output:} Specifies the optimal route to the fire and alternative options.
-    \item \textbf{Determine Fire Attack Strategy Task Output:} Documents the firefighting strategy, assigned zones, and risk assessments.
-    \item \textbf{Combat Fire Task Output:} Tracks firefighting progress, resources used, and encountered challenges.
-    \item \textbf{Notify Medical Services Task Output:} Records the details of medical notifications made and injuries encountered.
-    \item \textbf{Report Back to Emergency Central Task Output:} Summarizes the incident status, success metrics, and lessons learned post-response.
+\item \textbf{Receive Fire Report Task Output:} Captures the essential details from the initial fire report, including fire type, severity, hazards, and any trapped individuals.
+\item \textbf{Give Material Instructions Task Output:} Specifies the instructions provided regarding the materials needed for the firefighting operation.
+\item \textbf{Give Firefighting Instructions Task Output:} Details the specific firefighting strategies and guidance issued to the crew.
+\item \textbf{Allocate Firefighting Resources Task Output:} Documents the allocation of firefighting materials, including quantities and resource types.
+\item \textbf{Deploy Fire Combatants Task Output:} Tracks the deployment of personnel, estimated arrival times, and prioritized firefighting activities.
+\item \textbf{Report Firefighting Response Task Output:} Summarizes the response outcomes, including success metrics and timestamps.
 \end{itemize}
+
+

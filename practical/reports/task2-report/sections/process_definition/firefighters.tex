@@ -3,34 +3,31 @@
 The Firefighter Agent Crew operates within a structured \textbf{sequential process} to ensure effective and coordinated response to fire emergencies. Each task is assigned to a specific agent with well-defined responsibilities, as detailed below:
 
 \begin{enumerate}
-    \item \textbf{Receive Fire Report:} The \textit{Fire Chief} receives a fire report from the Emergency Service Operator. This serves as the starting point of the process, containing critical information about the location and severity of the fire.
-    \item \textbf{Analyze Fire Report:} The \textit{Fire Chief} analyzes the report to extract key details, such as the type of fire, potential hazards, and necessary resources.
-    \item \textbf{Give Instructions:} The \textit{Fire Chief} relays instructions based on the analysis to the other agents in the crew.
-    \item \textbf{Gather Materials:} The \textit{Equipment Technician} uses the provided instructions to determine which materials are required, such as fire hoses, extinguishers, and personal protective equipment, and ensures they are packed and ready.
-    \item \textbf{Determine Fastest Route to Fire:} The \textit{Fire Chief} calculates the fastest route to the fire location using real-time mapping tools.
-    \item \textbf{Determine Fire Attack Strategy:} Upon arrival, the \textit{Fire Combatants} assess the fire scene and coordinate with each other to devise the most effective strategy for extinguishing the fire.
-    \item \textbf{Combat Fire:} The \textit{Fire Combatants} use the gathered materials and implement the attack strategy to extinguish the fire.
-    \item \textbf{Notify Medical Services If Needed:} If any injuries or health risks arise at the scene, the \textit{Fire Combatants} immediately notify medical services.
-    \item \textbf{Report Back to Emergency Central:} The \textit{Fire Chief} provides updates to the Emergency Service Operator about the situation and the crew’s progress, ensuring that central command remains informed.
+    \item \textbf{Receive Report:} The \textit{Fire Chief} receives a fire report from the Emergency Service Operator. This serves as the starting point of the process, containing critical information such as the location and severity of the fire.
+    \item \textbf{Give Material Instructions:} The \textit{Fire Chief} relays instructions based on the fire report to the equipment technician.
+    \item \textbf{Give Firefighting Instructions:} The \textit{Fire Chief} relays instructions based on the fire report to the fire combatants.
+    \item \textbf{Allocate Firefighting Resources:} The \textit{Equipment Technician} determines if there exact resources required to combat the fire in question.
+	\item \textbf{Deploy Fire Combatants:} The \textit{Fire Combatants} are deployed to the place of the fire, reporting an estimation of the time of arrival and a list of the fire fighting activities that will have to be performed.
+	\item \textbf{Report Firefighting Response:} The \textit{Fire Chief} reports back a comprehensive summary of the firefighting activities as well as a success status.
 \end{enumerate}
-
-\begin{figure}[h!]
-    \centering
-    %\includegraphics[width=0.9\textwidth]{figures/firefighter-process.png}
-    \caption{Sequential Process Flow of the Firefighter Agent Crew with Agent Responsibilities}
-    \label{fig:firefighter_flow}
-\end{figure}
 
 \paragraph{Task Dependencies}
 The sequential process relies on strict task dependencies to maintain an organized workflow:
 \begin{itemize}
-    \item \textit{Analyze Fire Report} depends on the completion of \textit{Receive Fire Report}.
-    \item \textit{Give Instructions} depends on \textit{Analyze Fire Report}.
-    \item \textit{Gather Materials} depends on \textit{Give Instructions}.
-    \item \textit{Determine Fastest Route to Fire} can proceed in parallel with \textit{Gather Materials} but depends on \textit{Analyze Fire Report}.
-    \item \textit{Determine Fire Attack Strategy} and \textit{Combat Fire} depend on the crew’s arrival at the fire location.
-    \item \textit{Notify Medical Services If Needed} can occur independently based on the situation at the scene.
-    \item \textit{Report Back to Emergency Central} depends on the crew’s progress during and after extinguishing the fire.
+    \item \textit{Give Material Instructions} depends on the completion of \textit{Receive Report}.
+    \item \textit{Give Firefighting Instructions} depends on the completion of \textit{Receive Report}.
+    \item \textit{Give Material Instructions} can proceed in parallel with \textit{Give Firefighting Instructions}.
+    \item \textit{Allocate Firefighting Resources} depends on the completion of \textit{Give Material Instructions}.
+    \item \textit{Deploy Fire Combatants} depends on the completion of \textit{Give Firefighting Instructions}.
+    \item \textit{Report Firefighting Response} depends on the completion of \textit{Deploy Fire Combatants}.
 \end{itemize}
 
-The visual representation in Figure~\ref{fig:firefighter_flow} highlights these dependencies and assigns colors to denote the responsible agents, ensuring clarity and accountability.
+The visual representation in Figure~\ref{fig:firefighter_flow} highlights these dependencies and assigns colors to denote the responsible agents.
+
+\begin{figure}[h!]
+	\centering
+	%\includegraphics[height=0.6\textheight]{figures/Firefighter_Crew_Flow.png}
+	\caption{Sequential Process Flow of the Firefighter Crew with Agent Responsibilities}
+	\label{fig:firefighter_flow}
+\end{figure}
+
