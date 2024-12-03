@@ -4,8 +4,6 @@ The Firefighter Agent Crew operates within a structured \textbf{sequential proce
 
 \begin{enumerate}
     \item \textbf{Receive Report:} The \textit{Fire Chief} receives a fire report from the Emergency Service Operator. This serves as the starting point of the process, containing critical information such as the location and severity of the fire.
-    \item \textbf{Give Material Instructions:} The \textit{Fire Chief} relays instructions based on the fire report to the equipment technician.
-    \item \textbf{Give Firefighting Instructions:} The \textit{Fire Chief} relays instructions based on the fire report to the fire combatants.
     \item \textbf{Allocate Firefighting Resources:} The \textit{Equipment Technician} determines if there exact resources required to combat the fire in question.
 	\item \textbf{Deploy Fire Combatants:} The \textit{Fire Combatants} are deployed to the place of the fire, reporting an estimation of the time of arrival and a list of the fire fighting activities that will have to be performed.
 	\item \textbf{Report Firefighting Response:} The \textit{Fire Chief} reports back a comprehensive summary of the firefighting activities as well as a success status.
@@ -14,11 +12,8 @@ The Firefighter Agent Crew operates within a structured \textbf{sequential proce
 \paragraph{Task Dependencies}
 The sequential process relies on strict task dependencies to maintain an organized workflow:
 \begin{itemize}
-    \item \textit{Give Material Instructions} depends on the completion of \textit{Receive Report}.
-    \item \textit{Give Firefighting Instructions} depends on the completion of \textit{Receive Report}.
-    \item \textit{Give Material Instructions} can proceed in parallel with \textit{Give Firefighting Instructions}.
-    \item \textit{Allocate Firefighting Resources} depends on the completion of \textit{Give Material Instructions}.
-    \item \textit{Deploy Fire Combatants} depends on the completion of \textit{Give Firefighting Instructions}.
+    \item \textit{Allocate Firefighting Resources} depends on the completion of \textit{Receive Report}.
+    \item \textit{Deploy Fire Combatants} depends on the completion of \textit{Deploy Fire Combatants}.
     \item \textit{Report Firefighting Response} depends on the completion of \textit{Deploy Fire Combatants}.
 \end{itemize}
 
@@ -26,7 +21,7 @@ The visual representation in Figure~\ref{fig:firefighter_flow} highlights these 
 
 \begin{figure}[h!]
 	\centering
-	%\includegraphics[height=0.6\textheight]{figures/Firefighter_Crew_Flow.png}
+	\includegraphics[height=0.6\textheight]{figures/Firefighter_Crew_Flow.png}
 	\caption{Sequential Process Flow of the Firefighter Crew with Agent Responsibilities}
 	\label{fig:firefighter_flow}
 \end{figure}

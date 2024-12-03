@@ -2,8 +2,8 @@
 
 Structured outputs ensure effective communication and accountability among team members in the Firefighter Agent Crew. Below are the Pydantic models designed to encapsulate outputs for each task in the firefighting process:
 
-\subsubsection{Receive Fire Report Task Output}
-\begin{lstlisting}[caption={Pydantic model for Receive Fire Report Task Output}]
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 from pydantic import BaseModel
 
 class FireReportOutput(BaseModel):
@@ -13,23 +13,6 @@ class FireReportOutput(BaseModel):
     trapped_people: int # Number of trapped individuals
     hazards: List[str] # Hazards present
     hazards_present_indoor: bool # True if fire is indoor, False otherwise
-\end{lstlisting}
-
-\subsubsection{Give Material Instructions Task Output}
-\begin{lstlisting}[caption={Pydantic model for Material Instructions Task Output}]
-from pydantic import BaseModel
-
-class MaterialInstructionsOutput(BaseModel):
-    material_instructions: str
-\end{lstlisting}
-
-
-\subsubsection{Give Firefighting Instructions Task Output}
-\begin{lstlisting}[caption={Pydantic model for Firefighting Instructions Task Output}]
-from pydantic import BaseModel
-
-class FirefightingInstructionsOutput(BaseModel):
-    firefighting_instructions: str
 \end{lstlisting}
 
 
@@ -75,8 +58,6 @@ class ReportFirefightingResponseOutput(BaseModel):
 \paragraph{Summary of Outputs}
 \begin{itemize}
 \item \textbf{Receive Fire Report Task Output:} Captures the essential details from the initial fire report, including fire type, severity, hazards, and any trapped individuals.
-\item \textbf{Give Material Instructions Task Output:} Specifies the instructions provided regarding the materials needed for the firefighting operation.
-\item \textbf{Give Firefighting Instructions Task Output:} Details the specific firefighting strategies and guidance issued to the crew.
 \item \textbf{Allocate Firefighting Resources Task Output:} Documents the allocation of firefighting materials, including quantities and resource types.
 \item \textbf{Deploy Fire Combatants Task Output:} Tracks the deployment of personnel, estimated arrival times, and prioritized firefighting activities.
 \item \textbf{Report Firefighting Response Task Output:} Summarizes the response outcomes, including success metrics and timestamps.
