@@ -30,8 +30,8 @@ class fire_report(BaseModel):
     fire_type: str # Type of fire fire_severity: str # 
     fire_severity: str # Severity of fire: low, medium, or high
     trapped_people: int # Number of trapped individuals 
-    hazards: List[str] # 
-    Hazards present indoor: bool # True if fire is indoor, False otherwise
+    hazards: List[str] # Hazards present
+    hazards_present_indoor: bool # True if fire is indoor, False otherwise
 
 class medical_report(BaseModel): 
     location: Tuple[float, float] # Coordinates (x, y) 
