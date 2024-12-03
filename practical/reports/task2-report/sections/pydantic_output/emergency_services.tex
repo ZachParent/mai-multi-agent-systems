@@ -25,7 +25,8 @@ are the Pydantic models designed for each task's output.
     from pydantic import BaseModel 
     from typing import List, Tuple
 
-class fire_report(BaseModel): 
+class FireReport(BaseModel): 
+    report_id: str
     location: Tuple[float, float] # Coordinates (x, y) 
     fire_type: str # Type of fire fire_severity
     fire_severity: str # Severity of fire: low, medium, or high
@@ -33,15 +34,16 @@ class fire_report(BaseModel):
     hazards: List[str] # Hazards present
     hazards_present_indoor: bool # True if fire is indoor, False otherwise
 
-class medical_report(BaseModel): 
+class MedicalReport(BaseModel): 
+    report_id: str
     location: Tuple[float, float] # Coordinates (x, y) 
     injured_details: List[str] # Risk levels of injured people 
     fire_severity: str # Severity of fire: low, medium, or high 
     hazards: List[str] # Hazards present
 
 class CrewNotificationOutput(BaseModel): 
-    firefighters_output: List[fire_report]
-    medical_service_output: List[medical_report]
+    firefighters_output: List[FireReport]
+    medical_service_output: List[MedicalReport]
     timestamp: str # Timestamp of the notification \end{lstlisting}
 
     \paragraph{Summary of Outputs}

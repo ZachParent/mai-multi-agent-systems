@@ -6,11 +6,15 @@ Structured outputs ensure consistency and facilitate effective collaboration amo
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 from pydantic import BaseModel
 
-class ReceiveReportOutput(BaseModel):
+class MedicalReport(BaseModel): 
     report_id: str
-    location: str
-    number_of_injured: int
-    severity_levels: list[str]
+    location: Tuple[float, float] 
+    injured_details: List[str] 
+    fire_severity: str
+    hazards: List[str]
+
+class ReceiveReportOutput(BaseModel):
+    report: MedicalReport
     timestamp: str
 \end{lstlisting}
 
@@ -26,6 +30,7 @@ class Hospital(BaseModel):
     available_paramedics: int
 
 class RankHospitalsOutput(BaseModel):
+    report: MedicalReport
     ranked_hospitals: List[Hospital]
     timestamp: str
 \end{lstlisting}
@@ -36,11 +41,12 @@ from pydantic import BaseModel
 
 class HospitalResources(BaseModel):
     hospital_id: str
-    beds_provided: int
+    beds_reserved: int
     ambulances_dispatched: int
     paramedics_deployed: int
 
 class AllocateHospitalResourcesOutput(BaseModel):
+    report: MedicalReport
     hospital_resource_allocation = List[HospitalResources]
     timestamp: str
 \end{lstlisting}
@@ -50,15 +56,16 @@ class AllocateHospitalResourcesOutput(BaseModel):
 from pydantic import BaseModel
 from typing import List
 
-class MedicalProcedure(BaseModel):
-    procedure_name: str
-    priority_level: str
-    requires_ambulance_transport: bool
+class MedicalEquipment(BaseModel):
+    equipment_name: str
+    use_case: str
 
 class DeployParamedicsOutput(BaseModel):
-    paramedics_deployed: int
-    estimated_arrival_time: str
-    procedures: List[MedicalProcedure]
+    report: MedicalReport
+    total_paramedics_deployed: int
+    total_ambulances_dispatched: int
+    estimated_arrival_times: List[str]
+    equipment: List[MedicalEquipment]
 \end{lstlisting}
 
 \subsubsection{Report Medical Response Task Output}
@@ -75,6 +82,6 @@ class MedicalResponseReportOutput(BaseModel):
     \item \textbf{Receive Report Task Output:} Captures the key details of the fire incident, including injury data.
     \item \textbf{Rank Hospitals Task Output:} Ranks the available hospital based on distance to the emergency site.
     \item \textbf{Allocate Hospital Resources Task Output:} Summarizes the resources provided by each hospital for emergency medical care.
-    \item \textbf{Deploy Paramedics Task Output:} Reports the deployment plan and medical procedures to be performed.
+    \item \textbf{Deploy Paramedics Task Output:} Reports the deployment plan, estimated times of arrival of each ambulance, and special medical equipment to be brought.
     \item \textbf{Report Medical Response Task Output:} Provides an overall response plan.
 \end{itemize}
