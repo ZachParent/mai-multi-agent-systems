@@ -22,6 +22,10 @@ class EmergencyPlannerState(BaseModel):
     fire_fighter_dispatch: Optional[FireFighterDispatch]
 
 
+# Medical Services
+
+from dataModels.MedicalServices import *
+
 # Public Communication
 
 from dataModels.PublicCommunication import *
