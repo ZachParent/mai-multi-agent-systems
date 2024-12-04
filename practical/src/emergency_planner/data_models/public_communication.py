@@ -10,8 +10,8 @@ from .medical_services import MedicalResponseReport
 
 class EmergencyReport(BaseModel):
     call_assessment: CallAssessment
-    firefighting_report: FirefightersResponseReport
-    medical_report: MedicalResponseReport
+    firefighters_response_report: FirefightersResponseReport
+    medical_response_report: MedicalResponseReport
     timestamp: datetime
 
 
