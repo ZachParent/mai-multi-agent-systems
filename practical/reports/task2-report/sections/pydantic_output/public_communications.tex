@@ -6,7 +6,7 @@ Structured outputs are crucial for ensuring clarity, consistency, and seamless i
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 class ReceiveReportOutput(BaseModel):
     location: Tuple[float,float]
-    fire_type: str
+    fire_severity: str
     timestamp: str
     markdown_content: str
 \end{lstlisting}
@@ -16,7 +16,7 @@ class ReceiveReportOutput(BaseModel):
 class RelatedCase(BaseModel):
     case_id: str
     location: Tuple[float,float]
-    fire_type: str
+    fire_severity: str
     summary: str
 
 class SearchRelatedCasesOutput(BaseModel):
