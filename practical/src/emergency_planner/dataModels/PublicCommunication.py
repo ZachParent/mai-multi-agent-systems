@@ -1,17 +1,20 @@
 from pydantic import BaseModel
-from typing import List, Tuple
+from typing import List
+from datetime import datetime
 
-class ReceiveReportOutput(BaseModel):
+from .shared import Location, FireType
+
+class ReceiveReport(BaseModel):
     report_id: str
-    location: Tuple[float,float]
-    fire_type: str
-    timestamp: str
+    location: Location
+    fire_type: FireType
+    timestamp: datetime
     markdown_content: str
 
 class RelatedCase(BaseModel):
     case_id: str
-    location: str
-    fire_type: str
+    location: Location
+    fire_type: FireType
     summary: str
 
 class SearchRelatedCasesOutput(BaseModel):
