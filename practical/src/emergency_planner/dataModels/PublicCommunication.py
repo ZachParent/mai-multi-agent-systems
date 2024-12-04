@@ -3,40 +3,56 @@ from typing import List
 from datetime import datetime
 
 from .shared import Location, FireType
+from .EmergencyServices import CallAssessment
+from .Firefighters import FirefightersResponseReport
+from .MedicalServices import MedicalResponseReport
 
-class ReceiveReport(BaseModel):
-    report_id: str
-    location: Location
-    fire_type: FireType
+
+class EmergencyReport(BaseModel):
+    call_assessment: CallAssessment
+    firefighting_report: FirefightersResponseReport
+    medical_report: MedicalResponseReport
     timestamp: datetime
-    markdown_content: str
 
+
+# Search Related Cases Task
 class RelatedCase(BaseModel):
     case_id: str
     location: Location
     fire_type: FireType
     summary: str
 
-class SearchRelatedCasesOutput(BaseModel):
-    related_cases: List[RelatedCase]
-    total_cases: int
 
-class DraftArticleOutput(BaseModel):
+class RelatedCases(BaseModel):
+    emergency_report: EmergencyReport
+    related_cases: List[RelatedCase]
+
+# Draft Initial Article Task
+class DraftArticle(BaseModel):
+    emergency_report: EmergencyReport
     title: str
     draft: str
 
-class IntegratedArticleOutput(BaseModel):
+
+# Integrate Additional Information Task
+class IntegratedArticle(BaseModel):
+    emergency_report: EmergencyReport
     draft: str
     integrated_sources: List[str]
 
-class ReviewOutput(BaseModel):
+
+# Review and Authorize Publication Task
+class ReviewedArticle(BaseModel):
+    emergency_report: EmergencyReport
     approved: bool
     comments: str
     report: str
 
-class SocialMediaFeedbackOutput(BaseModel):
+
+# Provide Social Media Feedback Task
+class SocialMediaFeedback(BaseModel):
+    emergency_report: EmergencyReport
     feedback: str
     report: str
     approved: bool
     comments: str
-
