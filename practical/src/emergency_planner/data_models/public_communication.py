@@ -35,7 +35,7 @@ class RelatedCases(BaseModel):
 # Draft Initial Article Task
 class DraftArticle(BaseModel):
     emergency_report: EmergencyReport
-    title: str
+    title: str  # TODO: remove title?
     public_communication_report: str
 
 
@@ -50,8 +50,8 @@ class IntegratedArticle(BaseModel):
 class ReviewedArticle(BaseModel):
     emergency_report: EmergencyReport
     public_communication_report: str
-    approved: bool
-    comments: str
+    mayor_approved: bool
+    mayor_comments: str
 
 
 # Provide Social Media Feedback Task
