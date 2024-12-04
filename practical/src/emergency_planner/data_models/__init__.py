@@ -7,6 +7,7 @@ from .public_communication import *
 
 
 class EmergencyPlannerState(BaseModel):
+    call_transcript: Optional[str]
     call_assessment: Optional[CallAssessment]
     firefighters_response_report: Optional[FirefightersResponseReport]
     medical_response_report: Optional[MedicalResponseReport]

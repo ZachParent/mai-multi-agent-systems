@@ -14,7 +14,7 @@ from .data_models import (
 
 logger = logging.getLogger(__name__)
 
-
+# TODO: use a more sophisticated call transcript
 EMERGENCY_CALL = (
     "There's been a fire at 123 Main St, 12345. I think there are people trapped."
 )
@@ -24,6 +24,7 @@ MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def _create_initial_state(self) -> EmergencyPlannerState:
         return EmergencyPlannerState(
+            call_transcript=None,
             call_assessment=None,
             firefighters_response_report=None,
             medical_response_report=None,
@@ -31,6 +32,12 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         )
 
     @start()
+    def get_call_transcript(self):
+        logger.info("Getting call transcript")
+        self.state.call_transcript = EMERGENCY_CALL
+        logger.info("Call transcript received", self.state.call_transcript)
+
+    @listen(get_call_transcript)
     def emergency_services(self):
         logger.info("Receiving call")
         result = (
@@ -112,7 +119,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         # Emergency Report
 
         ## Call Transcript
-        {EMERGENCY_CALL}
+        {self.state.call_transcript}
 
         ## Firefighters Response
         *{self.state.firefighters_response_report.timestamp}*
