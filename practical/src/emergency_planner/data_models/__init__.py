@@ -11,3 +11,4 @@ class EmergencyPlannerState(BaseModel):
     firefighters_response_report: Optional[FirefightersResponseReport]
     medical_response_report: Optional[MedicalResponseReport]
     public_communication_report: Optional[PublicCommunicationReport]
+    mayor_approval_retry_count: int = 0

@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 EMERGENCY_CALL = (
     "There's been a fire at 123 Main St, 12345. I think there are people trapped."
 )
+MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
 
 class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
@@ -88,11 +89,21 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     @router(public_communication)
     def check_approval(self):
         logger.info("Checking approval")
-        if not self.state.public_communication_report.mayor_approved:
+        if self.state.public_communication_report.mayor_approved:
+            logger.info("Public communication approved by mayor")
+            return "save full emergency report"
+        elif self.state.mayor_approval_retry_count >= MAX_MAYOR_APPROVAL_RETRY_COUNT:
             logger.info("Public communication not approved by mayor")
-            return "retry public communication"
-        logger.info("Public communication approved by mayor")
-        return "save full emergency report"
+            logger.info(
+                f"Max retries reached ({self.state.mayor_approval_retry_count} of {MAX_MAYOR_APPROVAL_RETRY_COUNT})"
+            )
+            return "save full emergency report"
+        logger.info("Public communication not approved by mayor")
+        self.state.mayor_approval_retry_count += 1
+        logger.info(
+            f"Retrying public communication ({self.state.mayor_approval_retry_count} of {MAX_MAYOR_APPROVAL_RETRY_COUNT})"
+        )
+        return "retry public communication"
 
     @listen("save full emergency report")
     def save_full_emergency_report(self):
