@@ -5,16 +5,28 @@ from .crews.emergency_services.emergency_services import EmergencyServicesCrew
 from .crews.firefighters.firefighters import FirefightersCrew
 from .crews.medical_services.medical_services import MedicalServicesCrew
 from .crews.public_communication.public_communication import PublicCommunicationCrew
-from .data_models import EmergencyPlannerState, FireAssessment, MedicalAssessment, EmergencyReport
+from .data_models import (
+    EmergencyPlannerState,
+    FireAssessment,
+    MedicalAssessment,
+    EmergencyReport,
+)
 
 logger = logging.getLogger(__name__)
 
 
-EMERGENCY_CALL = "There's been a fire at 123 Main St, 12345. I think there are people trapped."
+EMERGENCY_CALL = (
+    "There's been a fire at 123 Main St, 12345. I think there are people trapped."
+)
+
 
 class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def _create_initial_state(self) -> EmergencyPlannerState:
-        return EmergencyPlannerState(call_assessment=None, firefighters_response_report=None, medical_response_report=None)
+        return EmergencyPlannerState(
+            call_assessment=None,
+            firefighters_response_report=None,
+            medical_response_report=None,
+        )
 
     @start()
     def emergency_services(self):
@@ -30,9 +42,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     @listen(emergency_services)
     def firefighters(self):
         logger.info("Dispatching fire fighters")
-        fire_assessment = FireAssessment(
-            **self.state.call_assessment.model_dump()
-        )
+        fire_assessment = FireAssessment(**self.state.call_assessment.model_dump())
         result = (
             FirefightersCrew()
             .crew()
@@ -61,7 +71,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         emergency_report = EmergencyReport(
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
-            medical_response_report=self.state.medical_response_report
+            medical_response_report=self.state.medical_response_report,
         )
         result = (
             PublicCommunicationCrew()
@@ -70,7 +80,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         )
         # TODO: store the public communication report
         logger.info("Public communication handled", result.raw)
-    
+
     @listen(public_communication)
     def save_full_emergency_report(self):
         logger.info("Saving full emergency report")

@@ -5,6 +5,7 @@ from .firefighters import *
 from .medical_services import *
 from .public_communication import *
 
+
 class EmergencyPlannerState(BaseModel):
     call_assessment: Optional[CallAssessment]
     firefighters_response_report: Optional[FirefightersResponseReport]

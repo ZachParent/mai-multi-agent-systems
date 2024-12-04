@@ -2,8 +2,10 @@ from pydantic import BaseModel
 from typing import List
 from .shared import Location, FireType, FireSeverity, InjuryType, HazardType
 
+
 class EmergencyCall(BaseModel):
     transcript: str
+
 
 class CallAssessment(BaseModel):
     fire_type: FireType  # Type of fire (e.g., ordinary, electrical, gas, etc.)
