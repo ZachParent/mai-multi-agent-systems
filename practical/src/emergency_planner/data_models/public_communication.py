@@ -35,7 +35,7 @@ class RelatedCases(BaseModel):
 # Draft Initial Article Task
 class DraftArticle(BaseModel):
     emergency_report: EmergencyReport
-    title: str  # TODO: remove title?
+    title: str
     public_communication_report: str
 
 
