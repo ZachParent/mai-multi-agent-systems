@@ -1,17 +1,16 @@
 from pydantic import BaseModel
-from typing import List, Tuple
+from typing import List
+from datetime import datetime
+from .shared import Location
 
 # Receive Report Task
-class MedicalReport(BaseModel): 
+class MedicalEmergencyReport(BaseModel):
     report_id: str
-    location: Tuple[float, float] 
+    location: Location
     injured_details: List[str] 
     fire_severity: str
     hazards: List[str]
-
-class ReceiveReportOutput(BaseModel):
-    report: MedicalReport
-    timestamp: str
+    timestamp: datetime
 
 # Rank Hospitals Task
 class Hospital(BaseModel):
@@ -21,10 +20,10 @@ class Hospital(BaseModel):
     available_ambulances: int
     available_paramedics: int
 
-class RankHospitalsOutput(BaseModel):
-    report: MedicalReport
+class RankedHospitals(BaseModel):
+    report: MedicalEmergencyReport
     ranked_hospitals: List[Hospital]
-    timestamp: str
+    timestamp: datetime
 
 # Allocate Hospital Resources Task
 class HospitalResources(BaseModel):
@@ -33,24 +32,24 @@ class HospitalResources(BaseModel):
     ambulances_dispatched: int
     paramedics_deployed: int
 
-class AllocateHospitalResourcesOutput(BaseModel):
-    report: MedicalReport
+class AllocatedHospitalResources(BaseModel):
+    report: MedicalEmergencyReport
     hospital_resource_allocation = List[HospitalResources]
-    timestamp: str
+    timestamp: datetime
 
 # Deploy Paramedics Task
 class MedicalEquipment(BaseModel):
     equipment_name: str
     use_case: str
 
-class DeployParamedicsOutput(BaseModel):
-    report: MedicalReport
+class DeployedParamedics(BaseModel):
+    report: MedicalEmergencyReport
     total_paramedics_deployed: int
     total_ambulances_dispatched: int
-    estimated_arrival_times: List[str]
+    estimated_arrival_times: List[datetime]
     equipment: List[MedicalEquipment]
 
 # Medical Response Report
-class MedicalResponseReportOutput(BaseModel):
+class MedicalResponseReport(BaseModel):
     summary: str
-    timestamp: str
+    timestamp: datetime
