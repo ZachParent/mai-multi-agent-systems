@@ -6,6 +6,7 @@ from .EmergencyServices import MedicalAssessment
 
 # Input: MedicalAssessment
 
+
 # Rank Hospitals Task
 class Hospital(BaseModel):
     hospital_id: str
@@ -14,10 +15,12 @@ class Hospital(BaseModel):
     available_ambulances: int
     available_paramedics: int
 
+
 class RankedHospitals(BaseModel):
     report: MedicalAssessment
     ranked_hospitals: List[Hospital]
     timestamp: datetime
+
 
 # Allocate Hospital Resources Task
 class HospitalResources(BaseModel):
@@ -26,15 +29,18 @@ class HospitalResources(BaseModel):
     ambulances_dispatched: int
     paramedics_deployed: int
 
+
 class AllocatedHospitalResources(BaseModel):
     report: MedicalAssessment
     hospital_resource_allocation = List[HospitalResources]
     timestamp: datetime
 
+
 # Deploy Paramedics Task
 class MedicalEquipment(BaseModel):
     equipment_name: str
     use_case: str
+
 
 class DeployedParamedics(BaseModel):
     report: MedicalAssessment
@@ -42,6 +48,7 @@ class DeployedParamedics(BaseModel):
     total_ambulances_dispatched: int
     estimated_arrival_times: List[datetime]
     equipment: List[MedicalEquipment]
+
 
 # Medical Response Report
 class MedicalResponseReport(BaseModel):

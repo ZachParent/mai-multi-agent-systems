@@ -29,7 +29,9 @@ for place in places:
 # %%
 fig, axs = plt.subplots(2, len(places) // 2, figsize=(20, 16))
 for i, (mapp, ax, place) in enumerate(zip(mapps, axs.flatten(), places)):
-    ox.plot_graph(mapp, ax=ax, show=False, close=False, edge_color="grey", node_color="black")
+    ox.plot_graph(
+        mapp, ax=ax, show=False, close=False, edge_color="grey", node_color="black"
+    )
     ax.set_title(f"#{i+1}: {place}", fontsize=20)
 
 ax = axs.flatten()[places.index("Lloret de Mar, Spain")]
@@ -98,7 +100,9 @@ color_dict = dict(zip(df.index, colors))
 fig, axs = plt.subplots(2, len(columns) // 2, figsize=(20, 10))
 for ax, col in zip(axs.flatten(), columns):
     sorted_df = df.sort_values(by=col)
-    ax.bar(sorted_df.index, sorted_df[col], color=[color_dict[i] for i in sorted_df.index])
+    ax.bar(
+        sorted_df.index, sorted_df[col], color=[color_dict[i] for i in sorted_df.index]
+    )
     ax.set_title(col)
     ax.set_xticks(sorted_df.index)
     ax.set_xticklabels(sorted_df.index, rotation=45)

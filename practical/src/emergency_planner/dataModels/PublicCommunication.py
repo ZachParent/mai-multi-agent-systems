@@ -27,6 +27,7 @@ class RelatedCases(BaseModel):
     emergency_report: EmergencyReport
     related_cases: List[RelatedCase]
 
+
 # Draft Initial Article Task
 class DraftArticle(BaseModel):
     emergency_report: EmergencyReport
