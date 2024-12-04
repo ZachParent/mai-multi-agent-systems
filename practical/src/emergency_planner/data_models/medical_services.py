@@ -32,7 +32,7 @@ class HospitalResources(BaseModel):
 
 class AllocatedHospitalResources(BaseModel):
     report: MedicalAssessment
-    hospital_resource_allocation = List[HospitalResources]
+    hospital_resource_allocation: List[HospitalResources]
     timestamp: datetime
 
 

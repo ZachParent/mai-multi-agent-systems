@@ -1,6 +1,6 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from ...data_models import EmergencyCall, FireFighterDispatch
+from ...data_models import EmergencyCall
 
 
 @CrewBase
@@ -16,9 +16,7 @@ class EmergencyServicesCrew:
         return Task(config=self.tasks_config["receive_call"])
 
     @task
-    def dispatch_fire_fighters(
-        self, input_pydantic: EmergencyCall, output_pydantic: FireFighterDispatch
-    ) -> Task:
+    def dispatch_fire_fighters(self, input_pydantic: EmergencyCall) -> Task:
         return Task(config=self.tasks_config["dispatch_fire_fighters"])
 
     @crew
