@@ -4,8 +4,8 @@ from ...data_models import FireFighterDispatch
 
 
 @CrewBase
-class FireFightersCrew:
-    """Fire Fighters Crew"""
+class MedicalServicesCrew:
+    """Medical Services Crew"""
 
     @agent
     def fire_fighter(self) -> Agent:
