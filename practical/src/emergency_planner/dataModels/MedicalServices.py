@@ -2,15 +2,9 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 from .shared import Location
+from .EmergencyServices import MedicalAssessment
 
-# Receive Report Task
-class MedicalEmergencyReport(BaseModel):
-    report_id: str
-    location: Location
-    injured_details: List[str] 
-    fire_severity: str
-    hazards: List[str]
-    timestamp: datetime
+# Input: MedicalAssessment
 
 # Rank Hospitals Task
 class Hospital(BaseModel):
@@ -21,7 +15,7 @@ class Hospital(BaseModel):
     available_paramedics: int
 
 class RankedHospitals(BaseModel):
-    report: MedicalEmergencyReport
+    report: MedicalAssessment
     ranked_hospitals: List[Hospital]
     timestamp: datetime
 
@@ -33,7 +27,7 @@ class HospitalResources(BaseModel):
     paramedics_deployed: int
 
 class AllocatedHospitalResources(BaseModel):
-    report: MedicalEmergencyReport
+    report: MedicalAssessment
     hospital_resource_allocation = List[HospitalResources]
     timestamp: datetime
 
@@ -43,7 +37,7 @@ class MedicalEquipment(BaseModel):
     use_case: str
 
 class DeployedParamedics(BaseModel):
-    report: MedicalEmergencyReport
+    report: MedicalAssessment
     total_paramedics_deployed: int
     total_ambulances_dispatched: int
     estimated_arrival_times: List[datetime]
