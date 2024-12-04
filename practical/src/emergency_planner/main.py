@@ -17,7 +17,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         return EmergencyPlannerState(call_assessment=None, firefighters_response_report=None, medical_response_report=None)
 
     @start()
-    def receive_emergency_call(self):
+    def emergency_services(self):
         logger.info("Receiving call")
         result = (
             EmergencyServicesCrew()
@@ -27,8 +27,8 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.call_assessment = result.raw
         logger.info("Emergency call received", result.raw)
 
-    @listen(receive_emergency_call)
-    def dispatch_fire_fighters(self):
+    @listen(emergency_services)
+    def firefighters(self):
         logger.info("Dispatching fire fighters")
         fire_assessment = FireAssessment(
             **self.state.call_assessment.model_dump()
@@ -41,8 +41,8 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.firefighters_response_report = result.raw
         logger.info("Fire fighters dispatched", result.raw)
 
-    @listen(receive_emergency_call)
-    def dispatch_medical_services(self):
+    @listen(emergency_services)
+    def medical_services(self):
         logger.info("Dispatching medical services")
         medical_assessment = MedicalAssessment(
             **self.state.call_assessment.model_dump()
@@ -55,8 +55,8 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.medical_response_report = result.raw
         logger.info("Medical services dispatched", result.raw)
 
-    @listen(and_(receive_emergency_call, dispatch_fire_fighters, dispatch_medical_services))
-    def handle_public_communication(self):
+    @listen(and_(firefighters, medical_services))
+    def public_communication(self):
         logger.info("Handling public communication")
         emergency_report = EmergencyReport(
             call_assessment=self.state.call_assessment,
@@ -71,7 +71,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         # TODO: store the public communication report
         logger.info("Public communication handled", result.raw)
     
-    @listen(handle_public_communication)
+    @listen(public_communication)
     def save_full_emergency_report(self):
         logger.info("Saving full emergency report")
         full_emergency_report = f"""
