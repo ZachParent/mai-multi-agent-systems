@@ -1,5 +1,5 @@
 import logging
-from crewai.flow.flow import Flow, listen, start, and_
+from crewai.flow.flow import Flow, listen, start, router, and_, or_
 
 from .crews.emergency_services.emergency_services import EmergencyServicesCrew
 from .crews.firefighters.firefighters import FirefightersCrew
@@ -26,6 +26,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=None,
             firefighters_response_report=None,
             medical_response_report=None,
+            public_communication_report=None,
         )
 
     @start()
@@ -65,7 +66,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.medical_response_report = result.raw
         logger.info("Medical services dispatched", result.raw)
 
-    @listen(and_(firefighters, medical_services))
+    @listen(or_(and_(firefighters, medical_services), "retry public communication"))
     def public_communication(self):
         logger.info("Handling public communication")
         emergency_report = EmergencyReport(
@@ -84,7 +85,16 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.public_communication_report = result.raw
         logger.info("Public communication handled", result.raw)
 
-    @listen(public_communication)
+    @router(public_communication)
+    def check_approval(self):
+        logger.info("Checking approval")
+        if not self.state.public_communication_report.mayor_approved:
+            logger.info("Public communication not approved by mayor")
+            return "retry public communication"
+        logger.info("Public communication approved by mayor")
+        return "save full emergency report"
+
+    @listen("save full emergency report")
     def save_full_emergency_report(self):
         logger.info("Saving full emergency report")
         full_emergency_report = f"""

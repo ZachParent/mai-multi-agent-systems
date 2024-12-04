@@ -62,4 +62,3 @@ class PublicCommunicationReport(BaseModel):
     mayor_comments: str
     social_media_feedback: str
     timestamp: datetime
-
