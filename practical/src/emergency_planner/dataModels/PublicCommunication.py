@@ -10,7 +10,7 @@ class ReceiveReportOutput(BaseModel):
 
 class RelatedCase(BaseModel):
     case_id: str
-    location: str
+    location: Tuple[float,float]
     fire_type: str
     summary: str
 
