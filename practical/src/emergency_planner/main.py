@@ -72,13 +72,16 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
             medical_response_report=self.state.medical_response_report,
+            fire_severity=self.state.call_assessment.fire_severity,
+            location_x=self.state.call_assessment.location[0],
+            location_y=self.state.call_assessment.location[1],
         )
         result = (
             PublicCommunicationCrew()
             .crew()
             .kickoff(inputs={"emergency_report": emergency_report})
         )
-        # TODO: store the public communication report
+        self.state.public_communication_report = result.raw
         logger.info("Public communication handled", result.raw)
 
     @listen(public_communication)
@@ -99,7 +102,18 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         {self.state.medical_response_report.summary}
 
         ## Public Communication Report
-        *TODO*
+        *{self.state.public_communication_report.timestamp}*
+        {self.state.public_communication_report.public_communication_report}
+
+        ### Approved by Mayor
+        {self.state.public_communication_report.mayor_approved}
+
+        ### Mayor's Comments
+        {self.state.public_communication_report.mayor_comments}
+
+        ### Social Media Feedback
+        {self.state.public_communication_report.social_media_feedback}
+
         """
         with open("data/outputs/full_emergency_report.md", "w") as f:
             f.write(full_emergency_report)

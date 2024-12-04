@@ -10,4 +10,4 @@ class EmergencyPlannerState(BaseModel):
     call_assessment: Optional[CallAssessment]
     firefighters_response_report: Optional[FirefightersResponseReport]
     medical_response_report: Optional[MedicalResponseReport]
-    # TODO: public_communication_report: PublicCommunicationReport
+    public_communication_report: Optional[PublicCommunicationReport]
