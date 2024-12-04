@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 from .shared import Location
-from .EmergencyServices import MedicalAssessment
+from .emergency_services import MedicalAssessment
 
 # Input: MedicalAssessment
 

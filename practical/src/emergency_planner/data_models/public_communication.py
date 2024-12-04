@@ -3,9 +3,9 @@ from typing import List
 from datetime import datetime
 
 from .shared import Location, FireType
-from .EmergencyServices import CallAssessment
-from .Firefighters import FirefightersResponseReport
-from .MedicalServices import MedicalResponseReport
+from .emergency_services import CallAssessment
+from .firefighters import FirefightersResponseReport
+from .medical_services import MedicalResponseReport
 
 
 class EmergencyReport(BaseModel):

@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Literal
 from datetime import datetime
-from .EmergencyServices import FireAssessment
+from .emergency_services import FireAssessment
 
 # input: FireAssessment
 
