@@ -4,12 +4,12 @@ from ...data_models import FireFighterDispatch
 
 
 @CrewBase
-class FireFightersCrew:
+class FirefightersCrew:
     """Fire Fighters Crew"""
 
     @agent
-    def fire_fighter(self) -> Agent:
-        return Agent(config=self.agents_config["fire_fighter"])
+    def firefighter(self) -> Agent:
+        return Agent(config=self.agents_config["firefighter"])
 
     @task
     def receive_dispatch(self, input_pydantic: FireFighterDispatch) -> Task:
