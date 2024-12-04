@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List
 from datetime import datetime
 
-from .shared import Location, FireSeverity
+from .shared import FireSeverity
 from .emergency_services import CallAssessment
 from .firefighters import FirefightersResponseReport
 from .medical_services import MedicalResponseReport
