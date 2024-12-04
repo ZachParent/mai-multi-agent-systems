@@ -1,24 +1,31 @@
 from pydantic import BaseModel
-from typing import List
-from .shared import Location, FireType, FireSeverity, InjuryType, HazardType
+from typing import List, Literal
+from datetime import datetime
+from .EmergencyServices import FireAssessment
 
+# input: FireAssessment
+
+# Allocate Firefighting Resources Task
 class FireFightingMaterial(BaseModel):
-    material_name: str
+    material_name: Literal["pickup_truck", "ladder_engine", "water_tanker", "foam_tanker", "dry_chemical_tanker", "air_tanker"]
     material_quantity: int
 
-class AllocateFirefightingResourcesOutput(BaseModel):
+class AllocatedFirefightingResources(BaseModel):
+    fire_assessment: FireAssessment 
     resources: List[FireFightingMaterial]
 
+# Deploy Fire Combatants Task
 class FirefightingActivity(BaseModel):
     firefighting_activity: str
-    priority_level: str
+    priority: Literal["low", "medium", "high"]
 
-class DeployFireCombatantsOutput(BaseModel):
+class DeployedFireCombatants(BaseModel):
+    fire_assessment: FireAssessment
     firecombatants_deployed: int
-    estimated_arrival_time: str
+    estimated_arrival_time: datetime
     firefighting_activities: List[FirefightingActivity]
 
-class ReportFirefightingResponseOutput(BaseModel):
+# Report Firefighting Response Task
+class FirefightingReport(BaseModel):
     summary: str
-    timestamp: str
-    success: bool
+    timestamp: datetime
