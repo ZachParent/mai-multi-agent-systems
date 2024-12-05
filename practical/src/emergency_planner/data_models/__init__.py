@@ -1,0 +1,15 @@
+from pydantic import BaseModel
+from typing import Optional
+from .emergency_services import *
+from .firefighters import *
+from .medical_services import *
+from .public_communication import *
+
+
+class EmergencyPlannerState(BaseModel):
+    call_transcript: Optional[str]
+    call_assessment: Optional[CallAssessment]
+    firefighters_response_report: Optional[FirefightersResponseReport]
+    medical_response_report: Optional[MedicalResponseReport]
+    public_communication_report: Optional[PublicCommunicationReport]
+    mayor_approval_retry_count: int = 0
