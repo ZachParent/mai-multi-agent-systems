@@ -28,7 +28,7 @@ are the Pydantic models designed for each task's output.
 class FireReport(BaseModel): 
     report_id: str
     location: Tuple[float, float] # Coordinates (x, y) 
-    fire_type: str # Type of fire fire_severity
+    fire_type: str # Nature of the fire (ordinary, electrical, gas, etc)
     fire_severity: str # Severity of fire: low, medium, or high
     trapped_people: int # Number of trapped individuals 
     hazards: List[str] # Hazards present
