@@ -5,8 +5,13 @@ Structured outputs ensure effective communication and accountability among team 
 \subsubsection{Receive Report Task Output}
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 from pydantic import BaseModel
+# from .emergency_services import FireAssessment
 
-class FireReportOutput(BaseModel):
+# class ReceiveReportOutput(BaseModel):
+#   report: FireAssessment
+#   timestamp: str
+
+class FireReport(BaseModel):
     location: Tuple[float, float] # Coordinates (x, y)
     fire_type: str # Nature of the fire 
     fire_severity: str # Severity of fire: low, medium, or high

@@ -5,16 +5,10 @@ Structured outputs ensure consistency and facilitate effective collaboration amo
 \subsubsection{Receive Report Task Output}
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 from pydantic import BaseModel
-
-class MedicalReport(BaseModel): 
-    report_id: str
-    location: Tuple[float, float] 
-    injured_details: List[str] 
-    fire_severity: str
-    hazards: List[str]
+from .emergency_services import MedicalAssessment
 
 class ReceiveReportOutput(BaseModel):
-    report: MedicalReport
+    report: MedicalAssessment
     timestamp: str
 \end{lstlisting}
 
