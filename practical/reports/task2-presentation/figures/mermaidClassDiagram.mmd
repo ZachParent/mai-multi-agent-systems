@@ -1,0 +1,77 @@
+classDiagram
+    %% Set a visually appealing theme
+    %% This is a custom theme, modify the following CSS styles as needed for aesthetics
+    %% Example: Class boxes with rounded corners and color-coded categories
+
+    %% Adding direction and color-coding for clarity
+    direction LR
+
+    %% Defining classes with color themes
+    class EmergencyReport {
+        +CallAssessment call_assessment
+        +FirefightersResponseReport firefighters_response_report
+        +MedicalResponseReport medical_response_report
+        +datetime timestamp
+        +FireSeverity fire_severity
+        +float location_x
+        +float location_y
+    }
+    class RelatedCase {
+        +int case_id
+        +FireSeverity fire_severity
+        +float location_x
+        +float location_y
+        +str summary
+    }
+    class RelatedCases {
+        +List<RelatedCase> related_cases
+    }
+    class DraftArticle {
+        +str title
+        +str public_communication_report
+    }
+    class IntegratedArticle {
+        +str public_communication_report
+        +List<str> integrated_sources
+    }
+    class ReviewedArticle {
+        +str public_communication_report
+        +bool mayor_approved
+        +str mayor_comments
+    }
+    class PublicCommunicationReport {
+        +str public_communication_report
+        +bool mayor_approved
+        +str mayor_comments
+        +str social_media_feedback
+    }
+
+    %% Relationships with labeled connectors and custom arrows
+    EmergencyReport --> RelatedCases: "Retrieve Related Cases"
+    EmergencyReport --> DraftArticle: "Draft Article"
+    DraftArticle --> IntegratedArticle: "Integrates Information"
+    RelatedCases --> IntegratedArticle: "Integrates Information"
+    IntegratedArticle --() c
+    c ()-- ReviewedArticle: "Mayor checks"
+    
+    %% IntegratedArticle --> ReviewedArticle: "Reviewed &\nAuthorized"
+    ReviewedArticle --> PublicCommunicationReport: "Public Feedback"
+
+
+    %% Style customization for nodes
+    style EmergencyReport fill:#F6D860,stroke:#333,stroke-width:2px
+    style RelatedCases fill:#6ECB63,stroke:#333,stroke-width:2px
+    style DraftArticle fill:#D88373,stroke:#333,stroke-width:2px
+    style IntegratedArticle fill:#D88373,stroke:#333,stroke-width:2px
+    style ReviewedArticle fill:#AF7AC5,stroke:#333,stroke-width:2px
+    style PublicCommunicationReport fill:#FFC300,stroke:#333,stroke-width:2px
+
+
+   
+
+    EmergencyReport: classDef EmergencyReport
+    RelatedCases: classDef RelatedCases
+    DraftArticle: classDef DraftArticle
+    IntegratedArticle: classDef IntegratedArticle
+    ReviewedArticle: classDef ReviewedArticle
+    PublicCommunicationReport: classDef PublicCommunicationReport
