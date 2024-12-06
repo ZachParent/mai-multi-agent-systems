@@ -48,7 +48,19 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.call_assessment = result.raw
         logger.info("Emergency call received", result.raw)
 
-    @listen(emergency_services)
+    @router(emergency_services)
+    def check_firefighters_required(self):
+        if self.state.call_assessment.firefighters_required:
+            logger.info("Firefighters required")
+            return "firefighters_required"
+
+    @router(emergency_services)
+    def check_medical_services_required(self):
+        if self.state.call_assessment.medical_services_required:
+            logger.info("Medical services required")
+            return "medical_services_required"
+
+    @listen("firefighters_required")
     def firefighters(self):
         logger.info("Dispatching fire fighters")
         fire_assessment = FireAssessment(**self.state.call_assessment.model_dump())
@@ -60,7 +72,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.firefighters_response_report = result.raw
         logger.info("Fire fighters dispatched", result.raw)
 
-    @listen(emergency_services)
+    @listen("medical_services_required")
     def medical_services(self):
         logger.info("Dispatching medical services")
         medical_assessment = MedicalAssessment(
@@ -74,7 +86,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.medical_response_report = result.raw
         logger.info("Medical services dispatched", result.raw)
 
-    @listen(or_(and_(firefighters, medical_services), "retry public communication"))
+    @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
     def public_communication(self):
         logger.info("Handling public communication")
         emergency_report = EmergencyReport(
@@ -110,7 +122,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         logger.info(
             f"Retrying public communication ({self.state.mayor_approval_retry_count} of {MAX_MAYOR_APPROVAL_RETRY_COUNT})"
         )
-        return "retry public communication"
+        return "retry_public_communication"
 
     @listen("save full emergency report")
     def save_full_emergency_report(self):
