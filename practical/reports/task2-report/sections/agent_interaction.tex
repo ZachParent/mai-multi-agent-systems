@@ -1,11 +1,20 @@
-\section{Agent Interaction}
-\subsection{Interaction Flow}
-The emergency response system implements a sophisticated flow-based approach for crew interactions:
+\section{Crew Interaction}
+\subsection{CrewAI Flow}
+The Emergency Planner Flow implements a sophisticated flow-based approach for crew interactions:
 \begin{itemize}
     \item Emergency Services Crew processes initial call transcripts and produces assessments
     \item Medical Services and Firefighters Crews operate in parallel based on the assessment
     \item A Public Communication Crew activates only after both response teams have reported or during approval retries
 \end{itemize}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/coordination_flow.png}
+    \caption{Emergency Response Flow showing parallel processing paths and conditional triggers}
+    \label{fig:interaction}
+\end{figure}
+
+As illustrated in Figure~\ref{fig:interaction}, the system uses logical operators (\texttt{and\_}, \texttt{or\_}) to create complex flow dependencies.
 
 The flow is orchestrated using CrewAI's decorators, with complex triggering conditions:
 
@@ -29,16 +38,11 @@ def medical_services():
 @listen(or_(and_(firefighters, medical_services), "retry public communication"))
 def public_communication():
     # Activates after both teams report or during retries
+
+@listen("save full emergency report")
+def save_full_emergency_report():
+    # Generates final report with all crew responses
 \end{lstlisting}
-
-As illustrated in Figure~\ref{fig:interaction}, the system uses logical operators (\texttt{and\_}, \texttt{or\_}) to create complex flow dependencies. This ensures that public communication only begins after both response teams have completed their assessments, or when a mayoral approval retry is needed.
-
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=0.8\textwidth]{figures/coordination_flow.png}
-\caption{Emergency Response Flow showing parallel processing paths and conditional triggers}
-\label{fig:interaction}
-\end{figure}
 
 \subsection{State Management}
 The system maintains a centralized state using a Pydantic model that tracks all aspects of the emergency response:
@@ -61,6 +65,8 @@ This state model ensures:
     \item Optional fields to accommodate partial state updates
 \end{itemize}
 
+In addition to basic state management, the flow also performs basic data transformations, such as deciding whether to activate the medical services crew based on the call assessment, and extracting relevant data to pass to subsequent crews.
+
 \subsection{Router Implementation}
 The system employs a router specifically for managing public communications:
 \begin{lstlisting}[caption={Router Implementation for Public Communication Approval}]
@@ -74,7 +80,7 @@ def check_approval():
     return "retry public communication"
 \end{lstlisting}
 
-\subsection{Communication Mechanism}
+\subsection{Coordination Mechanism}
 The system implements a message-passing protocol using CrewAI's flow decorators:
 \begin{itemize}
     \item \texttt{@start()} marks the entry point for emergency call processing
