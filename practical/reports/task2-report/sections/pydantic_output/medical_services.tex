@@ -2,8 +2,8 @@
 
 Structured outputs ensure consistency and facilitate effective collaboration among agents within the Medical Services Crew. Below are the Pydantic models for each task's output:
 
-\subsubsection{Medical Services Crew Input}
-\begin{lstlisting}[caption={Pydantic model for Medical Services Crew Input}]
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 class MedicalAssessment(BaseModel):
     location: Location  # Coordinates (x, y)
     injured_details: List[InjuryType]  # List of risk levels of injured people
