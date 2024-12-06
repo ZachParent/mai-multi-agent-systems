@@ -4,60 +4,69 @@ Structured outputs are crucial for ensuring clarity, consistency, and seamless i
 
 \subsubsection{Receive Report Task Output}
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
-class ReceiveReportOutput(BaseModel):
-    location: Tuple[float,float]
-    fire_severity: str
-    timestamp: str
-    markdown_content: str
+class EmergencyReport(BaseModel):
+    call_assessment: CallAssessment  # From Emergency Services Crew
+    firefighters_response_report: FirefightersResponseReport  # From Firefighters Crew
+    medical_response_report: MedicalResponseReport  # From Medical Services Crew
+    timestamp: datetime
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
 \end{lstlisting}
 
 \subsubsection{Search Related Cases Task Output}
 \begin{lstlisting}[caption={Pydantic model for Search Related Cases Task Output}]
 class RelatedCase(BaseModel):
-    case_id: str
-    location: Tuple[float,float]
-    fire_severity: str
+    case_id: int
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
     summary: str
 
-class SearchRelatedCasesOutput(BaseModel):
+class RelatedCases(BaseModel):
+    emergency_report: EmergencyReport
     related_cases: List[RelatedCase]
-    total_cases: int
 \end{lstlisting}
 
 \subsubsection{Draft Initial Article Task Output}
 \begin{lstlisting}[caption={Pydantic model for Draft Initial Article Task Output}]
-class DraftArticleOutput(BaseModel):
+class DraftArticle(BaseModel):
+    emergency_report: EmergencyReport
     title: str
-    draft: str
+    public_communication_report: str
 \end{lstlisting}
 
 \subsubsection{Integrate Additional Information Task Output}
 \begin{lstlisting}[caption={Pydantic model for Integrate Additional Information Task Output}]
-class IntegratedArticleOutput(BaseModel):
-    draft: str
-    integrated_sources: list[str]
+class IntegratedArticle(BaseModel):
+    emergency_report: EmergencyReport
+    public_communication_report: str
+    integrated_sources: List[str]
 \end{lstlisting}
 
 \subsubsection{Review and Authorize Publication Task Output}
 \begin{lstlisting}[caption={Pydantic model for Review and Authorize Publication Task Output}]
-class ReviewOutput(BaseModel):
-    approved: bool
-    comments: str
-    report: str
+class ReviewedArticle(BaseModel):
+    emergency_report: EmergencyReport
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
 \end{lstlisting}
 
 \subsubsection{Provide Social Media Feedback Task Output}
 \begin{lstlisting}[caption={Pydantic model for Provide Social Media Feedback Task Output}]
-class SocialMediaFeedbackOutput(BaseModel):
-    feedback: str
-    report: str
-    approved: bool
-    comments: str
+class PublicCommunicationReport(BaseModel):
+    emergency_report: EmergencyReport
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
+    social_media_feedback: str
+    timestamp: datetime
 \end{lstlisting}
 
 \paragraph{Summary of Outputs}
 \begin{itemize}
-    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details from \textit{Firefighters} and \textit{Medical Sevices} crews.
+    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details from \textit{Emergency Services Crew}, \textit{Firefighters Crew}, and \textit{Medical Services Crew}.
     \item \textbf{Search Related Cases Task Output:} Retrieves relevant historical cases for contextualization and save this case.
     \item \textbf{Draft Initial Article Task Output:} Records the initial draft content.
     \item \textbf{Integrate Additional Information Task Output:} Updates the draft with integrated sources and revisions.
