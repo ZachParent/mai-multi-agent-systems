@@ -6,7 +6,7 @@ The Firefighter Agent Crew operates within a structured \textbf{sequential proce
     \item \textbf{Receive Report:} The \textit{Fire Chief} receives a fire report from the Emergency Service Operator. This serves as the starting point of the process, containing critical information such as the location and severity of the fire.
     \item \textbf{Allocate Firefighting Resources:} The \textit{Equipment Technician} determines if there exact resources required to combat the fire in question.
 	\item \textbf{Deploy Fire Combatants:} The \textit{Fire Combatants} are deployed to the place of the fire, reporting an estimation of the time of arrival and a list of the fire fighting activities that will have to be performed.
-	\item \textbf{Report Firefighting Response:} The \textit{Fire Chief} reports back a comprehensive summary of the firefighting activities as well as a success status.
+	\item \textbf{Report Firefighting Response:} The \textit{Fire Chief} reports back a comprehensive summary of the firefighting activities.
 \end{enumerate}
 
 \paragraph{Task Dependencies}
@@ -19,7 +19,7 @@ The sequential process relies on strict task dependencies to maintain an organiz
 
 The visual representation in Figure~\ref{fig:firefighter_flow} highlights these dependencies and assigns colors to denote the responsible agents.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 	\centering
 	\includegraphics[height=0.59\textheight]{figures/Firefighter_Crew_Flow.png}
 	\caption{Sequential Process Flow of the Firefighter Crew with Agent Responsibilities}
