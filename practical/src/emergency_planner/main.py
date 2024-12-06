@@ -48,13 +48,6 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.call_assessment = result.raw
         logger.info("Emergency call received", result.raw)
 
-    @router(emergency_services)
-    def check_medical_services_required(self):
-        if self.state.call_assessment.medical_services_required:
-            logger.info("Medical services required")
-            return "medical_services_required"
-        return "medical_services_not_required"
-
     @listen(emergency_services)
     def firefighters(self):
         logger.info("Dispatching fire fighters")
@@ -67,8 +60,11 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.firefighters_response_report = result.raw
         logger.info("Fire fighters dispatched", result.raw)
 
-    @listen("medical_services_required")
+    @listen(emergency_services)
     def medical_services(self):
+        if not self.state.call_assessment.medical_services_required:
+            logger.info("Medical services not required")
+            return
         logger.info("Dispatching medical services")
         medical_assessment = MedicalAssessment(
             **self.state.call_assessment.model_dump()
@@ -81,15 +77,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.medical_response_report = result.raw
         logger.info("Medical services dispatched", result.raw)
 
-    @listen(
-        or_(
-            and_(
-                firefighters,
-                or_(medical_services, "medical_services_not_required"),
-            ),
-            "retry_public_communication",
-        )
-    )
+    @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
     def public_communication(self):
         logger.info("Handling public communication")
         emergency_report = EmergencyReport(
