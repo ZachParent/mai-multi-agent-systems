@@ -5,9 +5,9 @@ Structured outputs are crucial for ensuring clarity, consistency, and seamless i
 \subsubsection{Receive Report Task Output}
 \begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
 class EmergencyReport(BaseModel):
-    call_assessment: CallAssessment  # From Emergency Services Crew
-    firefighters_response_report: FirefightersResponseReport  # From Firefighters Crew
-    medical_response_report: MedicalResponseReport  # From Medical Services Crew
+    call_assessment: CallAssessment
+    firefighters_response_report: FirefightersResponseReport
+    medical_response_report: MedicalResponseReport
     timestamp: datetime
     fire_severity: FireSeverity
     location_x: float
@@ -23,15 +23,14 @@ class RelatedCase(BaseModel):
     location_y: float
     summary: str
 
+
 class RelatedCases(BaseModel):
-    emergency_report: EmergencyReport
     related_cases: List[RelatedCase]
 \end{lstlisting}
 
 \subsubsection{Draft Initial Article Task Output}
 \begin{lstlisting}[caption={Pydantic model for Draft Initial Article Task Output}]
 class DraftArticle(BaseModel):
-    emergency_report: EmergencyReport
     title: str
     public_communication_report: str
 \end{lstlisting}
@@ -39,7 +38,6 @@ class DraftArticle(BaseModel):
 \subsubsection{Integrate Additional Information Task Output}
 \begin{lstlisting}[caption={Pydantic model for Integrate Additional Information Task Output}]
 class IntegratedArticle(BaseModel):
-    emergency_report: EmergencyReport
     public_communication_report: str
     integrated_sources: List[str]
 \end{lstlisting}
@@ -47,7 +45,6 @@ class IntegratedArticle(BaseModel):
 \subsubsection{Review and Authorize Publication Task Output}
 \begin{lstlisting}[caption={Pydantic model for Review and Authorize Publication Task Output}]
 class ReviewedArticle(BaseModel):
-    emergency_report: EmergencyReport
     public_communication_report: str
     mayor_approved: bool
     mayor_comments: str
@@ -56,12 +53,10 @@ class ReviewedArticle(BaseModel):
 \subsubsection{Provide Social Media Feedback Task Output}
 \begin{lstlisting}[caption={Pydantic model for Provide Social Media Feedback Task Output}]
 class PublicCommunicationReport(BaseModel):
-    emergency_report: EmergencyReport
     public_communication_report: str
     mayor_approved: bool
     mayor_comments: str
     social_media_feedback: str
-    timestamp: datetime
 \end{lstlisting}
 
 \paragraph{Summary of Outputs}
