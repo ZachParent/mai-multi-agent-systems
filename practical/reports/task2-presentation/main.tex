@@ -4,12 +4,14 @@
 \usepackage{graphicx}
 \usepackage{float}
 \usepackage{fontawesome}
+\usepackage{multicol}
+
 
 % Beamer theme settings
 \usetheme{CambridgeUS}
 \usecolortheme{default}
 
-\title{Collaborative System Design for Urban Crisis: Resolution Using Multi-Agent Technology}
+\title{Collaborative System Coordination Design for Urban Crisis: Resolution Using Multi-Agent Technology}
 \author{Team 05}
 \date{\today}
 
@@ -19,19 +21,29 @@
     \titlepage
 \end{frame}
 
-\begin{frame}{Outline}
-    \tableofcontents
-\end{frame}
-
 % Introduction
 \section{Introduction}
 \begin{frame}{Introduction}
     \begin{itemize}
-        \item TODO
+        \item \textbf{Objective}: Design the cooperation and coordination mechanisms that will
+        be used to solve the emergency response for fire-related emergencies in Lloret de Mar, Girona.
+        \item \textbf{Teams Involved}:
+            \begin{itemize}
+                \item Emergency Services
+                \item Firefighters
+                \item Medical Services
+                \item Public Communications
+                \item \textit{Forensics}
+            \end{itemize}
+        \item \textbf{Overview}:
+            \begin{itemize}
+                \item For each crew: process definition and Pydantic outputs. 
+                \item Agent interactions: flows and routers.
+            \end{itemize}
     \end{itemize}
 \end{frame}
 
-%\input{4.1-emergency-services}
+\input{4.1-emergency-services}
 %\input{4.2-firefighters}
 %\input{4.3-medical-services}
 \input{4.4-public-communications}

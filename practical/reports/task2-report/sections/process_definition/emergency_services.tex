@@ -2,9 +2,10 @@
 \begin{enumerate}
 
     \item \textbf{Receive and Assess Call.} 
-    The \textit{Emergency Call Agent} receives incoming calls and collects relevant details
-    about the incident. The information that this agent receives answers the following six questions and is saved
-    in a report:
+    The \textit{Emergency Call Agent} receives incoming calls and collects relevant details about the incident. 
+    This task requires human input for accurate interpretation and contextual understanding of the caller's description, 
+    ensuring critical information is gathered effectively. The information that this agent receives answers the following 
+    six questions and is saved in a report:
     \begin{itemize}
         \item What type of fire is it? E.g. ordinary, electrical, gas, etc.
         \item Where is it? The location is received as coordinates \((x, y)\).
@@ -21,23 +22,8 @@
 
     \item \textbf{Notify Other Crews Decision.} 
     The \textit{Notification Agent} receives the details about the fire then it decides which crew should be notify and send
-    all the information to the flow:
-    
-    \begin{itemize}
-        \item Information provided to the Flow:
-        \begin{itemize}
-            \item Fire type.
-            \item Location \((x, y)\).
-            \item Details of injured individuals.
-            \item Fire severity.
-            \item Hazards.
-            \item If the fire is indoors or outdoors.
-            \item Number of trapped people $M$.
-            \item If medical services are required, this condition will only be true if the list of \textit{details of injured individuals}
-            is not empty.
-        \end{itemize}
-    \end{itemize}
-
+    all the information to the flow. It also decides whether the medical services are required or not, depending on the 
+    human input related to the injured individuals.    
 
 \end{enumerate}
 
@@ -45,8 +31,10 @@
 
 The sequential workflow for the Emergency Services Crew depends on task dependencies to ensure efficiency and coordination:
 \begin{itemize}
-    \item The \textit{Notify Other Crews Task} depends on the completion of the \textit{Receive and Assess Call Task}.
+    \item The \textit{Notify Other Crews Task} depends on the completion of the \textit{Receive and Assess Call Task}, which 
+    involves human input to accurately assess and interpret the situation.
 \end{itemize}
+
 
 The task dependencies and agents who perform each task can be observed in Figure~\ref{fig:emergency_services_flow}.
 
