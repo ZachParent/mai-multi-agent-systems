@@ -43,12 +43,27 @@
 \newpage
 
 \section{Introduction}
-In this report, we present the proposed cooperation and coordination mechanisms for the CrewAI emergency response problem. The mechanisms are structured into three main components:
-\begin{enumerate}
-    \item Process Definition for individual crews.
-    \item Pydantic Outputs for structured data handling.
-    \item Agent Interaction between different crews.
-\end{enumerate}
+In this report, we propose a robust framework to address the emergency response problem using cooperation and coordination
+ mechanisms in multi-agent systems (MAS). The system, dubbed CrewAI, orchestrates diverse specialized crews to handle emergencies
+  through structured processes, ensuring efficiency, precision, and adaptability. The approach integrates process definition, 
+  pydantic outputs, and agent interaction, enabling smooth task execution and seamless inter-crew communication.
+\\
+
+The \textbf{process definition} outlines the workflows for individual crews, specifying sequential and parallel dependencies, agent roles,
+ and key operational details. Each crew is equipped with tailored processes to ensure timely and effective responses.
+\\ 
+
+\textbf{Pydantic outputs} ensure consistency and clarity by defining structured data models for task outputs. These models are
+ pivotal in facilitating inter-crew interactions and ensuring data integrity throughout the emergency response lifecycle.
+\\ 
+
+Finally, the \textbf{agent interaction} mechanism employs flow-based coordination, leveraging CrewAI’s advanced routing and state 
+management capabilities. Through logical operators and conditional triggers, the framework ensures synchronization across crews, 
+optimizing both task allocation and response accuracy.
+\\ 
+
+This comprehensive report details each component of the framework, emphasizing its adaptability and potential scalability. 
+It serves as a blueprint for integrating multi-agent coordination into real-world emergency management systems.
 
 
 \input{sections/process_definition}

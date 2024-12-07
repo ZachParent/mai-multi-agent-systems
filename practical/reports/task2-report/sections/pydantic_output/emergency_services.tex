@@ -27,7 +27,6 @@ class CallAssessment(BaseModel):
     hazards: List[HazardType]
     indoor: bool
     trapped_people: int
-    firefighters_required: bool  # True if firefighters are required, False otherwise
     medical_services_required: bool  # True if medical services are required, False otherwise
 \end{lstlisting}
 
@@ -36,7 +35,8 @@ The Pydantic outputs for the \textit{Emergency Services Crew} ensure structured 
 
 \begin{itemize}
     \item \textbf{Receive and Assess Call Task Output:} Captures critical incident details including fire type, location, injured details, severity, hazards, indoor/outdoor status, and trapped individuals.
-    \item \textbf{Notify Other Crews Task Output:} Adds to the \textit{Call Assessment} model to include information about whether firefighters and medical services are required.
+    \item \textbf{Notify Other Crews Task Output:} Adds to the \textit{Call Assessment} model to include information about 
+    whether medical services are required.
 \end{itemize}
 
 These structured models enhance precision and ensure clear communication throughout the emergency response processes.

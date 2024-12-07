@@ -19,27 +19,25 @@
     \end{itemize}
     
 
-    \item \textbf{Notify Other Crews.} 
-    The \textit{Notification Agent} receives the details about the fire then communicates the information to the 
-    appropriate crews (Medical Services Crew and Fire Fighters Crew):
+    \item \textbf{Notify Other Crews Decision.} 
+    The \textit{Notification Agent} receives the details about the fire then it decides which crew should be notify and send
+    all the information to the flow:
+    
     \begin{itemize}
-        \item Information provided to the Fire Fighters:
+        \item Information provided to the Flow:
         \begin{itemize}
-            \item Location \((x, y)\)
-            \item Type of fire
-            \item How severe is the fire 
-            \item Number of trapped people $M$
-            \item Hazards
-            \item If the fire is indoors or outdoors
-        \end{itemize}
-        \item Information provided to the Medical Services Crew:
-        \begin{itemize}
-            \item Location \((x, y)\)
-            \item Information about the injured people if any
-            \item How severe is the fire 
-            \item Hazards
+            \item Fire type.
+            \item Location \((x, y)\).
+            \item Details of injured individuals.
+            \item Fire severity.
+            \item Hazards.
+            \item If the fire is indoors or outdoors.
+            \item Number of trapped people $M$.
+            \item If medical services are required, this condition will only be true if the list of \textit{details of injured individuals}
+            is not empty.
         \end{itemize}
     \end{itemize}
+
 
 \end{enumerate}
 
