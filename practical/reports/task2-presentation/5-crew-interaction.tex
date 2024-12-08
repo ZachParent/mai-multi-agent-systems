@@ -16,7 +16,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}[fragile]{Flow State}
+\begin{frame}[fragile]{EmergencyPlannerState}
     \begin{lstlisting}[language=Python]
 class EmergencyPlannerState:
     call_transcript: str | None
@@ -26,4 +26,12 @@ class EmergencyPlannerState:
     public_report: PublicReport | None
     retry_count: int = 0
     \end{lstlisting}
+\begin{itemize}
+    \item \texttt{call\_transcript}: The transcript of the emergency call
+    \item \texttt{call\_assessment}: From \texttt{EmergencyServices} crew
+    \item \texttt{firefighters\_response\_report}: From \texttt{Firefighters} crew
+    \item \texttt{medical\_response\_report}: From \texttt{MedicalServices} crew
+    \item \texttt{public\_communication\_report}: From \texttt{PublicCommunication} crew
+    \item \texttt{mayor\_approval\_retry\_count}: Number of mayor approval attempts
+\end{itemize}
 \end{frame}
