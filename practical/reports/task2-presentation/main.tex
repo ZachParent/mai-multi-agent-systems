@@ -6,6 +6,7 @@
 \usepackage{fontawesome}
 \usepackage{multicol}
 \usepackage{listings}
+\usepackage{url}
 
 \lstset{
     language=Python,
@@ -86,12 +87,11 @@
 \end{frame}
 
 % References
+\bibliographystyle{plain}
 \section{References}
 \begin{frame}{References}
-    \begin{itemize}
-        \item Wooldridge, Michael. An Introduction to MultiAgent Systems. 2nd ed., John Wiley \& Sons, 2009. ISBN 978-0-470-51946-2.
-        \item Wooldridge, Michael. "Properties of Intelligent Autonomous Agents." YouTube, 26 Feb. 2010, \url{https://www.youtube.com/watch?v=vID-_uIfAvg}.
-    \end{itemize}
+    \nocite{*}
+    \bibliography{references}
 \end{frame}
 
 \end{document}
