@@ -37,6 +37,9 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         self.state.call_transcript = EMERGENCY_CALL
         logger.info("Call transcript received", self.state.call_transcript)
 
+        # Read public input
+        # publicannouncements.kickoff()
+
     @listen(get_call_transcript)
     def emergency_services(self):
         logger.info("Receiving call")

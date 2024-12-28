@@ -1,0 +1,27 @@
+{
+  "test_cases": [
+    {
+      "crew_to_test": "PublicCommunicationCrew",
+      "crew_inputs": {
+        "emergency_report": {
+          "call_assessment": {
+            "fire_severity": 3,
+            "medical_services_required": true,
+            "location": [ 12.345, 67.89 ]
+          },
+          "firefighters_response_report": {
+            "timestamp": "2024-12-28 10:30:00",
+            "summary": "Fire has been contained, no casualties reported."
+          },
+          "medical_response_report": {
+            "timestamp": "2024-12-28 10:45:00",
+            "summary": "One person treated for minor burns, no hospital transfer."
+          },
+          "fire_severity": 3,
+          "location_x": 12.345,
+          "location_y": 67.89
+        }
+      }
+    }
+  ]
+}

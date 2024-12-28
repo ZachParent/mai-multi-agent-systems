@@ -1,0 +1,54 @@
+{
+    "test_cases": [
+      {
+        "crew_to_test": "EmergencyServicesCrew",
+        "crew_inputs": {
+          "transcript": "There's a small fire at 456 Elm St. People might be trapped."
+        }
+      },
+      {
+        "crew_to_test": "FirefightersCrew",
+        "crew_inputs": {
+          "fire_assessment": {
+            "fire_severity": 2,
+            "medical_services_required": true,
+            "location": [123.45, 678.90]
+          }
+        }
+      },
+      {
+        "crew_to_test": "MedicalServicesCrew",
+        "crew_inputs": {
+          "medical_assessment": {
+            "fire_severity": 2,
+            "medical_services_required": true,
+            "location": [100.0, 200.0]
+          }
+        }
+      },
+      {
+        "crew_to_test": "PublicCommunicationCrew",
+        "crew_inputs": {
+          "emergency_report": {
+            "call_assessment": {
+              "fire_severity": 2,
+              "medical_services_required": true,
+              "location": [100.0, 200.0]
+            },
+            "firefighters_response_report": {
+              "timestamp": "2024-12-29 09:00:00",
+              "summary": "Fire contained quickly, no casualties reported."
+            },
+            "medical_response_report": {
+              "timestamp": "2024-12-29 09:15:00",
+              "summary": "Treated 2 individuals for smoke inhalation."
+            },
+            "fire_severity": 2,
+            "location_x": 100.0,
+            "location_y": 200.0
+          }
+        }
+      }
+    ]
+  }
+  

@@ -1,26 +1,44 @@
-# src/public_communication/config/agents.yaml
-
 communication_operator:
   role: Communication Operator
   goal: Relay information between emergency crews and the public communication team.
   backstory: Main point of contact for updates from emergency crews.
+  llm: ollama/llama3.2
+  temperature: 0.7
+  max_tokens: 1000
+  verbose: True
 
 archive_keeper:
   role: Archive Keeper
   goal: Manage and retrieve information related to past incidents.
   backstory: Maintains a repository of past incident reports.
+  llm: ollama/llama3.2
+  temperature: 0.6
+  max_tokens: 800
+  verbose: True
 
 article_writer:
   role: Article Writer
   goal: Draft and refine articles for public dissemination.
   backstory: Responsible for creating clear and concise public updates.
+  llm: ollama/llama3.2
+  temperature: 0.8
+  max_tokens: 1200
+  verbose: True
 
 mayor:
   role: Mayor
   goal: Review and approve articles before publication.
   backstory: Ensures communications align with city policies.
+  llm: ollama/llama3.2
+  temperature: 0.5
+  max_tokens: 500
+  verbose: True
 
 social_media_commentator:
   role: Social Media Commentator
   goal: Provide humorous yet constructive feedback on emergency responses.
   backstory: Engages the public with lighthearted commentary.
+  llm: ollama/llama3.2
+  temperature: 0.9
+  max_tokens: 1000
+  verbose: True

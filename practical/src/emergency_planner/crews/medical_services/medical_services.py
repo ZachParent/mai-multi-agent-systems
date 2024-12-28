@@ -1,6 +1,6 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from ...data_models import MedicalAssessment
+from data_models import MedicalAssessment
 
 
 @CrewBase
