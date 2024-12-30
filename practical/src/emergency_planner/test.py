@@ -53,7 +53,7 @@ logger.addHandler(console_handler)
 # ------------------------------------------------------------------------
 # Where to store results
 # ------------------------------------------------------------------------
-RESULTS_FOLDER = os.path.join(os.path.dirname(__file__), "results")
+RESULTS_FOLDER = os.path.join(os.path.dirname(__file__), "test", "results")
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 
 # ------------------------------------------------------------------------
