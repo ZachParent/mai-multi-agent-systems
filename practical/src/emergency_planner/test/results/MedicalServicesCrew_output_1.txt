@@ -1,0 +1,24 @@
+=== Results for Test #1 | MedicalServicesCrew ===
+The medical response plan is as follows:
+
+1. Dispatching of Ambulance: One (1) ambulance will be dispatched with a paramedic crew consisting of two individuals.
+
+2. Estimated Time of Arrival: The estimated time of arrival at the incident location will be 8 minutes.
+
+3. Equipment Provided by Anytown Regional Hospital: The paramedics will have access to all necessary equipment for emergency cases provided by Anytown Regional Hospital, including temporary beds allocated to Oak Street Medical Center.
+
+4. Utilization of Special Equipment: A defibrillator will be utilized as required for the specific type of incident that may occur.
+
+5. Coordination with Other Crews: The medical services crew will ensure efficient coordination and communication with other crews involved in the response, ensuring a unified and effective approach to the incident.
+
+6. Pre-Deployment Briefing: The paramedic crew will receive a pre-deployment briefing from the Medical Services Operator to ensure they are aware of the incident details, available resources, and any specific procedures or protocols that may be relevant.
+
+7. Incident Command System (ICS): The medical services crew will adhere to the ICS structure to ensure clear communication and decision-making during the response.
+
+8. Patient Care: The paramedics will prioritize patient care, providing emergency medical treatment and stabilization as needed, while also ensuring the safety of themselves and other responders at the incident location.
+
+9. Handover Procedure: Upon arrival, the paramedic crew will conduct a thorough handover with the Oak Street Medical Center staff to ensure seamless transfer of patient information and care instructions.
+
+10. Post-Deployment Debriefing: The medical services crew will participate in a post-deployment briefing to review the response, discuss lessons learned, and identify areas for improvement.
+
+By following this comprehensive plan, the medical services crew will be able to respond effectively and efficiently to the incident, ensuring the best possible outcome for patients and responders alike.

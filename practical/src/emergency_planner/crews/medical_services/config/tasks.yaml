@@ -1,11 +1,24 @@
-# TODO: update this
+receive_report:
+  description: Receive the medical assessment of the fire incident.
+  expected_output: Key information such as location, number of injured, and severity of injuries.
+  agent: medical_services_operator
 
-receive_dispatch:
-  description: Receive the fire incident report in Markdown format.
-  expected_output: A location to dispatch the fire fighters to.
-  agent: fire_fighter
+rank_hospitals:
+  description: Rank the city's hospitals based on distance to the emergency location.
+  expected_output: A ranked list of hospitals.
+  agent: hospital_coordinator
 
-plan_route:
-  description: Plan the route to the fire incident location.
-  expected_output: A list of directions to the fire incident location.
-  agent: fire_fighter
+allocate_hospital_resources:
+  description: Assess available resources at hospitals and allocate them according to the emergency needs.
+  expected_output: Allocation plan for hospital resources.
+  agent: hospital_coordinator
+
+deploy_paramedics:
+  description: Plan the deployment of paramedics to the incident location.
+  expected_output: Number of paramedics and ambulances dispatched, estimated times of arrival, and any special equipment needed.
+  agent: paramedics
+
+report_medical_response:
+  description: Report a comprehensive summary of the medical response plan.
+  expected_output: Summary of the response plan.
+  agent: medical_services_operator
