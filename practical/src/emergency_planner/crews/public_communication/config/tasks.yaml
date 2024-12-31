@@ -1,31 +1,60 @@
-# src/public_communication/config/tasks.yaml
-
 receive_report:
-  description: Receive the fire incident report in Markdown format.
-  expected_output: Structured report data.
+  description: >
+    1. Await the incoming fire incident report, provided in Markdown format.
+    2. Parse the report to extract key details—such as time, location, fire type, and severity.
+    3. Confirm receipt of these details and prepare to share them with relevant departments.
+  expected_output: >
+    A structured summary of the incident report, clearly formatted to highlight
+    date/time, location, type of fire, severity, and any other critical metadata.
   agent: communication_operator
 
 search_related_cases:
-  description: Search for related cases based on location or fire type.
-  expected_output: List of related past incidents.
+  description: >
+    1. Receive input containing the location, fire type, and other metadata from the current incident.
+    2. Search the historical archives to find past incidents with similar characteristics 
+       (e.g., same location, similar fire type).
+    3. Compile a list of relevant past cases, highlighting any consistent trends or reoccurring issues.
+  expected_output: >
+    A list or summary of related past fire incidents, each including a brief description, 
+    date of occurrence, and a link to or reference for more detailed information.
   agent: archive_keeper
 
 draft_initial_article:
-  description: Create a draft article based on the current report.
-  expected_output: Initial draft of the article.
+  description: >
+    1. Take the structured incident data and any relevant background from the archives.
+    2. Write a clear, concise article draft intended for the public, focusing on facts and immediate safety information.
+    3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
+  expected_output: >
+    An initial article draft summarizing the incident, its background context, and necessary
+    safety measures or official statements, all formatted for easy reading by a general audience.
   agent: article_writer
 
 integrate_additional_information:
-  description: Review and integrate related cases into the article draft.
-  expected_output: Revised article draft with integrated information.
+  description: >
+    1. Review the initial article draft alongside the historical or supplementary information discovered.
+    2. Integrate pertinent details—such as similar past incidents or recommended safety protocols.
+    3. Refine the language and structure of the article to ensure clarity and coherence.
+  expected_output: >
+    A revised article draft incorporating any newly found context or clarifications, 
+    ensuring the final copy is thorough, accurate, and well-structured.
   agent: article_writer
 
 review_and_authorize_publication:
-  description: Review the article and authorize publication or provide comments.
-  expected_output: Approved article or feedback for revisions.
+  description: >
+    1. Carefully read the revised draft to ensure consistency with city policies, factual accuracy, and overall quality.
+    2. Provide explicit approval for publication, or offer detailed feedback for further revisions.
+  expected_output: >
+    Either a clearly approved article ready for publication or a set of actionable
+    revision notes indicating required changes before final release.
   agent: mayor
 
 provide_social_media_feedback:
-  description: Critique the response in a humorous yet constructive manner.
-  expected_output: Social media post with feedback.
+  description: >
+    1. Examine the approved or near-final article from a public perspective, focusing on how
+       it might be received on social media platforms.
+    2. Craft a lighthearted, witty response or commentary that also provides constructive feedback 
+       on the emergency response or communication approach.
+  expected_output: >
+    A short, social-media-friendly paragraph that offers humorous yet helpful insights on the
+    incident response, encouraging community engagement and maintaining a positive tone.
   agent: social_media_commentator

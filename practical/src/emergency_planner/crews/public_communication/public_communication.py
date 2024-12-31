@@ -1,6 +1,8 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
+from tools.incident_retrieval_tool import IncidentAnalysisTool
 
+incident_analysis_tool = IncidentAnalysisTool()
 
 @CrewBase
 class PublicCommunicationCrew:
@@ -32,7 +34,7 @@ class PublicCommunicationCrew:
 
     @task
     def search_related_cases(self) -> Task:
-        return Task(config=self.tasks_config["search_related_cases"])
+        return Task(config=self.tasks_config["search_related_cases"], tools= [incident_analysis_tool])
 
     @task
     def draft_initial_article(self) -> Task:
