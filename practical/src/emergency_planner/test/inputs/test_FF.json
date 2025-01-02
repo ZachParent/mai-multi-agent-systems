@@ -1,7 +1,7 @@
 {
     "test_cases": [
         {
-            "crew_to_test": "FirefighterAgentCrew",
+            "crew_to_test": "FirefightersCrew",
             "crew_inputs": {
                 "fire_assessment": {
                     "fire_type": "chemical",

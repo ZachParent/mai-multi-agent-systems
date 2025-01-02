@@ -3,7 +3,7 @@ from crewai.project import CrewBase, agent, task, crew
 from data_models import FireAssessment
 
 @CrewBase
-class FirefighterAgentCrew:
+class FirefightersCrew:
     """Firefighter Agent Crew"""
 
     @agent
