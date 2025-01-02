@@ -1,0 +1,19 @@
+=== Results for Test #1 | EmergencyServicesCrew ===
+The full emergency details have been sent to the workflow. The information includes:
+Incident Report:
+Fire Type: Electrical
+Location: (43.2137° N, 79.3832° W) - Fire location in an office building at 123 Main St.
+Injuries:
+1. Person A: Minor burns on hands and arms.
+2. Person B: Critical injuries from electrical shock, requires immediate medical attention.
+Fire Severity: Medium
+Hazardous Materials: Gas cylinders present on the ground floor.
+The fire is located indoors.
+There are 5 people trapped in the building.
+
+Additional Information:
+- The caller reported hearing an alarm going off and seeing flames coming from the second floor.
+- The person who made the call stated they were outside when they noticed smoke billowing from the window.
+- They also mentioned that there might be someone still inside the building, unable to escape.
+
+The boolean indicating whether medical services and firefighters are required is: True (medical services) and True (firefighters).
