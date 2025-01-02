@@ -7,4 +7,3 @@ notify_other_crews:
   description: Send the full emergency details to the workflow. The workflow will then split the information and decide which crew should receive what data, including determining if medical services are required based on injuries.
   expected_output: Confirmation that all the information has been sent to the workflow, and a boolean indicating whether medical services and the firefighters are required.
   agent: notification_agent
-

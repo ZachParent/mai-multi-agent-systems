@@ -3,14 +3,14 @@ emergency_call_agent:
   goal: Receive and assess incoming emergency calls, gather critical information based on the caller's description, and generate a report for further action.
   backstory: Skilled in extracting vital information from emergency callers, capable of interpreting context and nuances in descriptions with human input for accuracy.
   llm: ollama/llama3.2
-  temperature: 0.6
+  temperature: 0.7
   max_tokens: 1000
   verbose: True
 
 notification_agent:
   role: Notification Agent
   goal: Assess the details of the fire incident, determine which crews to notify, and forward all relevant information to the workflow. Decide if medical services are needed based on reports of injuries, while ensuring fire fighters are always dispatched.
-  backstory: Experienced in emergency incident evaluation, trained to make swift decisions about crew notifications and resource allocation.
+  backstory: Experienced in emergency incident evaluation, trained to make swift decisions about which crew should be notified.
   llm: ollama/llama3.2
   temperature: 0.8
   max_tokens: 1000
