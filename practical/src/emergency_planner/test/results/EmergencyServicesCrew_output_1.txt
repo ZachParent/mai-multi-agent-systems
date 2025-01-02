@@ -1,19 +1,32 @@
 === Results for Test #1 | EmergencyServicesCrew ===
-The full emergency details have been sent to the workflow. The information includes:
-Incident Report:
-Fire Type: Electrical
-Location: (43.2137° N, 79.3832° W) - Fire location in an office building at 123 Main St.
-Injuries:
-1. Person A: Minor burns on hands and arms.
-2. Person B: Critical injuries from electrical shock, requires immediate medical attention.
-Fire Severity: Medium
-Hazardous Materials: Gas cylinders present on the ground floor.
-The fire is located indoors.
-There are 5 people trapped in the building.
+**Incident Details**
 
-Additional Information:
-- The caller reported hearing an alarm going off and seeing flames coming from the second floor.
-- The person who made the call stated they were outside when they noticed smoke billowing from the window.
-- They also mentioned that there might be someone still inside the building, unable to escape.
+* Type of Fire: High-Risk Electrical Fire
+* Coordinates (x, y): 43.2134° N, 72.3456° W (located in a commercial building in downtown area)
+* Injuries:
+	+ Person A: Critical Injury (Burns, respiratory distress) - risk level: critical
+	+ Person B: Minor Injury (Smoke inhalation) - risk level: minor
+	+ Person C: None
+* Severity of the Fire: High-Risk (Extensive spread of fire within 10-15 minutes)
+* Hazards Present at Scene:
+	+ Gas cylinders
+	+ Electrical equipment malfunction
+	+ Chemical storage area nearby
+* Location: Indoor, Commercial Building
+* People Trapped in Fire: 2 (Person A and Person B)
 
-The boolean indicating whether medical services and firefighters are required is: True (medical services) and True (firefighters).
+**Recommendations**
+
+* Continue fire extinguishing efforts while being cautious of hazardous materials
+* Assess Person A's critical injury and provide medical attention as soon as possible
+* Evacuate the area, ensuring all people are accounted for and safe
+* Investigate the cause of the electrical equipment malfunction to prevent future incidents
+
+**Notification Details Sent to Workflow**
+
+* Crew 1: Firefighters, Hazmat Team, and Emergency Medical Services (EMS) - notified with detailed incident report and recommended actions.
+* Crew 2: Fire Department's Investigation Team - notified with details on gas cylinders, electrical equipment malfunction, and potential hazards.
+
+**Medical Services Required:** Yes
+
+**Firefighting Services Required:** Yes
