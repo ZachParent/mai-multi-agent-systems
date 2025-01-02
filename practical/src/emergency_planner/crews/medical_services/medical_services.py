@@ -1,6 +1,6 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from data_models import MedicalAssessment
+from data_models import MedicalAssessment, RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport
 
 @CrewBase
 class MedicalServicesCrew:
@@ -20,23 +20,23 @@ class MedicalServicesCrew:
 
     @task
     def receive_report(self) -> Task:
-        return Task(config=self.tasks_config["receive_report"])
+        return Task(config=self.tasks_config["receive_report"], output_pydantic=MedicalAssessment)
 
     @task
     def rank_hospitals(self) -> Task:
-        return Task(config=self.tasks_config["rank_hospitals"])
+        return Task(config=self.tasks_config["rank_hospitals"], output_pydantic=RankedHospitals)
 
     @task
     def allocate_hospital_resources(self) -> Task:
-        return Task(config=self.tasks_config["allocate_hospital_resources"])
+        return Task(config=self.tasks_config["allocate_hospital_resources"], output_pydantic=AllocatedHospitalResources)
 
     @task
     def deploy_paramedics(self) -> Task:
-        return Task(config=self.tasks_config["deploy_paramedics"])
+        return Task(config=self.tasks_config["deploy_paramedics"], output_pydantic=DeployedParamedics)
 
     @task
     def report_medical_response(self) -> Task:
-        return Task(config=self.tasks_config["report_medical_response"])
+        return Task(config=self.tasks_config["report_medical_response"], output_pydantic=MedicalResponseReport)
 
     @crew
     def crew(self) -> Crew:

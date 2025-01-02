@@ -61,7 +61,7 @@ os.makedirs(RESULTS_FOLDER, exist_ok=True)
 # ------------------------------------------------------------------------
 INPUTS_FOLDER = os.path.join(os.path.dirname(__file__), "test", "inputs")
 # JSON_FILE = os.path.join(INPUTS_FOLDER, "test_crews.json")
-JSON_FILE = os.path.join(INPUTS_FOLDER, "test_ES.json")
+JSON_FILE = os.path.join(INPUTS_FOLDER, "test_MS.json")
 
 def load_test_cases(json_path: str) -> List[Dict[str, Any]]:
     """
@@ -81,9 +81,9 @@ def instantiate_crew(crew_name: str) -> Any:
     """
     crew_map = {
         # "PublicCommunicationCrew": PublicCommunicationCrew,
-        "EmergencyServicesCrew": EmergencyServicesCrew,
+        # "EmergencyServicesCrew": EmergencyServicesCrew,
         # "FirefightersCrew": FirefightersCrew,
-        #"MedicalServicesCrew": MedicalServicesCrew,
+        "MedicalServicesCrew": MedicalServicesCrew,
     }
     CrewClass = crew_map.get(crew_name)
     if not CrewClass:

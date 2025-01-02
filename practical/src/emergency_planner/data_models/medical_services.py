@@ -15,11 +15,25 @@ class Hospital(BaseModel):
     available_ambulances: int
     available_paramedics: int
 
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
+
 
 class RankedHospitals(BaseModel):
     medical_assessment: MedicalAssessment
     ranked_hospitals: List[Hospital]
     timestamp: datetime
+
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
 
 
 # Allocate Hospital Resources Task
@@ -29,11 +43,25 @@ class HospitalResources(BaseModel):
     ambulances_dispatched: int
     paramedics_deployed: int
 
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
+
 
 class AllocatedHospitalResources(BaseModel):
     medical_assessment: MedicalAssessment
     hospital_resource_allocation: List[HospitalResources]
     timestamp: datetime
+
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
 
 
 # Deploy Paramedics Task
@@ -47,6 +75,13 @@ class MedicalEquipment(BaseModel):
     ]
     use_case: str
 
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
+
 
 class DeployedParamedics(BaseModel):
     medical_assessment: MedicalAssessment
@@ -55,8 +90,22 @@ class DeployedParamedics(BaseModel):
     estimated_arrival_times: List[datetime]
     equipment: List[MedicalEquipment]
 
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
+
 
 # Medical Response Report
 class MedicalResponseReport(BaseModel):
     summary: str
     timestamp: datetime
+
+    @classmethod
+    def get_schema(cls) -> str:
+        schema = '\n'
+        for field_name, field_instance in cls.__fields__.items():
+            schema += f'{field_name}, described as: {field_instance.description}\n'
+        return schema
