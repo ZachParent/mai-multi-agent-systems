@@ -1,0 +1,11 @@
+{
+    "test_cases": [
+        {
+            "crew_to_test": "EmergencyServicesCrew",
+            "crew_inputs": {
+                "transcript": 
+                    "A fire of electrical origin has broken out at coordinates (x: 42.56, y: -71.23). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are five people currently trapped. Additionally, there are 2 injured individuals with minor and critical injuries respectively requiring immediate attention."
+            }
+        }
+    ]
+}
