@@ -2,7 +2,7 @@ from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
 from tools.incident_retrieval_tool import IncidentAnalysisTool
 
-incident_analysis_tool = IncidentAnalysisTool()
+incident_analysis_tool = IncidentAnalysisTool("incident.db")
 
 @CrewBase
 class PublicCommunicationCrew:
