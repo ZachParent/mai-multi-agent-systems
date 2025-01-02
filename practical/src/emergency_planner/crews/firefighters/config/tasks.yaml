@@ -1,9 +1,19 @@
-receive_dispatch:
-  description: Receive the fire incident report in Markdown format.
-  expected_output: A location to dispatch the fire fighters to.
-  agent: fire_fighter
+receive_report:
+  description: Receive the fire assessment from the Emergency Service Operator.
+  expected_output: Key information such as fire location, type, severity, number of trapped individuals, and hazards.
+  agent: fire_chief
 
-plan_route:
-  description: Plan the route to the fire incident location.
-  expected_output: A list of directions to the fire incident location.
-  agent: fire_fighter
+allocate_firefighting_resources:
+  description: Determine the necessary firefighting materials based on the fire assessment.
+  expected_output: A list of required materials with their quantities.
+  agent: equipment_technician
+
+deploy_fire_combatants:
+  description: Plan and execute the deployment of firefighters to the fire location.
+  expected_output: Number of firefighters deployed, estimated arrival time, and prioritized firefighting activities.
+  agent: firefighter
+
+report_firefighting_response:
+  description: Report a comprehensive summary of the firefighting response and actions taken.
+  expected_output: A summary of firefighting activities and outcomes.
+  agent: fire_chief

@@ -1,0 +1,17 @@
+{
+    "test_cases": [
+        {
+            "crew_to_test": "FirefighterAgentCrew",
+            "crew_inputs": {
+                "fire_assessment": {
+                    "fire_type": "chemical",
+                    "location": [45.678, 123.456],
+                    "fire_severity": "medium",
+                    "hazards": ["toxic fumes", "explosives"],
+                    "indoor": true,
+                    "trapped_people": 3
+                }
+            }
+        }
+    ]
+}
