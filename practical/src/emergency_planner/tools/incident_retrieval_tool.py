@@ -28,8 +28,7 @@ class IncidentAnalysisTool(BaseTool):
         location_y: float, 
         fire_severity: FireSeverity, 
         fire_type: FireType,
-        summary: str,
-        db_path: str = None  # Make this optional if you want to allow overriding.
+        summary: str
     ) -> RelatedCases:
         """
         Connects to a SQL database, retrieves related incidents, and saves the new case.
@@ -46,9 +45,7 @@ class IncidentAnalysisTool(BaseTool):
         Returns:
             RelatedCases: An object containing lists of related cases.
         """
-        # Fall back to the db_path given at initialization if none is passed to _run
-        if db_path is None:
-            db_path = self.db_path
+        db_path = self.db_path
 
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()

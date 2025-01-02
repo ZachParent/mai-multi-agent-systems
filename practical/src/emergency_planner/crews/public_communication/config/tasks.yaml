@@ -1,11 +1,10 @@
 receive_report:
   description: >
-    1. Await the incoming fire incident report, provided in Markdown format.
-    2. Parse the report to extract key details—such as time, location, fire type, and severity.
+    1. Given the following emergency report: {emergency_report}.
+    2. Parse the report to extract key details: such as time, location, fire type, and severity.
     3. Confirm receipt of these details and prepare to share them with relevant departments.
   expected_output: >
-    A structured summary of the incident report, clearly formatted to highlight
-    date/time, location, type of fire, severity, and any other critical metadata.
+    You need to complete the following schema using the provided information in JSON format.
   agent: communication_operator
 
 search_related_cases:
@@ -15,9 +14,10 @@ search_related_cases:
        (e.g., same location, similar fire type).
     3. Compile a list of relevant past cases, highlighting any consistent trends or reoccurring issues.
   expected_output: >
-    A list or summary of related past fire incidents, each including a brief description, 
-    date of occurrence, and a link to or reference for more detailed information.
+    You need to complete the following schema using the provided information in JSON format. Don't return the schema itself, but fill it with the information of the given report.
   agent: archive_keeper
+  context:
+    - receive_report
 
 draft_initial_article:
   description: >
@@ -25,9 +25,10 @@ draft_initial_article:
     2. Write a clear, concise article draft intended for the public, focusing on facts and immediate safety information.
     3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
   expected_output: >
-    An initial article draft summarizing the incident, its background context, and necessary
-    safety measures or official statements, all formatted for easy reading by a general audience.
+    You need to complete the following schema using the provided information in JSON format.
   agent: article_writer
+  context:
+    - receive_report
 
 integrate_additional_information:
   description: >
@@ -35,18 +36,22 @@ integrate_additional_information:
     2. Integrate pertinent details—such as similar past incidents or recommended safety protocols.
     3. Refine the language and structure of the article to ensure clarity and coherence.
   expected_output: >
-    A revised article draft incorporating any newly found context or clarifications, 
-    ensuring the final copy is thorough, accurate, and well-structured.
+    You need to complete the following schema using the provided information in JSON format.
   agent: article_writer
+  context:
+    - draft_initial_article
+    - search_related_cases
+
 
 review_and_authorize_publication:
   description: >
     1. Carefully read the revised draft to ensure consistency with city policies, factual accuracy, and overall quality.
     2. Provide explicit approval for publication, or offer detailed feedback for further revisions.
   expected_output: >
-    Either a clearly approved article ready for publication or a set of actionable
-    revision notes indicating required changes before final release.
+    You need to return a JSON that contains all the properties in the following schema.
   agent: mayor
+  context:
+    - integrate_additional_information
 
 provide_social_media_feedback:
   description: >
@@ -55,6 +60,7 @@ provide_social_media_feedback:
     2. Craft a lighthearted, witty response or commentary that also provides constructive feedback 
        on the emergency response or communication approach.
   expected_output: >
-    A short, social-media-friendly paragraph that offers humorous yet helpful insights on the
-    incident response, encouraging community engagement and maintaining a positive tone.
+    You need to complete the following schema using the provided information in JSON format.
   agent: social_media_commentator
+  context:
+    - review_and_authorize_publication
