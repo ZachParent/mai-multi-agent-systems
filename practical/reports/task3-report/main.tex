@@ -32,7 +32,7 @@
     captionpos=b
 }
 
-\title{Emergency Response: Cooperation and Coordination Mechanisms in Multi-Agent Systems}
+\title{Emergency Response: A Multi-Agent System}
 \author{Sheena Maria Lang, Antonio Lobo Santos, Zachary Parent, \\ María del Carmen Ramírez Trujillo and Bruno Sánchez Gómez}
 \date{\today}
 
@@ -43,44 +43,25 @@
 \newpage
 
 \section{Introduction}
-% In this report, we propose a robust framework to address the emergency response problem using cooperation and coordination
-%  mechanisms in multi-agent systems (MAS). The system, dubbed CrewAI, orchestrates diverse specialized crews to handle emergencies
-%   through structured processes, ensuring efficiency, precision, and adaptability. The approach integrates process definition, 
-%   pydantic outputs, and agent interaction, enabling smooth task execution and seamless inter-crew communication.
-% \\
-
-% The \textbf{process definition} outlines the workflows for individual crews, specifying sequential and parallel dependencies, agent roles,
-%  and key operational details. Each crew is equipped with tailored processes to ensure timely and effective responses.
-% \\ 
-
-% \textbf{Pydantic outputs} ensure consistency and clarity by defining structured data models for task outputs. These models are
-%  pivotal in facilitating inter-crew interactions and ensuring data integrity throughout the emergency response lifecycle.
-% \\ 
-
-% Finally, the \textbf{agent interaction} mechanism employs flow-based coordination, leveraging CrewAI’s advanced routing and state 
-% management capabilities. Through logical operators and conditional triggers, the framework ensures synchronization across crews, 
-% optimizing both task allocation and response accuracy.
-% \\ 
-
-% This comprehensive report details each component of the framework, emphasizing its adaptability and potential scalability, and leveraging insights from the literature \cite{app10155335, 2009-weiss, 10.5555/1695886}. 
-% It serves as a blueprint for integrating multi-agent coordination into real-world emergency management systems.
-% \\
-
-% In the previous design process, we outlined the role of a \textbf{Forensics Team}, tasked with investigating the origins and causes 
-% of fires. This team included a \textit{Forensics Operator}, who facilitated communication and updates with other emergency crews, 
-% and a \textit{Forensics Coordinator}, responsible for managing team resources, assigning cases, and maintaining a database of current 
-% and historical incidents. The \textit{Coroner} performed examinations of bodies at fire scenes and conducted detailed analyses in the 
-% morgue, while the \textit{Investigator} handled on-site evidence collection, witness interviews, and cause determination. However, the 
-% primary objective of this work was to develop a framework for emergency response planning rather than diving deeply into specific 
-% scenarios or active interventions. As the forensic team’s functions extend beyond the immediate scope of emergency planning, it 
-% has been excluded in order to maintain the focus on the core objectives.
 
 
-\input{sections/process_definition}
+\section{Crew Design and Implementation}
 
+\subsection{Emergency Services Crew}
+\input{sections/process_definition/emergency_services}
+\input{sections/pydantic_output/emergency_services}
 
-\input{sections/pydantic_output}
+\subsection{Firefighter Agent Crew}
+\input{sections/process_definition/firefighters}
+\input{sections/pydantic_output/firefighters}
 
+\subsection{Medical Services Crew}
+\input{sections/process_definition/medical_services}
+\input{sections/pydantic_output/medical_services}
+
+\subsection{Public Communication Crew}
+\input{sections/process_definition/public_communications}
+\input{sections/pydantic_output/public_communications}
 
 \input{sections/crew_interaction}
 
