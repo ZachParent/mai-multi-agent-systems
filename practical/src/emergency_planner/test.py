@@ -102,10 +102,10 @@ def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: i
         logger.info(f"Role: {agent.role}")
 
     # Iterate through tasks to log intermediate outputs
-    for task in crew.crew().tasks:
-        logger.info("[Test #%d] Executing task: %s", test_index, task.description)
-        result = task.execute_sync(agent=task.agent, context=task.context, tools=task.tools)
-        logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
+    # for task in crew.crew().tasks:
+    #     logger.info("[Test #%d] Executing task: %s", test_index, task.description)
+    #     result = task.execute_sync(agent=task.agent, context=task.context, tools=task.tools)
+    #     logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
 
     # Final result after all tasks
     final_result = crew.crew().kickoff(inputs=crew_inputs)
