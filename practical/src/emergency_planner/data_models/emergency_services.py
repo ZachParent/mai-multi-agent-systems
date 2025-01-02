@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from typing import List
 from .shared import Location, FireType, FireSeverity, InjuryType, HazardType
 
-
 # Receive and Assess Call Task Input
 class EmergencyCall(BaseModel):
     transcript: str
