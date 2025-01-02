@@ -1,11 +1,254 @@
-
 \section{Pydantic Outputs}
 Structured outputs are essential for ensuring clarity and consistency in task execution. Below are listed the Pydantic models used in the system.
 
-\input{sections/pydantic_output/emergency_services}
+\subsection{Emergency Services Crew}
+Structured outputs ensure accurate information handling and effective communication within the Emergency Services Crew. Below 
+are the Pydantic models designed for each task's output.
 
-\input{sections/pydantic_output/firefighters}
+\subsubsection{Receive and Assess Call Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive and Assess Call Task Output}] 
+class EmergencyDetails(BaseModel):
+    fire_type: FireType  # Type of fire (e.g., ordinary, electrical, gas, etc.)
+    location: Location  # Coordinates (x, y)
+    injured_details: List[InjuryType]  # List of risk levels of injured people
+    fire_severity: FireSeverity  # Severity of fire: low, medium, or high
+    hazards: List[HazardType]  # Hazards present, e.g., gas cylinders, chemicals
+    indoor: bool  # True if fire is indoor, False otherwise
+    trapped_people: int  # Number of people trapped (0 if none)
+\end{lstlisting}
 
-\input{sections/pydantic_output/medical_services}
+\subsubsection{Notify Other Crews Task Output}
+\begin{lstlisting}[caption={Pydantic model for Notify Other Crews Task Output}] 
+class CallAssessment(BaseModel):
+    fire_type: FireType
+    location: Location
+    injured_details: List[InjuryType]
+    fire_severity: FireSeverity
+    hazards: List[HazardType]
+    indoor: bool
+    trapped_people: int
+    medical_services_required: bool  # True if medical services are required, False otherwise
+\end{lstlisting}
 
-\input{sections/pydantic_output/public_communications}
+\paragraph{Summary of Outputs}
+The Pydantic outputs for the \textit{Emergency Services Crew} ensure structured data handling and effective communication between agents. Below is a summary of the outputs for each task:
+
+\begin{itemize}
+    \item \textbf{Receive and Assess Call Task Output:} Captures critical incident details including fire type, location, injured details, severity, hazards, indoor/outdoor status, and trapped individuals.
+    \item \textbf{Notify Other Crews Task Output:} Adds to the \textit{Call Assessment} model to include information about 
+    whether medical services are required.
+\end{itemize}
+
+\subsection{Firefighter Agent Crew}
+
+Structured outputs ensure effective communication and accountability among team members in the Firefighter Agent Crew. Below are the Pydantic models designed to encapsulate outputs for each task in the firefighting process:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class FireAssessment(BaseModel):
+    location: Location  # Coordinates (x, y)
+    fire_type: FireType  # Type of fire fire_severity
+    fire_severity: FireSeverity  # Severity of fire: low, medium, or high
+    trapped_people: int  # Number of trapped individuals
+    hazards: List[HazardType]  # Hazards present
+    hazards_present_indoor: bool  # True if fire is indoor, False otherwise
+\end{lstlisting}
+
+
+\subsubsection{Allocate Firefighting Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Firefighting Resources Task Output}]
+class FireFightingMaterial(BaseModel):
+    material_name: Literal[
+        "pickup_truck",
+        "ladder_engine",
+        "water_tanker",
+        "foam_tanker",
+        "dry_chemical_tanker",
+        "air_tanker",
+    ]
+    material_quantity: int
+
+class AllocatedFirefightingResources(BaseModel):
+    fire_assessment: FireAssessment
+    resources: List[FireFightingMaterial]
+\end{lstlisting}
+
+
+\subsubsection{Deploy Fire Combatants Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Fire Combatants Task Output}]
+class FirefightingActivity(BaseModel):
+    firefighting_activity: str
+    priority: Literal["low", "medium", "high"]
+
+class DeployedFireCombatants(BaseModel):
+    fire_assessment: FireAssessment
+    firecombatants_deployed: int
+    estimated_arrival_time: datetime
+    firefighting_activities: List[FirefightingActivity]
+\end{lstlisting}
+
+
+\subsubsection{Report Firefighting Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Firefighting Response Task Output}]
+class FirefightersResponseReport(BaseModel):
+    summary: str
+    timestamp: datetime
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+\item \textbf{Receive Fire Report Task Output:} Captures the essential details from the initial fire report, including fire type, severity, hazards, and any trapped individuals.
+\item \textbf{Allocate Firefighting Resources Task Output:} Documents the allocation of firefighting materials, including quantities and resource types.
+\item \textbf{Deploy Fire Combatants Task Output:} Tracks the deployment of personnel, estimated arrival times, and prioritized firefighting activities.
+\item \textbf{Report Firefighting Response Task Output:} Summarizes the firefighting response plan.
+\end{itemize}
+
+\subsection{Medical Services Crew}
+
+Structured outputs ensure consistency and facilitate effective collaboration among agents within the Medical Services Crew. Below are the Pydantic models for each task's output:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class MedicalAssessment(BaseModel):
+    location: Location  # Coordinates (x, y)
+    injured_details: List[InjuryType]  # List of risk levels of injured people
+    fire_severity: FireSeverity  # Severity of fire: low, medium, or high
+    hazards: List[HazardType]  # Hazards present, e.g., gas cylinders, chemicals
+\end{lstlisting}
+
+\subsubsection{Rank Hospitals Task Output}
+\begin{lstlisting}[caption={Pydantic model for Rank Hospitals Task Output}]
+class Hospital(BaseModel):
+    hospital_id: str
+    location: Location
+    available_beds: int
+    available_ambulances: int
+    available_paramedics: int
+
+class RankedHospitals(BaseModel):
+    medical_assessment: MedicalAssessment
+    ranked_hospitals: List[Hospital]
+    timestamp: datetime
+\end{lstlisting}
+
+\subsubsection{Allocate Hospital Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Hospital Resources Task Output}]
+class HospitalResources(BaseModel):
+    hospital_id: str
+    beds_reserved: int
+    ambulances_dispatched: int
+    paramedics_deployed: int
+
+class AllocatedHospitalResources(BaseModel):
+    medical_assessment: MedicalAssessment
+    hospital_resource_allocation: List[HospitalResources]
+    timestamp: datetime
+\end{lstlisting}
+
+\subsubsection{Deploy Paramedics Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Paramedics Task Output}]
+class MedicalEquipment(BaseModel):
+    equipment_name: Literal[
+        "oxygen_mask",
+        "stretcher",
+        "defibrillator",
+        "IV_drip",
+        "other",
+    ]
+    use_case: str
+
+
+class DeployedParamedics(BaseModel):
+    medical_assessment: MedicalAssessment
+    total_paramedics_deployed: int
+    total_ambulances_dispatched: int
+    estimated_arrival_times: List[datetime]
+    equipment: List[MedicalEquipment]
+\end{lstlisting}
+
+\subsubsection{Report Medical Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Medical Response Task Output}]
+class MedicalResponseReport(BaseModel):
+    summary: str
+    timestamp: datetime
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Report Task Output:} Captures the key details of the fire incident, including injury data.
+    \item \textbf{Rank Hospitals Task Output:} Ranks the available hospital based on distance to the emergency site.
+    \item \textbf{Allocate Hospital Resources Task Output:} Summarizes the resources provided by each hospital for emergency medical care.
+    \item \textbf{Deploy Paramedics Task Output:} Reports the deployment plan, estimated times of arrival of each ambulance, and special medical equipment to be brought.
+    \item \textbf{Report Medical Response Task Output:} Provides an overall response plan.
+\end{itemize}
+
+\subsection{Public Communication Crew}
+
+Structured outputs are crucial for ensuring clarity, consistency, and seamless integration across tasks. Below are the Pydantic models designed for the tasks in the Public Communication Crew process:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class EmergencyReport(BaseModel):
+    call_assessment: CallAssessment
+    firefighters_response_report: FirefightersResponseReport
+    medical_response_report: MedicalResponseReport
+    timestamp: datetime
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
+\end{lstlisting}
+
+\subsubsection{Search Related Cases Task Output}
+\begin{lstlisting}[caption={Pydantic model for Search Related Cases Task Output}]
+class RelatedCase(BaseModel):
+    case_id: int
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
+    summary: str
+
+
+class RelatedCases(BaseModel):
+    related_cases: List[RelatedCase]
+\end{lstlisting}
+
+\subsubsection{Draft Initial Article Task Output}
+\begin{lstlisting}[caption={Pydantic model for Draft Initial Article Task Output}]
+class DraftArticle(BaseModel):
+    title: str
+    public_communication_report: str
+\end{lstlisting}
+
+\subsubsection{Integrate Additional Information Task Output}
+\begin{lstlisting}[caption={Pydantic model for Integrate Additional Information Task Output}]
+class IntegratedArticle(BaseModel):
+    public_communication_report: str
+    integrated_sources: List[str]
+\end{lstlisting}
+
+\subsubsection{Review and Authorize Publication Task Output}
+\begin{lstlisting}[caption={Pydantic model for Review and Authorize Publication Task Output}]
+class ReviewedArticle(BaseModel):
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
+\end{lstlisting}
+
+\subsubsection{Provide Social Media Feedback Task Output}
+\begin{lstlisting}[caption={Pydantic model for Provide Social Media Feedback Task Output}]
+class PublicCommunicationReport(BaseModel):
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
+    social_media_feedback: str
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details from \textit{Emergency Services Crew}, \textit{Firefighters Crew}, and \textit{Medical Services Crew}.
+    \item \textbf{Search Related Cases Task Output:} Retrieves relevant historical cases for contextualization and save this case.
+    \item \textbf{Draft Initial Article Task Output:} Records the initial draft content.
+    \item \textbf{Integrate Additional Information Task Output:} Updates the draft with integrated sources and revisions.
+    \item \textbf{Review and Authorize Publication Task Output:} Specifies the review status and comments from the Mayor.
+    \item \textbf{Provide Social Media Feedback Task Output:} Details feedback posted on social media platforms, he can critize the mayor's decission.
+\end{itemize}
