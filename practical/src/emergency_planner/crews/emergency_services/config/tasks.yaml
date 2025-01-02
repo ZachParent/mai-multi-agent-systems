@@ -1,9 +1,10 @@
 receive_call:
-  description: Receive the fire incident report in Markdown format.
-  expected_output: EmergencyCall
-  agent: communication_operator
+  description: Receive the transcript of the emergency call, assess the situation based on the caller's description, and generate a comprehensive report with critical incident details.
+  expected_output: A report detailing the incident based on the information gathered from the call. The details should include the type of fire (e.g., ordinary, electrical, gas, etc.), the coordinates (x, y) indicating the fire's location, a list of risk levels for each injured person (e.g., minor, critical), the severity of the fire (low, medium, or high), a list of hazards present at the scene (e.g., gas cylinders, chemicals), if the fire is indoors or outdoors and the number of people trapped in the fire (0 if none).
+  agent: emergency_call_agent
 
-dispatch_fire_fighters:
-  description: Dispatch the fire fighters to the incident location.
-  expected_output: FireFighterDispatch
-  agent: communication_operator
+notify_other_crews:
+  description: Send the full emergency details to the workflow. The workflow will then split the information and decide which crew should receive what data, including determining if medical services are required based on injuries.
+  expected_output: Confirmation that all the information has been sent to the workflow, and a boolean indicating whether medical services and the firefighters are required.
+  agent: notification_agent
+
