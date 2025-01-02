@@ -1,0 +1,121 @@
+\documentclass[12pt,a4paper,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[top=1in, bottom=1in, left=1in, right=0.75in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{enumerate} % Import the enumerate package
+\usepackage{amsfonts}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{verbatim}
+
+
+% Listings settings for Python code
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    stringstyle=\color{red},
+    commentstyle=\color{green!70!black},
+    numberstyle=\tiny\color{gray},
+    numbers=left,
+    stepnumber=1,
+    numbersep=8pt,
+    showspaces=false,
+    showstringspaces=false,
+    frame=single,
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    captionpos=b
+}
+
+\title{Emergency Response: Cooperation and Coordination Mechanisms in Multi-Agent Systems}
+\author{Sheena Maria Lang, Antonio Lobo Santos, Zachary Parent, \\ María del Carmen Ramírez Trujillo and Bruno Sánchez Gómez}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
+In this report, we propose a robust framework to address the emergency response problem using cooperation and coordination
+ mechanisms in multi-agent systems (MAS). The system, dubbed CrewAI, orchestrates diverse specialized crews to handle emergencies
+  through structured processes, ensuring efficiency, precision, and adaptability. The approach integrates process definition, 
+  pydantic outputs, and agent interaction, enabling smooth task execution and seamless inter-crew communication.
+\\
+
+The \textbf{process definition} outlines the workflows for individual crews, specifying sequential and parallel dependencies, agent roles,
+ and key operational details. Each crew is equipped with tailored processes to ensure timely and effective responses.
+\\ 
+
+\textbf{Pydantic outputs} ensure consistency and clarity by defining structured data models for task outputs. These models are
+ pivotal in facilitating inter-crew interactions and ensuring data integrity throughout the emergency response lifecycle.
+\\ 
+
+Finally, the \textbf{agent interaction} mechanism employs flow-based coordination, leveraging CrewAI’s advanced routing and state 
+management capabilities. Through logical operators and conditional triggers, the framework ensures synchronization across crews, 
+optimizing both task allocation and response accuracy.
+\\ 
+
+This comprehensive report details each component of the framework, emphasizing its adaptability and potential scalability, and leveraging insights from the literature \cite{app10155335, 2009-weiss, 10.5555/1695886}. 
+It serves as a blueprint for integrating multi-agent coordination into real-world emergency management systems.
+\\
+
+In the previous design process, we outlined the role of a \textbf{Forensics Team}, tasked with investigating the origins and causes 
+of fires. This team included a \textit{Forensics Operator}, who facilitated communication and updates with other emergency crews, 
+and a \textit{Forensics Coordinator}, responsible for managing team resources, assigning cases, and maintaining a database of current 
+and historical incidents. The \textit{Coroner} performed examinations of bodies at fire scenes and conducted detailed analyses in the 
+morgue, while the \textit{Investigator} handled on-site evidence collection, witness interviews, and cause determination. However, the 
+primary objective of this work was to develop a framework for emergency response planning rather than diving deeply into specific 
+scenarios or active interventions. As the forensic team’s functions extend beyond the immediate scope of emergency planning, it 
+has been excluded in order to maintain the focus on the core objectives.
+
+
+\input{sections/process_definition}
+
+
+\input{sections/pydantic_output}
+
+
+\input{sections/crew_interaction}
+
+
+\section{Conclusion}
+This report presents a comprehensive multi-agent system for emergency response coordination, implementing sophisticated cooperation mechanisms across specialized crews. The key achievements and insights include:
+
+\begin{itemize}
+    \item \textbf{Process Definition:} Each crew operates with clearly defined sequential workflows:
+    \begin{itemize}
+        \item Emergency Services established structured protocols for initial assessment and crew dispatch
+        \item Firefighters implemented systematic resource allocation and deployment procedures
+        \item Medical Services developed efficient hospital ranking and resource coordination
+        \item Public Communications created an iterative approval workflow with historical case integration
+    \end{itemize}
+    
+    \item \textbf{Data Standardization:} Implementation of Pydantic models ensures:
+    \begin{itemize}
+        \item Type-safe data transfer between crews
+        \item Consistent reporting formats
+        \item Structured storage of emergency response states
+    \end{itemize}
+    
+    \item \textbf{Coordination Mechanisms:} The system achieves efficient crew interaction through:
+    \begin{itemize}
+        \item Centralized state management
+        \item Parallel processing capabilities
+        \item Sophisticated routing mechanisms
+        \item Retry systems for critical operations
+    \end{itemize}
+\end{itemize}
+
+The framework demonstrates the effectiveness of structured agent cooperation in emergency response scenarios. Future work could explore the integration of additional specialized crews (such as Forensics) and further optimization of the coordination mechanisms for larger-scale emergencies.
+
+\section{References}
+\bibliography{references}
+\bibliographystyle{plain}
+\end{document}

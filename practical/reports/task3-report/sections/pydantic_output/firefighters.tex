@@ -1,0 +1,65 @@
+\subsection{Firefighter Agent Crew}
+
+Structured outputs ensure effective communication and accountability among team members in the Firefighter Agent Crew. Below are the Pydantic models designed to encapsulate outputs for each task in the firefighting process:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class FireAssessment(BaseModel):
+    location: Location  # Coordinates (x, y)
+    fire_type: FireType  # Type of fire fire_severity
+    fire_severity: FireSeverity  # Severity of fire: low, medium, or high
+    trapped_people: int  # Number of trapped individuals
+    hazards: List[HazardType]  # Hazards present
+    hazards_present_indoor: bool  # True if fire is indoor, False otherwise
+\end{lstlisting}
+
+
+\subsubsection{Allocate Firefighting Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Firefighting Resources Task Output}]
+class FireFightingMaterial(BaseModel):
+    material_name: Literal[
+        "pickup_truck",
+        "ladder_engine",
+        "water_tanker",
+        "foam_tanker",
+        "dry_chemical_tanker",
+        "air_tanker",
+    ]
+    material_quantity: int
+
+class AllocatedFirefightingResources(BaseModel):
+    fire_assessment: FireAssessment
+    resources: List[FireFightingMaterial]
+\end{lstlisting}
+
+
+\subsubsection{Deploy Fire Combatants Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Fire Combatants Task Output}]
+class FirefightingActivity(BaseModel):
+    firefighting_activity: str
+    priority: Literal["low", "medium", "high"]
+
+class DeployedFireCombatants(BaseModel):
+    fire_assessment: FireAssessment
+    firecombatants_deployed: int
+    estimated_arrival_time: datetime
+    firefighting_activities: List[FirefightingActivity]
+\end{lstlisting}
+
+
+\subsubsection{Report Firefighting Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Firefighting Response Task Output}]
+class FirefightersResponseReport(BaseModel):
+    summary: str
+    timestamp: datetime
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+\item \textbf{Receive Fire Report Task Output:} Captures the essential details from the initial fire report, including fire type, severity, hazards, and any trapped individuals.
+\item \textbf{Allocate Firefighting Resources Task Output:} Documents the allocation of firefighting materials, including quantities and resource types.
+\item \textbf{Deploy Fire Combatants Task Output:} Tracks the deployment of personnel, estimated arrival times, and prioritized firefighting activities.
+\item \textbf{Report Firefighting Response Task Output:} Summarizes the firefighting response plan.
+\end{itemize}
+
+

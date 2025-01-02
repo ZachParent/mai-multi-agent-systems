@@ -1,0 +1,78 @@
+\subsection{Medical Services Crew}
+
+Structured outputs ensure consistency and facilitate effective collaboration among agents within the Medical Services Crew. Below are the Pydantic models for each task's output:
+
+\subsubsection{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class MedicalAssessment(BaseModel):
+    location: Location  # Coordinates (x, y)
+    injured_details: List[InjuryType]  # List of risk levels of injured people
+    fire_severity: FireSeverity  # Severity of fire: low, medium, or high
+    hazards: List[HazardType]  # Hazards present, e.g., gas cylinders, chemicals
+\end{lstlisting}
+
+\subsubsection{Rank Hospitals Task Output}
+\begin{lstlisting}[caption={Pydantic model for Rank Hospitals Task Output}]
+class Hospital(BaseModel):
+    hospital_id: str
+    location: Location
+    available_beds: int
+    available_ambulances: int
+    available_paramedics: int
+
+class RankedHospitals(BaseModel):
+    medical_assessment: MedicalAssessment
+    ranked_hospitals: List[Hospital]
+    timestamp: datetime
+\end{lstlisting}
+
+\subsubsection{Allocate Hospital Resources Task Output}
+\begin{lstlisting}[caption={Pydantic model for Allocate Hospital Resources Task Output}]
+class HospitalResources(BaseModel):
+    hospital_id: str
+    beds_reserved: int
+    ambulances_dispatched: int
+    paramedics_deployed: int
+
+class AllocatedHospitalResources(BaseModel):
+    medical_assessment: MedicalAssessment
+    hospital_resource_allocation: List[HospitalResources]
+    timestamp: datetime
+\end{lstlisting}
+
+\subsubsection{Deploy Paramedics Task Output}
+\begin{lstlisting}[caption={Pydantic model for Deploy Paramedics Task Output}]
+class MedicalEquipment(BaseModel):
+    equipment_name: Literal[
+        "oxygen_mask",
+        "stretcher",
+        "defibrillator",
+        "IV_drip",
+        "other",
+    ]
+    use_case: str
+
+
+class DeployedParamedics(BaseModel):
+    medical_assessment: MedicalAssessment
+    total_paramedics_deployed: int
+    total_ambulances_dispatched: int
+    estimated_arrival_times: List[datetime]
+    equipment: List[MedicalEquipment]
+\end{lstlisting}
+
+\subsubsection{Report Medical Response Task Output}
+\begin{lstlisting}[caption={Pydantic model for Report Medical Response Task Output}]
+class MedicalResponseReport(BaseModel):
+    summary: str
+    timestamp: datetime
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Report Task Output:} Captures the key details of the fire incident, including injury data.
+    \item \textbf{Rank Hospitals Task Output:} Ranks the available hospital based on distance to the emergency site.
+    \item \textbf{Allocate Hospital Resources Task Output:} Summarizes the resources provided by each hospital for emergency medical care.
+    \item \textbf{Deploy Paramedics Task Output:} Reports the deployment plan, estimated times of arrival of each ambulance, and special medical equipment to be brought.
+    \item \textbf{Report Medical Response Task Output:} Provides an overall response plan.
+\end{itemize}

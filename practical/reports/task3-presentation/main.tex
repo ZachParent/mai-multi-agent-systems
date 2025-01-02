@@ -1,0 +1,97 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fontawesome}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{url}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keywordstyle=\color{red}\bfseries,
+    stringstyle=\color{green!60!black},
+    commentstyle=\color{gray},
+    showstringspaces=false,
+    columns=flexible,
+    backgroundcolor=\color{gray!10},
+}
+
+% Beamer theme settings
+\usetheme{CambridgeUS}
+\usecolortheme{default}
+
+\title{Coordination of a Multi-Agent System \\for Emergency Response}
+\author{Team 05}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Introduction
+\section{Introduction}
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item \textbf{Objective}: Design the cooperation and coordination mechanisms that will
+        be used to solve the emergency response for fire-related emergencies in Lloret de Mar, Girona.
+        \item \textbf{Teams Involved}:
+            \begin{itemize}
+                \item Emergency Services
+                \item Firefighters
+                \item Medical Services
+                \item Public Communications
+                \item \textit{Forensics}
+            \end{itemize}
+        \item \textbf{Overview}:
+            \begin{itemize}
+                \item For each crew: process definition and Pydantic outputs. 
+                \item Agent interactions: flows and routers.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\section{Crew Processes}
+\input{1-emergency-services}
+\input{2-firefighters}
+\input{3-medical-services}
+\input{4-public-communications}
+\section{Crew Interaction}
+\input{5-crew-interaction}
+
+\section{Conclusion}
+\begin{frame}{Conclusion}
+    \begin{itemize}
+        \item The \textbf{Emergency Services} crew establishes robust initial assessment and crew dispatching
+        \item The \textbf{Firefighters and Medical Services} crews demonstrate effective parallel operation and complex processes
+        \item The \textbf{Public Communications} crew generates useful summaries with mayor approval system and retry mechanisms
+        \item A \textbf{centralized state management} with the CrewAI flow framework enables coordination between crews
+        \item A \textbf{standardized reporting system} with structured outputs from each specialized crew is compiled into a single report
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \vspace{2cm}
+    {\Large Thank You!}
+    \vspace{1cm}
+    
+    {\large Questions?}
+\end{frame}
+
+% References
+\bibliographystyle{plain}
+\section{References}
+\begin{frame}{References}
+    \nocite{*}
+    \bibliography{references}
+\end{frame}
+
+\end{document}
