@@ -1,17 +1,20 @@
+# agents.yaml
 emergency_call_agent:
   role: Emergency Call Agent
-  goal: Receive and assess incoming emergency calls, gather critical information based on the caller's description, and generate a report for further action.
+  goal: Receive and assess incoming emergency calls, gather critical information based on the caller's description, and structure the data according to the EmergencyDetails schema.
   backstory: Skilled in extracting vital information from emergency callers, capable of interpreting context and nuances in descriptions with human input for accuracy.
   llm: ollama/llama3.2
-  temperature: 0.6
+  temperature: 0.7
   max_tokens: 1000
   verbose: True
+  #allowed_tools: ["parse_emergency_details"]
 
 notification_agent:
   role: Notification Agent
-  goal: Assess the details of the fire incident, determine which crews to notify, and forward all relevant information to the workflow. Decide if medical services are needed based on reports of injuries, while ensuring fire fighters are always dispatched.
-  backstory: Experienced in emergency incident evaluation, trained to make swift decisions about crew notifications and resource allocation.
+  goal: Process EmergencyDetails to create a CallAssessment, determining required emergency services based on the incident details.
+  backstory: Experienced in emergency incident evaluation, trained to make swift decisions about which crews should be notified based on incident parameters.
   llm: ollama/llama3.2
   temperature: 0.8
   max_tokens: 1000
   verbose: True
+  #allowed_tools: ["determine_required_services"]

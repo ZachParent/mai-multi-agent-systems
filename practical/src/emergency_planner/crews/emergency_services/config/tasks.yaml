@@ -1,10 +1,32 @@
+# tasks.yaml
 receive_call:
-  description: Receive the transcript of the emergency call, assess the situation based on the caller's description, and generate a comprehensive report with critical incident details.
-  expected_output: A report detailing the incident based on the information gathered from the call. The details should include the type of fire (e.g., ordinary, electrical, gas, etc.), the coordinates (x, y) indicating the fire's location, a list of risk levels for each injured person (e.g., minor, critical), the severity of the fire (low, medium, or high), a list of hazards present at the scene (e.g., gas cylinders, chemicals), if the fire is indoors or outdoors and the number of people trapped in the fire (0 if none).
+  description: >
+    Process the emergency call transcript and extract structured information:
+    1. Type of fire (ordinary, electrical, gas)
+    2. Location coordinates (x, y)
+    3. List of injured people and their conditions
+    4. Fire severity (low, medium, high)
+    5. List of hazards present
+    6. Whether the fire is indoor or outdoor
+    7. Number of trapped people
+  expected_output: >
+    A structured EmergencyDetails object containing:
+    - fire_type: The type of fire (ordinary, electrical, gas)
+    - location: Coordinates (x, y)
+    - injured_details: List of injury types (minor, moderate, critical)
+    - fire_severity: Level of severity (low, medium, high)
+    - hazards: List of present hazards
+    - indoor: Boolean indicating if fire is indoors
+    - trapped_people: Number of people trapped
   agent: emergency_call_agent
 
 notify_other_crews:
-  description: Send the full emergency details to the workflow. The workflow will then split the information and decide which crew should receive what data, including determining if medical services are required based on injuries.
-  expected_output: Confirmation that all the information has been sent to the workflow, and a boolean indicating whether medical services and the firefighters are required.
+  description: >
+    Analyze the emergency details and determine which emergency services are required.
+    Firefighters are always required for fires.
+    Medical services are required if there are injuries or trapped people.
+  expected_output: >
+    A CallAssessment object containing all emergency details plus:
+    - firefighters_required: Always true for fires
+    - medical_services_required: True if there are injuries or trapped people
   agent: notification_agent
-
