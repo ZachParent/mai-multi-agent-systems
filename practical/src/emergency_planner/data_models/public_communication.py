@@ -13,6 +13,7 @@ class EmergencyReport(BaseModel):
     firefighters_response_report: FirefightersResponseReport
     medical_response_report: MedicalResponseReport
     timestamp: datetime
+    fire_type: FireType
     fire_severity: FireSeverity
     location_x: float
     location_y: float

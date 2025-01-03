@@ -5,9 +5,15 @@
       "crew_inputs": {
         "emergency_report": {
           "call_assessment": {
-            "fire_severity": 3,
-            "medical_services_required": true,
-            "location": [ 12.345, 67.89 ]
+            "fire_type": "electrical",
+            "location": [12.345, 67.89],
+            "injured_details": ["minor", "moderate"],
+            "fire_severity": "low",
+            "hazards": ["gas cylinders", "chemicals"],
+            "indoor": false,
+            "trapped_people": 3,
+            "firefighters_required": true,
+            "medical_services_required": true
           },
           "firefighters_response_report": {
             "timestamp": "2024-12-28 10:30:00",
@@ -17,9 +23,11 @@
             "timestamp": "2024-12-28 10:45:00",
             "summary": "One person treated for minor burns, no hospital transfer."
           },
-          "fire_severity": 3,
+          "fire_type": "electrical",
+          "fire_severity": "low",
           "location_x": 12.345,
-          "location_y": 67.89
+          "location_y": 67.89,
+          "timestamp": "2024-12-28 10:30:00"
         }
       }
     }

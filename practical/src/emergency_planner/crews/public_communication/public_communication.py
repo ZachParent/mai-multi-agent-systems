@@ -18,9 +18,9 @@ def add_schema_to_task_config(task_config, schema):
 class PublicCommunicationCrew:
     """Public Communication Crew"""
 
-    @agent
-    def communication_operator(self) -> Agent:
-        return Agent(config=self.agents_config["communication_operator"])
+    # @agent
+    # def communication_operator(self) -> Agent:
+    #     return Agent(config=self.agents_config["communication_operator"])
 
     @agent
     def archive_keeper(self) -> Agent:
@@ -38,47 +38,47 @@ class PublicCommunicationCrew:
     def social_media_commentator(self) -> Agent:
         return Agent(config=self.agents_config["social_media_commentator"])
     
-    @task
-    def receive_report(self) -> Task:
-        config = add_schema_to_task_config(
-            self.tasks_config["receive_report"], EmergencyReport.model_json_schema()
-        )
-        return Task(config=config, output_pydantic=EmergencyReport)
+    # @task
+    # def receive_report(self) -> Task:
+    #     config = add_schema_to_task_config(
+    #         self.tasks_config["receive_report"], EmergencyReport.model_json_schema()
+    #     )
+    #     return Task(config=config, output_pydantic=EmergencyReport)
 
     @task
     def search_related_cases(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["search_related_cases"], RelatedCases.model_json_schema()
         )
-        return Task(config=config, tools=[incident_analysis_tool], output_pydantic=RelatedCases)
+        return Task(config=config, tools=[incident_analysis_tool])# output_pydantic=RelatedCases)
 
     @task
     def draft_initial_article(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["draft_initial_article"], DraftArticle.model_json_schema()
         )
-        return Task(config=config, output_pydantic=DraftArticle)
+        return Task(config=config)
 
     @task
     def integrate_additional_information(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["integrate_additional_information"], IntegratedArticle.model_json_schema()
         )
-        return Task(config=config, output_pydantic=IntegratedArticle)
+        return Task(config=config)
 
     @task
     def review_and_authorize_publication(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["review_and_authorize_publication"], ReviewedArticle.model_json_schema()
         )
-        return Task(config=config, output_pydantic=ReviewedArticle)
+        return Task(config=config)
 
     @task
     def provide_social_media_feedback(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["provide_social_media_feedback"], PublicCommunicationReport.model_json_schema()
         )
-        return Task(config=config, output_pydantic=PublicCommunicationReport)
+        return Task(config=config)
 
     @crew
     def crew(self) -> Crew:

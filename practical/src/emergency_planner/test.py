@@ -20,6 +20,15 @@ from data_models import (
     CallAssessment,
     EmergencyPlannerState,
 )
+# Map snake_case keys to their corresponding data models
+MODEL_MAP = {
+    "emergency_report": EmergencyReport,
+    "public_communication_report": PublicCommunicationReport,
+    "firefighters_response_report": FirefightersResponseReport,
+    "medical_response_report": MedicalResponseReport,
+    "call_assessment": CallAssessment,
+    "emergency_planner_state": EmergencyPlannerState,
+}
 
 # ------------------------------------------------------------------------
 # Setup Logging
@@ -127,6 +136,11 @@ def main() -> None:
     for i, test_case in enumerate(test_cases, start=1):
         crew_name = test_case.get('crew_to_test')
         crew_inputs = test_case.get('crew_inputs', {})
+        # Include model validation
+        crew_inputs_parsed = {
+            key: MODEL_MAP[key](**value) if key in MODEL_MAP else value 
+            for key, value in crew_inputs.items()
+        }
         process_crew_test(crew_name, crew_inputs, i)
 
     logger.info("=== Multi-Crew Test Completed ===")
