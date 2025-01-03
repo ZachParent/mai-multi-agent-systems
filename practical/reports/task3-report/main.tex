@@ -43,9 +43,29 @@
 \newpage
 
 \section{Introduction}
+This report presents the final implementation and results of our multi-agent system (MAS) for emergency response coordination. Building upon our previous designs from Tasks 1 and 2, we have developed a complete, functional system that demonstrates the effectiveness of agent-based approaches in managing complex emergency scenarios.
 
+The system is implemented using CrewAI, a framework that enables the creation and coordination of specialized agent crews. Each crew is designed with specific responsibilities and operates through well-defined processes, ensuring efficient handling of emergency situations. The implementation includes:
+
+\begin{itemize}
+    \item \textbf{Emergency Services Crew:} Handles initial emergency assessment and coordination
+    \item \textbf{Firefighter Agent Crew:} Manages firefighting resources and operations
+    \item \textbf{Medical Services Crew:} Coordinates medical response and hospital resources
+    \item \textbf{Public Communication Crew:} Manages public information and communication
+\end{itemize}
+
+\paragraph{Report Structure:}
+\begin{itemize}
+    \item Section \ref{sec:crew_design} details the design and implementation of each crew, including their process definitions and data models
+    \item Section \ref{sec:crew_interaction} explains the interaction mechanisms between crews and the overall system flow
+    \item Section \ref{sec:results} presents the results of system testing and validation
+    \item Section \ref{sec:conclusion} concludes with insights and potential future improvements
+\end{itemize}
+
+The implementation builds upon our previous design while introducing several refinements based on practical considerations and testing results. These modifications are documented and justified throughout the report. The complete source code, along with setup instructions and required input files, is provided in the accompanying project repository.
 
 \section{Crew Design and Implementation}
+\label{sec:crew_design}
 
 \subsection{Emergency Services Crew}
 \input{sections/design/emergency_services}
@@ -68,6 +88,7 @@
 \input{sections/results}
 
 \section{Conclusion}
+\label{sec:conclusion}
 % This report presents a comprehensive multi-agent system for emergency response coordination, implementing sophisticated cooperation mechanisms across specialized crews. The key achievements and insights include:
 
 % \begin{itemize}
