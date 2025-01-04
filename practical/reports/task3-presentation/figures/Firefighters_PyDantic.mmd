@@ -1,0 +1,52 @@
+classDiagram
+    direction LR
+
+    %% Classes and Attributes
+    class FireAssessment {
+        +Location location
+        +FireType fire_type
+        +FireSeverity fire_severity
+        +int trapped_people
+        +List<HazardType> hazards
+        +bool hazards_present_indoor
+    }
+    class FireFightingMaterial {
+        +str material_name
+        +int material_quantity
+    }
+    class AllocatedFirefightingResources {
+        +FireAssessment fire_assessment
+        +List<FireFightingMaterial> resources
+    }
+    class FirefightingActivity {
+        +str firefighting_activity
+        +str priority
+    }
+    class DeployedFireCombatants {
+        +FireAssessment fire_assessment
+        +int firecombatants_deployed
+        +datetime estimated_arrival_time
+        +List<FirefightingActivity> firefighting_activities
+    }
+    class FirefightersResponseReport {
+        +str summary
+        +datetime timestamp
+    }
+
+    %% Relationships
+    FireAssessment --> AllocatedFirefightingResources: "Allocate Resources"
+    AllocatedFirefightingResources --> DeployedFireCombatants: "Deploy Resources"
+    DeployedFireCombatants --> FirefightersResponseReport: "Summarize Response"
+
+    %% Grouped Classes
+    AllocatedFirefightingResources <-- FireFightingMaterial
+    DeployedFireCombatants <-- FirefightingActivity
+
+    %% Style Customization
+    style FireAssessment fill:#6ECB63,stroke:#333,stroke-width:2px
+    style AllocatedFirefightingResources fill:#AF7AC5,stroke:#333,stroke-width:2px
+    style DeployedFireCombatants fill:#FFC300,stroke:#333,stroke-width:2px
+    style FireFightingMaterial fill:#ECECFF,stroke:#333,stroke-width:2px
+    style FirefightingActivity fill:#ECECFF,stroke:#333,stroke-width:2px
+    style FirefightersResponseReport fill:#B2BABB,stroke:#333,stroke-width:2px
+

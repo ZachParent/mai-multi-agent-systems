@@ -1,0 +1,70 @@
+\subsubsection{Pydantic Outputs}
+
+Structured outputs are crucial for ensuring clarity, consistency, and seamless integration across tasks. Below are the Pydantic models designed for the tasks in the Public Communication Crew process:
+
+\paragraph{Receive Report Task Output}
+\begin{lstlisting}[caption={Pydantic model for Receive Report Task Output}]
+class EmergencyReport(BaseModel):
+    call_assessment: CallAssessment
+    firefighters_response_report: FirefightersResponseReport
+    medical_response_report: MedicalResponseReport
+    timestamp: datetime
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
+\end{lstlisting}
+
+\paragraph{Search Related Cases Task Output}
+\begin{lstlisting}[caption={Pydantic model for Search Related Cases Task Output}]
+class RelatedCase(BaseModel):
+    case_id: int
+    fire_severity: FireSeverity
+    location_x: float
+    location_y: float
+    summary: str
+
+
+class RelatedCases(BaseModel):
+    related_cases: List[RelatedCase]
+\end{lstlisting}
+
+\paragraph{Draft Initial Article Task Output}
+\begin{lstlisting}[caption={Pydantic model for Draft Initial Article Task Output}]
+class DraftArticle(BaseModel):
+    title: str
+    public_communication_report: str
+\end{lstlisting}
+
+\paragraph{Integrate Additional Information Task Output}
+\begin{lstlisting}[caption={Pydantic model for Integrate Additional Information Task Output}]
+class IntegratedArticle(BaseModel):
+    public_communication_report: str
+    integrated_sources: List[str]
+\end{lstlisting}
+
+\paragraph{Review and Authorize Publication Task Output}
+\begin{lstlisting}[caption={Pydantic model for Review and Authorize Publication Task Output}]
+class ReviewedArticle(BaseModel):
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
+\end{lstlisting}
+
+\paragraph{Provide Social Media Feedback Task Output}
+\begin{lstlisting}[caption={Pydantic model for Provide Social Media Feedback Task Output}]
+class PublicCommunicationReport(BaseModel):
+    public_communication_report: str
+    mayor_approved: bool
+    mayor_comments: str
+    social_media_feedback: str
+\end{lstlisting}
+
+\paragraph{Summary of Outputs}
+\begin{itemize}
+    \item \textbf{Receive Report Task Output:} Captures the initial fire incident report relevant details from \textit{Emergency Services Crew}, \textit{Firefighters Crew}, and \textit{Medical Services Crew}.
+    \item \textbf{Search Related Cases Task Output:} Retrieves relevant historical cases for contextualization and save this case.
+    \item \textbf{Draft Initial Article Task Output:} Records the initial draft content.
+    \item \textbf{Integrate Additional Information Task Output:} Updates the draft with integrated sources and revisions.
+    \item \textbf{Review and Authorize Publication Task Output:} Specifies the review status and comments from the Mayor.
+    \item \textbf{Provide Social Media Feedback Task Output:} Details feedback posted on social media platforms, he can critize the mayor's decission.
+\end{itemize} 
