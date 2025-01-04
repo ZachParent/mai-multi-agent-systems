@@ -1,6 +1,8 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from data_models import MedicalAssessment, RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport
+from data_models import RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport
+from data_models.shared import add_schema_to_task_config
+
 
 @CrewBase
 class MedicalServicesCrew:
@@ -19,24 +21,32 @@ class MedicalServicesCrew:
         return Agent(config=self.agents_config["paramedics"])
 
     @task
-    def receive_report(self) -> Task:
-        return Task(config=self.tasks_config["receive_report"], output_pydantic=MedicalAssessment)
-
-    @task
     def rank_hospitals(self) -> Task:
-        return Task(config=self.tasks_config["rank_hospitals"], output_pydantic=RankedHospitals)
+        config = add_schema_to_task_config(
+            self.tasks_config["rank_hospitals"], RankedHospitals.model_json_schema()
+        )
+        return Task(config=config)
 
     @task
     def allocate_hospital_resources(self) -> Task:
-        return Task(config=self.tasks_config["allocate_hospital_resources"], output_pydantic=AllocatedHospitalResources)
+        config = add_schema_to_task_config(
+            self.tasks_config["allocate_hospital_resources"], AllocatedHospitalResources.model_json_schema()
+        )
+        return Task(config=config)
 
     @task
     def deploy_paramedics(self) -> Task:
-        return Task(config=self.tasks_config["deploy_paramedics"], output_pydantic=DeployedParamedics)
+        config = add_schema_to_task_config(
+            self.tasks_config["deploy_paramedics"], DeployedParamedics.model_json_schema()
+        )
+        return Task(config=config)
 
     @task
     def report_medical_response(self) -> Task:
-        return Task(config=self.tasks_config["report_medical_response"], output_pydantic=MedicalResponseReport)
+        config = add_schema_to_task_config(
+            self.tasks_config["report_medical_response"], MedicalResponseReport.model_json_schema()
+        )
+        return Task(config=config)
 
     @crew
     def crew(self) -> Crew:
