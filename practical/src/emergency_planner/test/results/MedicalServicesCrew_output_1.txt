@@ -1,5 +1,5 @@
 === Results for Test #1 | MedicalServicesCrew ===
 {
-  "summary": "The medical response plan has been activated in response to an emergency situation. The injured count is 2 with severe and minor injuries reported. Hospital A has reserved 2 beds, dispatched 1 ambulance, and deployed 1 paramedic. Estimated arrival time of the paramedic team is 2023-02-20T14:45:00Z. Deployed equipment includes oxygen masks for minor injuries and stretchers for severe injuries.",
-  "timestamp": "2023-02-20T14:30:00Z"
+  "summary": "Medical Response Plan Summary:\n\nHospital Resource Allocation Plan:\n- Hospital 1 allocated 2 beds, dispatched 1 ambulance, and deployed 1 paramedic.\n- Hospital 2 allocated 0 beds, dispatched 0 ambulances, and deployed 0 paramedics.\nParamedic Deployment Plan:\nThe total number of paramedics deployed is 1. The estimated arrival time for the ambulance is 2023-02-20T14:40:00. Equipment used includes a stretcher for patient transportation.\nMedical Assessment:\nThe emergency is located at coordinates [41.71947, 2.84031]. There are 2 injured individuals, with details 'severe' and 'minor'. The fire severity is high, and hazards include gas cylinders.\n\nKey Actions to be taken: Ensure timely arrival of paramedics and equipment. Coordinate with Hospital 1 for bed allocation and ambulance dispatch.\nOutcomes Expected: Successful patient transportation and treatment.",
+  "timestamp": "2023-02-20T14:30:00"
 }

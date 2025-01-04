@@ -4,7 +4,7 @@
             "crew_to_test": "MedicalServicesCrew",
             "crew_inputs": {
                 "medical_assessment": {
-                    "location": [12.345, 67.89],
+                    "location": [41.71947, 2.84031],
                     "injured_count": 2,
                     "injured_details": ["severe", "minor"],
                     "fire_severity": "high",

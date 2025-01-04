@@ -1,7 +1,8 @@
 rank_hospitals:
   description: >
     1. Receive input containing the Medical Assessment: {medical_assessment}.
-    2. Rank the city's hospitals based on their distance to the emergency location.
+    2. Rank the city's hospitals based on their distance to the emergency location. For this, you may use the route distance tool with the coordinates of the hospitals and the emergency location.
+    The coordinates of the hospitals are: [2.80, 41.67], [2.89, 41.67].
     3. Compile a list of hospitals, ordered based on the distance ranking.
     4. Return the ranked list of hospitals, as well as a timestamp.
   expected_output: >

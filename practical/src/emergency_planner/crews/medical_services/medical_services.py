@@ -5,7 +5,7 @@ from data_models.shared import add_schema_to_task_config
 from tools.distance_tool import RouteDistanceTool
 from tools.incident_retrieval_tool import IncidentAnalysisTool
 
-#route_distance_tool = RouteDistanceTool('path/to/city_map.graphml')
+route_distance_tool = RouteDistanceTool()
 #incident_analysis_tool = IncidentAnalysisTool("incidents.db")
 
 @CrewBase
@@ -29,7 +29,7 @@ class MedicalServicesCrew:
         config = add_schema_to_task_config(
             self.tasks_config["rank_hospitals"], RankedHospitals.model_json_schema()
         )
-        return Task(config=config) #, tools=[route_distance_tool, incident_analysis_tool])
+        return Task(config=config, tools=[route_distance_tool]) #, incident_analysis_tool])
 
     @task
     def allocate_hospital_resources(self) -> Task:
