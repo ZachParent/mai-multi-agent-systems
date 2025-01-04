@@ -37,8 +37,7 @@ class RouteDistanceTool(BaseTool):
         self.city_map = ox.routing.add_edge_speeds(self.city_map)
         self.city_map = ox.routing.add_edge_travel_times(self.city_map)
 
-    def _run(self, *args, **kwargs) -> int:
-        # args = args[0]
+    def _run(self, **kwargs) -> int:
         x_origin = kwargs.get("x_origin")
         y_origin = kwargs.get("y_origin")
         x_destination = kwargs.get("x_destination")

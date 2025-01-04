@@ -16,7 +16,7 @@ medical_services_operator:
 hospital_coordinator:
   role: Hospital Coordinator
   goal: >
-    Manage all hospitals, rank them based on proximity to emergencies, and allocate resources effectively
+    Manage all hospitals, decide each of their responses based on proximity to emergencies, and allocate resources effectively
     to ensure optimal response during crises.
   backstory: >
     Experienced in hospital resource management and emergency response planning, the Hospital Coordinator

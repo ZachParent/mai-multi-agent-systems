@@ -1,12 +1,14 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from data_models import RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport
+from data_models import RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport, HospitalsInformation
 from data_models.shared import add_schema_to_task_config
 from tools.distance_tool import RouteDistanceTool
-from tools.incident_retrieval_tool import IncidentAnalysisTool
+from tools.hospital_reader_tool import HospitalReaderTool
+from tools.hospital_updater_tool import HospitalUpdaterTool
 
 route_distance_tool = RouteDistanceTool()
-#incident_analysis_tool = IncidentAnalysisTool("incidents.db")
+hospital_reader_tool = HospitalReaderTool()
+hospital_updater_tool = HospitalUpdaterTool()
 
 @CrewBase
 class MedicalServicesCrew:
@@ -25,11 +27,18 @@ class MedicalServicesCrew:
         return Agent(config=self.agents_config["paramedics"])
 
     @task
+    def fetch_hospital_information(self) -> Task:
+        config = add_schema_to_task_config(
+            self.tasks_config["fetch_hospital_information"], HospitalsInformation.model_json_schema()
+        )
+        return Task(config=config, tools=[hospital_reader_tool])
+
+    @task
     def rank_hospitals(self) -> Task:
         config = add_schema_to_task_config(
             self.tasks_config["rank_hospitals"], RankedHospitals.model_json_schema()
         )
-        return Task(config=config, tools=[route_distance_tool]) #, incident_analysis_tool])
+        return Task(config=config, tools=[route_distance_tool])
 
     @task
     def allocate_hospital_resources(self) -> Task:
@@ -50,7 +59,7 @@ class MedicalServicesCrew:
         config = add_schema_to_task_config(
             self.tasks_config["report_medical_response"], MedicalResponseReport.model_json_schema()
         )
-        return Task(config=config)
+        return Task(config=config, tools=[hospital_updater_tool])
 
     @crew
     def crew(self) -> Crew:

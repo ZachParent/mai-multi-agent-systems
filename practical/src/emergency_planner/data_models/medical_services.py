@@ -5,9 +5,20 @@ from .shared import Location
 
 # Input: MedicalAssessment
 
+# Fetch Hospitals Task
+class HospitalLoc(BaseModel):
+    hospital_id: str
+    location: Location
+    available_beds: int
+    available_ambulances: int
+    available_paramedics: int
+
+class HospitalsInformation(BaseModel):
+    ranked_hospitals: List[HospitalLoc]
+    timestamp: datetime
 
 # Rank Hospitals Task
-class Hospital(BaseModel):
+class HospitalDist(BaseModel):
     hospital_id: str
     distance_to_emergency: float
     available_beds: int
@@ -16,7 +27,7 @@ class Hospital(BaseModel):
 
 
 class RankedHospitals(BaseModel):
-    ranked_hospitals: List[Hospital]
+    ranked_hospitals: List[HospitalDist]
     timestamp: datetime
 
 
