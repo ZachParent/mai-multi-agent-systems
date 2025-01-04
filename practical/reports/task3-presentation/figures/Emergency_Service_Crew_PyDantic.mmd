@@ -1,0 +1,30 @@
+classDiagram
+    direction LR
+
+    %% Classes and Attributes
+    class EmergencyDetails {
+        +FireType fire_type
+        +Location location
+        +List<InjuryType> injured_details
+        +FireSeverity fire_severity
+        +List<HazardType> hazards
+        +bool indoor
+        +int trapped_people
+    }
+    class CallAssessment {
+        +FireType fire_type
+        +Location location
+        +List<InjuryType> injured_details
+        +FireSeverity fire_severity
+        +List<HazardType> hazards
+        +bool indoor
+        +int trapped_people
+        +bool medical_services_required
+    }
+
+    %% Relationships
+    EmergencyDetails --> CallAssessment: "Input for Call Assessment"
+
+    %% Style Customization
+    style EmergencyDetails fill:#FFD700,stroke:#333,stroke-width:2px
+    style CallAssessment fill:#FF5733,stroke:#333,stroke-width:2px

@@ -1,0 +1,67 @@
+classDiagram
+    direction LR
+
+    %% Classes and Attributes
+    class MedicalAssessment {
+        +Location location
+        +List<InjuryType> injured_details
+        +FireSeverity fire_severity
+        +List<HazardType> hazards
+    }
+    class Hospital {
+        +str hospital_id
+        +Location location
+        +int available_beds
+        +int available_ambulances
+        +int available_paramedics
+    }
+    class RankedHospitals {
+        +MedicalAssessment medical_assessment
+        +List<Hospital> ranked_hospitals
+        +datetime timestamp
+    }
+    class HospitalResources {
+        +str hospital_id
+        +int beds_reserved
+        +int ambulances_dispatched
+        +int paramedics_deployed
+    }
+    class AllocatedHospitalResources {
+        +MedicalAssessment medical_assessment
+        +List<HospitalResources> hospital_resource_allocation
+        +datetime timestamp
+    }
+    class MedicalEquipment {
+        +str equipment_name
+        +str use_case
+    }
+    class DeployedParamedics {
+        +MedicalAssessment medical_assessment
+        +int total_paramedics_deployed
+        +int total_ambulances_dispatched
+        +List<datetime> estimated_arrival_times
+        +List<MedicalEquipment> equipment
+    }
+    class MedicalResponseReport {
+        +str summary
+        +datetime timestamp
+    }
+
+    %% Relationships
+    MedicalAssessment --> RankedHospitals: "Rank Hospitals"
+    RankedHospitals --> AllocatedHospitalResources: "Allocate Resources"
+    AllocatedHospitalResources --() c
+    c ()-- DeployedParamedics: "Deploy Resources"
+    DeployedParamedics --> MedicalResponseReport: "Summarize Response"
+
+    %% Grouped Classes
+    RankedHospitals <-- Hospital
+    AllocatedHospitalResources <-- HospitalResources
+    DeployedParamedics <-- MedicalEquipment
+
+    %% Style Customization
+    style MedicalAssessment fill:#6ECB63,stroke:#333,stroke-width:2px
+    style RankedHospitals fill:#D88373,stroke:#333,stroke-width:2px
+    style AllocatedHospitalResources fill:#AF7AC5,stroke:#333,stroke-width:2px
+    style DeployedParamedics fill:#FFC300,stroke:#333,stroke-width:2px
+    style MedicalResponseReport fill:#B2BABB,stroke:#333,stroke-width:2px
