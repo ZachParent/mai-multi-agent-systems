@@ -5,7 +5,8 @@
             "crew_inputs": {
                 "medical_assessment": {
                     "location": [12.345, 67.89],
-                    "injured_details": ["severe"],
+                    "injured_count": 2,
+                    "injured_details": ["severe", "minor"],
                     "fire_severity": "high",
                     "hazards": ["gas cylinders"]
                 }

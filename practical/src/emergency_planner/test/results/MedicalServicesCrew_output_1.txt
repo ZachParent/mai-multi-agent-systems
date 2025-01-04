@@ -1,5 +1,5 @@
 === Results for Test #1 | MedicalServicesCrew ===
 {
-  "summary": "Based on the Hospital Resource Allocation plan, Paramedic Deployment plan, and Medical Assessment, we will allocate 5 beds at H2 hospital, 3 beds at H1 hospital, and deploy 6 paramedics with equipment suited for high severity fires with hazardous materials present. Total ambulances dispatched are 1, and estimated arrival time is 2023-02-20T15:00:00Z. Key actions to be taken include dispatching ambulances to H2 hospital and deploying paramedics with stretcher to H2 hospital. Outcomes expected are the successful treatment of injured patients at H2 hospital.",
+  "summary": "The medical response plan has been activated in response to an emergency situation. The injured count is 2 with severe and minor injuries reported. Hospital A has reserved 2 beds, dispatched 1 ambulance, and deployed 1 paramedic. Estimated arrival time of the paramedic team is 2023-02-20T14:45:00Z. Deployed equipment includes oxygen masks for minor injuries and stretchers for severe injuries.",
   "timestamp": "2023-02-20T14:30:00Z"
 }
