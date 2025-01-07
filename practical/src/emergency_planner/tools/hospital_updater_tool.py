@@ -1,7 +1,7 @@
 import sqlite3
 from crewai_tools import BaseTool
 from pydantic import BaseModel, Field
-from typing import List, Type
+from typing import Type
 from dotenv import load_dotenv
 import os
 
@@ -12,14 +12,10 @@ class UpdateEntry(BaseModel):
     ambulances_dispatched: int = Field(..., description="Number of ambulances dispatched.")
     paramedics_deployed: int = Field(..., description="Number of paramedics deployed.")
 
-class HospitalUpdateSchema(BaseModel):
-    """Input for the HospitalUpdaterTool."""
-    updates: List[UpdateEntry] = Field(..., description="List of updates for hospitals.")
-
 class HospitalUpdaterTool(BaseTool):
     name: str = "Hospital Status Updater"
-    description: str = "This tool updates the status of hospitals in the database."
-    args_schema: Type[BaseModel] = HospitalUpdateSchema
+    description: str = "This tool updates the status of a single hospital in the database."
+    args_schema: Type[BaseModel] = UpdateEntry
     db_path: str = None
 
     def __init__(self):
@@ -35,25 +31,30 @@ class HospitalUpdaterTool(BaseTool):
 
     def _run(self, **kwargs):
         """
-        Connects to a SQL database and updates the status of hospitals.
+        Connects to a SQL database and updates the status of a single hospital.
 
         Args:
-            updates (list): A list of dictionaries containing hospital_id and resource adjustments.
+            hospital_id (str): ID of the hospital to update.
+            beds_reserved (int): Number of beds reserved.
+            ambulances_dispatched (int): Number of ambulances dispatched.
+            paramedics_deployed (int): Number of paramedics deployed.
         """
-        updates = kwargs.get("updates")
+        hospital_id = kwargs.get("hospital_id")
+        beds_reserved = kwargs.get("beds_reserved")
+        ambulances_dispatched = kwargs.get("ambulances_dispatched")
+        paramedics_deployed = kwargs.get("paramedics_deployed")
         db_path = self.db_path
 
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
-        for update in updates:
-            cursor.execute("""
-            UPDATE hospitals
-            SET available_beds = available_beds - ?,
-                available_ambulances = available_ambulances - ?,
-                available_paramedics = available_paramedics - ?
-            WHERE hospital_id = ?
-            """, (update.beds_reserved, update.ambulances_dispatched, update.paramedics_deployed, update.hospital_id))
+        cursor.execute("""
+        UPDATE hospitals
+        SET available_beds = available_beds - ?,
+            available_ambulances = available_ambulances - ?,
+            available_paramedics = available_paramedics - ?
+        WHERE hospital_id = ?
+        """, (beds_reserved, ambulances_dispatched, paramedics_deployed, hospital_id))
 
         conn.commit()
         conn.close()
