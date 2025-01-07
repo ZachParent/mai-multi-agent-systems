@@ -139,7 +139,7 @@ def populate_hospital_table(db_path: str):
 
 def main(reset=True):
     # Load environment variables
-    load_dotenv(os.path.join("practical", "src", ".env"))
+    load_dotenv()
 
     # Get DB path and file from environment variables
     raw_db_path = os.getenv("DB_PATH")

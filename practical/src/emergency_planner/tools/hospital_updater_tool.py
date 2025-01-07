@@ -23,7 +23,7 @@ class HospitalUpdaterTool(BaseTool):
         Initialize the HospitalUpdaterTool with a default database path.
         """
         super().__init__()
-        load_dotenv(os.path.join("practical", "src", ".env"))
+        load_dotenv()
         raw_db_path = os.getenv("DB_PATH")
         db_file = os.getenv("DB_FILE")
         normalized_path = os.path.normpath(raw_db_path)
