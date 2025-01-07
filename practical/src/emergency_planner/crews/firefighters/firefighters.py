@@ -2,9 +2,8 @@ import json
 
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from data_models import FireAssessment
 
-from data_models.firefighters import AllocatedFirefightingResources, DeployedFireCombatants, FirefightersResponseReport
+from ...data_models.firefighters import AllocatedFirefightingResources, DeployedFireCombatants, FirefightersResponseReport
 
 
 def add_schema_to_task_config(task_config, schema):

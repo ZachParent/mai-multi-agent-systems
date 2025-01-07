@@ -1,6 +1,6 @@
 import sqlite3
 from crewai_tools import BaseTool
-from data_models import HospitalLoc
+from ..data_models import HospitalLoc
 from typing import List
 from dotenv import load_dotenv
 import os
