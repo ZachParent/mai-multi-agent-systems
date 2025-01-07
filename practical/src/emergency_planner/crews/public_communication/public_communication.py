@@ -1,10 +1,23 @@
 import json
+import os
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
+from dotenv import load_dotenv
 from data_models.public_communication import DraftArticle, EmergencyReport, IntegratedArticle, PublicCommunicationReport, RelatedCases, ReviewedArticle
 from tools.incident_retrieval_tool import IncidentAnalysisTool
 
-incident_analysis_tool = IncidentAnalysisTool("incidents.db")
+# Load environment variables
+load_dotenv(os.path.join("practical", "src", ".env"))
+
+# Get DB path and file from environment variables
+raw_db_path = os.getenv("DB_PATH")
+db_file = os.getenv("DB_FILE")
+
+# Ensure cross-platform compatibility by normalizing paths
+normalized_path = os.path.normpath(raw_db_path)
+db_path = os.path.join(normalized_path, db_file)
+
+incident_analysis_tool = IncidentAnalysisTool(db_path, result_as_answer=True)
 
 def add_schema_to_task_config(task_config, schema):
     """
@@ -18,9 +31,9 @@ def add_schema_to_task_config(task_config, schema):
 class PublicCommunicationCrew:
     """Public Communication Crew"""
 
-    # @agent
-    # def communication_operator(self) -> Agent:
-    #     return Agent(config=self.agents_config["communication_operator"])
+    @agent
+    def communication_operator(self) -> Agent:
+        return Agent(config=self.agents_config["communication_operator"])
 
     @agent
     def archive_keeper(self) -> Agent:
@@ -75,8 +88,12 @@ class PublicCommunicationCrew:
 
     @task
     def provide_social_media_feedback(self) -> Task:
+        return Task(config=self.tasks_config["provide_social_media_feedback"])
+    
+    @task
+    def publish_final_communication(self) -> Task:
         config = add_schema_to_task_config(
-            self.tasks_config["provide_social_media_feedback"], PublicCommunicationReport.model_json_schema()
+            self.tasks_config["publish_final_communication"], PublicCommunicationReport.model_json_schema()
         )
         return Task(config=config)
 

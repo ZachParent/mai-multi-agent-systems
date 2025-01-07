@@ -46,12 +46,10 @@ class IntegratedArticle(BaseModel):
 
 # Review and Authorize Publication Task
 class ReviewedArticle(BaseModel):
-    public_communication_report: str
     mayor_approved: bool
     mayor_comments: str
 
-
-# Provide Social Media Feedback Task
+# Final Output
 class PublicCommunicationReport(BaseModel):
     public_communication_report: str
     mayor_approved: bool

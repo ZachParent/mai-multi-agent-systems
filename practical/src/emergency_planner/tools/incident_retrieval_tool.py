@@ -12,15 +12,17 @@ class IncidentAnalysisTool(BaseTool):
     )
     db_path: str = "incidents.db"
 
-    def __init__(self, db_path: str):
+    def __init__(self, db_path: str, result_as_answer: bool):
         """
         Initialize the IncidentAnalysisTool with a default database path.
 
         Args:
             db_path (str): Path to the SQLite database.
+            result_as_answer (bool): Directly returns tool output
         """
-        super().__init__()
+        super().__init__(result_as_answer=result_as_answer)
         self.db_path = db_path
+        self.result_as_answer = result_as_answer
 
     def _run(
         self, 
@@ -107,5 +109,7 @@ class IncidentAnalysisTool(BaseTool):
 
         conn.commit()
         conn.close()
-
-        return RelatedCases(related_cases=related_by_distance + related_by_severity)
+        if self.result_as_answer:
+            return RelatedCases(related_cases=related_by_distance + related_by_severity).model_dump_json(indent=2)
+        else:
+            return RelatedCases(related_cases=related_by_distance + related_by_severity)

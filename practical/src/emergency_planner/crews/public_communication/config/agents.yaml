@@ -10,9 +10,8 @@ communication_operator:
     condensing complex updates into actionable insights for both operational teams and the general public.
   allow_delegation: false
   verbose: true
-  llm: ollama/llama3.1
-  temperature: 0.7
-  max_tokens: 1000
+  llm: ollama/falcon3:10b
+  temperature: 0.2
 
 archive_keeper:
   role: Archive Keeper
@@ -26,25 +25,23 @@ archive_keeper:
     documents and providing concise summaries of past cases for comparative analysis.
   allow_delegation: false
   verbose: true
-  llm: ollama/llama3.1
-  temperature: 0.6
-  max_tokens: 800
+  llm: ollama/falcon3:10b
+  temperature: 0.2
 
 article_writer:
   role: Article Writer
   goal: >
     Draft and refine articles for public dissemination. The Article Writer focuses on clarity,
     coherence, and credibility, shaping informative texts that keep the community well-informed
-    about unfolding events and safety measures.
+    about unfolding events and safety measures. It also focuses on creating engaging and easy to read articles.
   backstory: >
     This agent is skilled in journalistic writing and content creation, with an ability to distill 
     technical details into engaging, easy-to-read narratives. Its past work has been praised for 
     instilling community awareness and trust during critical situations.
   allow_delegation: false
   verbose: true
-  llm: ollama/llama3.1
+  llm: ollama/falcon3:10b
   temperature: 0.8
-  max_tokens: 1200
 
 mayor:
   role: Mayor
@@ -58,9 +55,8 @@ mayor:
     city's standards and values.
   allow_delegation: false
   verbose: true
-  llm: ollama/llama3.1
+  llm: ollama/falcon3:10b
   temperature: 0.5
-  max_tokens: 500
 
 social_media_commentator:
   role: Social Media Commentator
@@ -74,6 +70,5 @@ social_media_commentator:
     everyone informed in a less formal, more relatable manner.
   allow_delegation: false
   verbose: true
-  llm: ollama/llama3.1
+  llm: ollama/falcon3:10b
   temperature: 0.9
-  max_tokens: 1000

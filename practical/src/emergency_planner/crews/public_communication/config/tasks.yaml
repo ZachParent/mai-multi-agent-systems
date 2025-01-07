@@ -1,11 +1,11 @@
-receive_report:
-  description: >
-    1. Given the following emergency report: {emergency_report}.
-    2. Parse the report to extract key details: such as time, location, fire type, and severity.
-    3. Confirm receipt of these details and prepare to share them with relevant departments.
-  expected_output: >
-    You need to complete the following schema using the provided information in JSON format.
-  agent: communication_operator
+# receive_report:
+#   description: >
+#     1. Given the following emergency report: {emergency_report}.
+#     2. Parse the report to extract key details: such as time, location, fire type, and severity.
+#     3. Confirm receipt of these details and prepare to share them with relevant departments.
+#   expected_output: >
+#     You need to complete the following schema using the provided information in JSON format.
+#   agent: communication_operator
 
 search_related_cases:
   description: >
@@ -13,30 +13,54 @@ search_related_cases:
     2. Search the historical archives to find past incidents with similar characteristics 
        (e.g., same location, similar fire type).
     3. Compile a list of relevant past cases, highlighting any consistent trends or reoccurring issues.
+    4. Elaborate a medium size summary for the new incident described in Fire and Medical report.
+    Context:
+    - location_x: {emergency_report[location_x]}
+    - location_y: {emergency_report[location_y]}
+    - fire_severity: {emergency_report[fire_severity]}
+    - fire_type: {emergency_report[fire_type]}
+    - Fire report: {emergency_report[firefighters_response_report][summary]}
+    - Medical report: {emergency_report[medical_response_report][summary]}
   expected_output: >
-    You need to complete the following schema using the provided information in JSON format. Don't return the schema itself, but fill it with the information of the given report.
+   You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
+    Example: 
+    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
+    Generated string: {{"temperature": 24.3}}
   agent: archive_keeper
-  context:
-    - receive_report
+  async_execution: true
 
 draft_initial_article:
   description: >
-    1. Take the structured incident data and any relevant background from the archives.
+    1. Take the structured incident data.
     2. Write a clear, concise article draft intended for the public, focusing on facts and immediate safety information.
     3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
+    Context:
+    - location_x coordinate: {emergency_report[location_x]}
+    - location_y coordinate: {emergency_report[location_y]}
+    - timestamp: {emergency_report[timestamp]}
+    - Fire report: {emergency_report[firefighters_response_report][summary]}
+    - Medical report: {emergency_report[medical_response_report][summary]}
   expected_output: >
-    You need to complete the following schema using the provided information in JSON format.
+    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
+    Example: 
+    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
+    Generated string: {{"temperature": 24.3}}
   agent: article_writer
-  context:
-    - receive_report
+  async_execution: true
 
 integrate_additional_information:
   description: >
     1. Review the initial article draft alongside the historical or supplementary information discovered.
-    2. Integrate pertinent details—such as similar past incidents or recommended safety protocols.
+    2. Integrate pertinent details-such as similar past incidents or recommended safety protocols.
     3. Refine the language and structure of the article to ensure clarity and coherence.
+    4. Provide a professional and informative article in markdown format.
+    5. Don't include any placeholder, this text should be DEFINITIVE. You will be punished if it has something that is not ready for the publish.
   expected_output: >
-    You need to complete the following schema using the provided information in JSON format.
+    Provide a profesional, clear and ready to publish article.
+    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
+    Example: 
+    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
+    Generated string: {{"temperature": 24.3}}
   agent: article_writer
   context:
     - draft_initial_article
@@ -48,8 +72,14 @@ review_and_authorize_publication:
     1. Carefully read the revised draft to ensure consistency with city policies, factual accuracy, and overall quality.
     2. Provide explicit approval for publication, or offer detailed feedback for further revisions.
   expected_output: >
-    You need to return a JSON that contains all the properties in the following schema.
+    You should copy the original article and afterwards approve it or not and provide feedback.
+    Return the article in the context without any modification as part of the output in the corresponding property.
+    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
+    Example: 
+    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
+    Generated string: {{"temperature": 24.3}}
   agent: mayor
+  async_execution: true
   context:
     - integrate_additional_information
 
@@ -60,7 +90,33 @@ provide_social_media_feedback:
     2. Craft a lighthearted, witty response or commentary that also provides constructive feedback 
        on the emergency response or communication approach.
   expected_output: >
-    You need to complete the following schema using the provided information in JSON format.
+    A funny and short social media post with a constructive critique to the emergency services actuation.
   agent: social_media_commentator
+  async_execution: true
   context:
+    - integrate_additional_information
+
+publish_final_communication:
+  description: >
+    1. Consolidate the final article text from integrate_additional_information, the mayor's approval and feedback from review_and_authorize_publication, and the social media commentary.
+    2. Produce a single, cohesive JSON output containing all critical elements:
+       - The final refined article.
+       - The mayor's approval status and feedback.
+       - The social media comment.
+    3. Ensure no duplication of content and that all referenced items are included in the final schema.
+    4. This is the definitive version to be distributed publicly or stored as the final record.
+  expected_output: >
+    Return a JSON object that includes:
+      - The final article (unmodified from integrate_additional_information). Replace placeholders if any.
+      Provide a final markdown post ready to be publish. Substitute any placeholder of the type [location]
+      - The mayor's approval status and feedback (unmodified from review_and_authorize_publication).
+      - The social media comment (unmodified from provide_social_media_feedback).
+    Do not alter the text of any of these elements. Only compile them into one complete output in JSON.
+    Example: 
+    JSON schema: {{"temperature": {{"title": "Temperature in Celsius", "type": "float"}}}}
+    Generated string: {{"temperature": 24.3}}
+  agent: communication_operator
+  context:
+    - integrate_additional_information
     - review_and_authorize_publication
+    - provide_social_media_feedback

@@ -122,7 +122,7 @@ def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: i
 
     # Save result in results folder
     output_file = os.path.join(RESULTS_FOLDER, f"{crew_name}_output_{test_index}.txt")
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding="utf-16") as f:
         f.write(f"=== Results for Test #{test_index} | {crew_name} ===\n")
         f.write(str(final_result.raw))
 
