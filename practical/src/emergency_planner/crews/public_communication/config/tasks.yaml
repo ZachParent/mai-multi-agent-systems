@@ -112,6 +112,8 @@ publish_final_communication:
       - The mayor's approval status and feedback (unmodified from review_and_authorize_publication).
       - The social media comment (unmodified from provide_social_media_feedback).
     Do not alter the text of any of these elements. Only compile them into one complete output in JSON.
+    Don't complete title either, it is normally not a property and you must be really sure to include this.
+    Ensure that the format is correct before returning the final answer.
     Example: 
     JSON schema: {{"temperature": {{"title": "Temperature in Celsius", "type": "float"}}}}
     Generated string: {{"temperature": 24.3}}

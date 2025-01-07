@@ -379,6 +379,78 @@ This lecture, part of the Multi-Agent Systems (MAS) course, focuses on agent com
 
 ---
 
+### Contract Net Protocol (Expanded)
+
+The **Contract Net Protocol (CNP)** is a task-sharing mechanism within multi-agent systems that provides a structured way for agents to allocate and accomplish tasks collaboratively. It supports dynamic task allocation through mutual agreements between managers (agents needing help) and contractors (agents offering services). Below is an expanded explanation of its stages, features, and challenges.
+
+#### **Stages of the Contract Net Protocol**
+
+1. **Recognition**  
+   - A manager agent identifies a task that requires external assistance.  
+   - This need may arise from limitations in capability, resource constraints, or preferences for improved efficiency or quality.  
+
+2. **Announcement**  
+   - The manager broadcasts a task announcement specifying the task details, constraints (e.g., deadlines, required quality), and any meta-task preferences.  
+   - This stage ensures all potential contractors are informed of the opportunity.
+
+3. **Bidding**  
+   - Interested contractor agents evaluate the task based on their capabilities, resource availability, and competing priorities.  
+   - Agents submit bids, detailing the terms under which they can perform the task (e.g., cost, expected completion time).  
+
+4. **Awarding**  
+   - The manager evaluates received bids based on predefined criteria, such as cost-efficiency, reliability, or quality.  
+   - The contract is awarded to the most suitable contractor, and the decision is communicated to all participants.
+
+5. **Expediting**  
+   - The contractor executes the task and may further subcontract portions of it if needed.  
+   - This stage may involve monitoring progress and ensuring compliance with the agreed terms.
+
+#### **Key Features**
+
+- **Mutual Selection:**  
+  - Contractors autonomously decide whether to bid.  
+  - Managers independently evaluate and choose among bids, ensuring flexibility and autonomy.
+
+- **Dynamic Transfer:**  
+  - Tasks and responsibilities can be reallocated dynamically to adapt to changing conditions.  
+  - This flexibility supports fault tolerance and resource optimization.
+
+- **Local Evaluation:**  
+  - Decisions are made locally by individual agents, preserving autonomy and privacy.
+
+#### **Challenges and Limitations**
+
+- **Complex Problem Decomposition:**  
+  - Effective decomposition of a problem into manageable tasks is a non-trivial step, especially when tasks are interdependent.
+
+- **Solution Synthesis:**  
+  - Integrating results from multiple contractors can be challenging due to conflicts or inconsistencies in partial solutions.
+
+- **Computational Overhead:**  
+  - Managing communication, evaluating bids, and waiting for responses introduce delays and increase the system's computational load.
+
+- **Quality of Service (QoS):**  
+  - Determining appropriate criteria for task specification and bid evaluation requires careful design to ensure service quality.
+
+#### **Efficiency Enhancements**
+
+1. **Focused Addressing:**  
+   - Instead of broadcasting to all agents, announcements can target specific, relevant agents based on past interactions or task specialization.
+
+2. **Directed Contracts:**  
+   - Managers with prior knowledge of suitable agents can directly assign tasks, reducing deliberation time.
+
+3. **Proactive Offers:**  
+   - Contractors may proactively inform managers of their capabilities and readiness to handle specific tasks, streamlining future announcements.
+
+#### **Applications in MAS**
+
+The Contract Net Protocol is widely used in domains requiring dynamic, decentralized task allocation, such as logistics, manufacturing, and robotics. Its flexibility and scalability make it a valuable tool for distributed problem-solving in multi-agent systems.
+
+For further exploration, consider reading chapters 6 and 7 of Wooldridge’s *Introduction to Multiagent Systems*.
+
+---
+
 ## Recommended Reading
 - Chapters 6 and 7 of Wooldridge’s *Introduction to Multiagent Systems*.
 
@@ -430,6 +502,8 @@ This lecture introduces the concept of coordination and cooperation in Multi-Age
 - Explicit cooperation through communication (e.g., messages, blackboards).
 - Implicit cooperation by observing and reacting to others' behavior.
 
+![Cooperation Hierarchy](figures/Cooperation%20Hierarchy.png)
+
 ---
 
 ## Partial Global Planning (PGP)
@@ -441,6 +515,8 @@ This lecture introduces the concept of coordination and cooperation in Multi-Age
 1. **Create Local Plans:**
    - Each agent generates a sequence of actions for assigned tasks.
    - Plans are modifiable and account for action duration and quality.
+![Local Plan](figures/Create%20Local%20Plans.png)
+
 2. **Exchange Local Plans:**
    - Agents share relevant plans with others based on system structure.
 3. **Generate Partial Global Plans:**
@@ -448,6 +524,12 @@ This lecture introduces the concept of coordination and cooperation in Multi-Age
    - Identify sub-goals and opportunities for better coordination.
 4. **Optimize Partial Global Plans:**
    - Reorder tasks, reallocate work, and adjust plans based on authority or redundancy.
+5. **Building the Solution:**  
+   From the modified Plan Activity Map, each agent builds a Solution Construction Graph: how the agents should interact, including specifications about:  
+   - What partial results to exchange  
+   - When to exchange them  
+   - Who to exchange them with
+
 
 ### **Benefits**
 - Dynamic adaptation to environmental changes.
@@ -468,6 +550,9 @@ This lecture introduces the concept of coordination and cooperation in Multi-Age
 - **Enablement:** Task A must precede Task B.
 - **Facilitation:** Task A improves Task B's quality or speed.
 - **Hindrance:** Task A negatively impacts Task B's quality or speed.
+- **Structure**: AND-OR Tree:
+    - AND -> Sub-problems.
+    - OR -> Redundancy
 
 ### **Agent Structure**
 1. **Belief Database:** Stores task structure information.
@@ -479,6 +564,7 @@ This lecture introduces the concept of coordination and cooperation in Multi-Age
 2. **Manage Hard Coordination Relationships:** Ensure timely task execution to avoid bottlenecks.
 3. **Manage Soft Coordination Relationships:** Optimize for quality and speed when possible.
 4. **Detect Redundancy:** Resolve duplicate efforts by assigning tasks to the most suitable agent.
+    Strategies such as Random Choice, Fastest solution, best solution, less assigned tasks.
 
 ### **Conclusions**
 - Flexible coordination adaptable to dynamic environments.
@@ -539,58 +625,108 @@ This lecture delves into coalition formation as a mechanism for cooperation amon
 
 ---
 
-## Task Allocation via Coalition Formation
-- **Goal:** Efficiently distribute tasks among agent subgroups.
-- **Optimization Criteria:**
-  - Minimize coalition size or number.
-  - Match task requirements to coalition capabilities.
-  - Maximize overall benefit.
-
----
-
-## Simplified Assumptions
-- Agents can only belong to one coalition at a time.
-- Coalitions work on a single task at a time.
-- Coalition capabilities are the sum of member capabilities.
-
----
-
 ## Task Allocation Algorithm
-1. **Preliminary Stage:**
-   - Agents calculate potential coalitions they can participate in.
-2. **Iterative Stage:**
-   - Assign tasks to the best coalition based on calculated values.
-   - Form a coalition, execute the task, and remove it from the pool.
-   - Repeat until all tasks are assigned or agents/resources are exhausted.
 
-### **Heuristics**
-- Prefer smaller coalitions to reduce coordination costs.
-- Limit coalition size to manage complexity.
+### Goal
+The primary objective of the task allocation algorithm is to efficiently distribute a set of tasks among coalitions of agents, ensuring that the allocation is both effective and optimal according to predefined criteria (e.g., minimal coordination cost, maximum benefit, or balanced workload distribution).
 
----
+### Steps in the Task Allocation Algorithm
 
-## Overlapping Coalitions
-- Agents can participate in multiple coalitions if resources allow.
-- Requires updating capabilities dynamically after each task execution.
+#### 1. Preliminary Stage
+- **Coalition Identification:** Each agent begins by identifying potential coalitions it can join. This involves considering all possible subsets of agents that include the agent itself, with a limit on the maximum coalition size \(k\) (to control complexity).
+- **Capabilities Exchange:** Agents communicate with each other to gather information about capabilities and potential coalition benefits.
+- **Distributed Assignment of Responsibilities:** Each agent determines the specific coalitions for which it will calculate the value, ensuring an even distribution of workload across all agents.
 
----
+#### 2. Iterative Stage
+- **Value Calculation:** For each potential coalition-task pair, agents calculate the coalition's value. This involves assessing:
+  - **Capabilities Match:** Whether the coalition's combined capabilities meet the task's requirements.
+  - **Net Benefit:** The benefit of completing the task minus the costs of capabilities and internal coordination.
+- **Coalition Formation:** The coalition with the highest value for a given task is selected.
+  - Agents in the selected coalition execute the task.
+  - These agents are removed from further coalition formation processes, and the completed task is removed from the task pool.
+- **Recalculation and Update:** The algorithm iteratively recalculates the values of coalitions and assigns tasks until no tasks remain or resources are exhausted.
 
-## Example: RETSINA Framework
+### Heuristics
+- **Small Coalitions Preferred:** To minimize communication and coordination costs, smaller coalitions are favored.
+- **Capability Optimization:** Coalitions are chosen to match task requirements as closely as possible, avoiding unnecessary overhead.
+
+### Overlapping Coalitions
+- In some cases, agents may belong to multiple coalitions if their resources allow. This introduces additional complexity:
+  - **Dynamic Capability Updates:** After completing a task, an agent's remaining resources are recalculated to ensure accurate capability assessments for future coalitions.
+
+### Challenges
+- **Message Overhead:** High communication requirements in decentralized systems.
+- **Redundancy:** Multiple agents might redundantly evaluate the same coalitions.
+- **Memory Constraints:** Storing all potential coalitions requires significant resources.
+- **Suboptimality:** Heuristic-based decisions may leave some tasks unassigned or result in non-optimal allocations.
+
+### Example Execution
+1. **Initial Calculations:** An agent \(A_1\) identifies potential coalitions such as \(\{A_1, A_2\}\), \(\{A_1, A_3\}\), and \(\{A_1, A_2, A_3\}\).
+2. **Value Assignment:** The coalition \(\{A_1, A_2\}\) is found to have the highest value for task \(T_1\). This coalition executes \(T_1\).
+3. **Recalculation:** Remaining coalitions are updated, and tasks \(T_2, T_3\), etc., are assigned in subsequent iterations.
+
+
+
+## Improved Task Allocation Algorithm
+
+This improved algorithm emphasizes a decentralized approach, aiming to balance computational load, reduce communication overhead, and ensure efficient task allocation.
+
+### Steps in the Improved Algorithm
+
+#### 1. Initial Distribution of Coalition Responsibilities
+- **Local Assignment:** Each agent calculates the coalitions it could potentially participate in. This set is represented as \( P_i \), containing all possible coalitions with up to \( k \) members that include the agent itself.
+- **Responsibility Assignment:** Agents collectively distribute coalition evaluation tasks. Each agent maintains a list \( L_i \), containing the coalitions it is responsible for evaluating.
+
+#### 2. Iterative Coalition Formation
+- **Stage 2a: Calculate Coalition Values**
+  - For each coalition \( C \) in \( L_i \):
+    1. Calculate the combined capability vector \( B_C \) as the sum of capabilities of all agents in \( C \).
+    2. Check pending tasks \( t_j \):
+       - Verify if \( C \) can complete \( t_j \) (\( B_C \geq B_{t_j} \)).
+       - Compute the net benefit \( e_j \) as:
+         \[
+         e_j = \text{market value of required capabilities} - \text{capability costs} - \text{coordination costs}
+         \]
+       - Store the result \( (t_j, e_j) \) in a benefit set \( E_C \).
+  - Identify the task \( t_{j,\text{best}} \) with the highest net benefit for \( C \) and calculate:
+    - Coalition value \( V_C \).
+    - Coalition cost \( c_C = 1 / V_C \).
+
+- **Stage 2b: Form a Coalition**
+  - **Select Optimal Coalition:** Each agent identifies the coalition in \( L_i \) with the lowest weight \( w_p = c_p / |C_p| \).
+  - **Global Announcement:** Agents publicly share the weights of their optimal coalitions. The coalition \( C_{\text{low}} \) with the lowest global weight is selected to execute \( t_{\text{low},\text{best}} \).
+  - **Update State:**
+    - Agents in \( C_{\text{low}} \) execute the task, and their capabilities are updated to reflect resource usage.
+    - Remove completed task \( t_{\text{low},\text{best}} \) from the task pool.
+    - Recalculate coalition values for coalitions involving members of \( C_{\text{low}} \).
+
+#### 3. Repeating the Process
+- The process repeats until:
+  - All tasks are assigned, or
+  - No remaining coalitions can perform any tasks.
+
+### Benefits of the Improved Algorithm
+- **Balanced Distribution:** Responsibilities for coalition evaluation are evenly distributed among agents, avoiding bottlenecks.
+- **Efficiency:** By focusing only on relevant coalitions, computational and communication costs are reduced.
+- **Dynamic Adaptation:** Agents dynamically recalculate coalition values, accommodating changes in capabilities and task requirements.
+
+### Example Execution
+1. **Initial Stage:** Agent \( A_1 \) identifies potential coalitions \( \{A_1, A_2\}, \{A_1, A_4\}, \{A_1, A_2, A_4\}, \{A_1, A_2, A_3, A_4\} \).
+2. **Coalition Evaluation:** Each coalition's capability and cost are calculated. For instance, coalition \( \{A_1, A_2, A_4\} \) may have the best value for task \( T_3 \).
+3. **Task Execution:** Coalition \( \{A_1, A_2, A_4\} \) is formed to execute \( T_3 \). Afterward, the coalition disbands, and its agents update their states for the next round of task allocation.
+
+This improved algorithm ensures a scalable, decentralized solution for task allocation in multi-agent systems.
+
+
+### Example: RETSINA Framework
 - **Task Assignment:**
-  - Tasks decomposed into subtasks by a Task Agent.
-  - Middle Agents identify potential coalitions for each subtask.
-- **Coalition Formation:**
-  - Coalitions with the highest value are selected to execute subtasks.
+  - Tasks are decomposed into subtasks by a central Task Agent.
+  - A Middle Agent facilitates coalition formation by matching agents to subtasks.
 - **Dynamic Updates:**
-  - Agents report changes in capabilities to update future coalition options.
+  - After completing subtasks, agents report changes in their capabilities to update coalition options dynamically.
 
----
+This systematic approach ensures that tasks are allocated efficiently while addressing the inherent complexity of coalition formation in multi-agent systems.
 
-## Challenges and Drawbacks
-- **Message Overhead:** High communication costs in decentralized systems.
-- **Redundancy:** Duplicate coalition evaluations by different agents.
-- **Memory Requirements:** Storing large sets of potential coalitions.
-- **Suboptimality:** Tasks may remain unassigned due to heuristic limitations.
 
 ---
 
@@ -864,6 +1000,7 @@ This lecture explores implicit cooperation methods in Multi-Agent Systems (MAS),
   1. **Markets:** Focus on exchanges of goods and services (e.g., negotiation-based interactions).
   2. **Networks:** Emphasize dynamic collaboration with contracts and mutual interests.
   3. **Hierarchies:** Use command and control for efficiency in production or specialized tasks.
+  ![Social Structures](figures/Social%20Structures.png)
 
 ### **Examples of Organizational Structures**
 1. **Product Hierarchy:**

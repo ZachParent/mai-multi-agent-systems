@@ -11,7 +11,7 @@ communication_operator:
   allow_delegation: false
   verbose: true
   llm: ollama/falcon3:10b
-  temperature: 0.2
+  temperature: 0
 
 archive_keeper:
   role: Archive Keeper
