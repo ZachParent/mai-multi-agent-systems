@@ -41,11 +41,16 @@ class MedicalServicesCrew:
         return Task(config=config, tools=[route_distance_tool])
 
     @task
-    def allocate_hospital_resources(self) -> Task:
+    def plan_hospital_response(self) -> Task:
         config = add_schema_to_task_config(
-            self.tasks_config["allocate_hospital_resources"], AllocatedHospitalResources.model_json_schema()
+            self.tasks_config["plan_hospital_response"], AllocatedHospitalResources.model_json_schema()
         )
         return Task(config=config)
+
+    @task
+    def allocate_hospital_resources(self) -> Task:
+        config = self.tasks_config["allocate_hospital_resources"]
+        return Task(config=config, tools=[hospital_updater_tool])
 
     @task
     def deploy_paramedics(self) -> Task:
@@ -59,7 +64,7 @@ class MedicalServicesCrew:
         config = add_schema_to_task_config(
             self.tasks_config["report_medical_response"], MedicalResponseReport.model_json_schema()
         )
-        return Task(config=config, tools=[hospital_updater_tool])
+        return Task(config=config)
 
     @crew
     def crew(self) -> Crew:
