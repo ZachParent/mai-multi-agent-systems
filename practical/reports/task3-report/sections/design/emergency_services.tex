@@ -1,0 +1,10 @@
+\subsubsection{Design}
+
+\paragraph{Purpose}
+The Emergency Services crew is responsible for the initial assessment of the emergency situation and the dispatch of the appropriate response teams.
+
+\paragraph{Changes}
+In the initial design, the emergency services crew was responsible for directly notifying the other crews
+and generating separate assessments for the firefighters crew and the medical services crew, but we
+chose to instead generate a single call assessment, which includes the evaluation of whether firefighters
+and medical services are required. This assessment is then programmetically used by the flow to call the subsequent crews.

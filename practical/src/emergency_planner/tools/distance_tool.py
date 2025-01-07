@@ -30,20 +30,18 @@ class RouteDistanceTool(BaseTool):
     class Config:
         arbitrary_types_allowed = True
 
-    def __init__(self, city_map: str, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        if not city_map:
-            raise Exception("A valid city map path to a graphml file must be provided.")
+        city_map = 'practical/src/data/lloretDeMar.graphml'
         self.city_map = ox.load_graphml(city_map)
         self.city_map = ox.routing.add_edge_speeds(self.city_map)
         self.city_map = ox.routing.add_edge_travel_times(self.city_map)
 
-    def _run(self, *args, **kwargs) -> int:
-        args = args[0]
-        x_origin = args.get("x_origin")
-        y_origin = args.get("y_origin")
-        x_destination = args.get("x_destination")
-        y_destination = args.get("y_destination")
+    def _run(self, **kwargs) -> int:
+        x_origin = kwargs.get("x_origin")
+        y_origin = kwargs.get("y_origin")
+        x_destination = kwargs.get("x_destination")
+        y_destination = kwargs.get("y_destination")
 
         return self._find_distance(x_origin, y_origin, x_destination, y_destination)
 
@@ -63,4 +61,4 @@ class RouteDistanceTool(BaseTool):
         )
         edge_lengths = ox.routing.route_to_gdf(self.city_map, route)["length"]
 
-        return round(sum(edge_lengths))
+        return round(sum(edge_lengths))/1000 # in km

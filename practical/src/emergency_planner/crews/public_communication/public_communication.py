@@ -4,6 +4,7 @@ from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
 from dotenv import load_dotenv
 from data_models.public_communication import DraftArticle, EmergencyReport, IntegratedArticle, PublicCommunicationReport, RelatedCases, ReviewedArticle
+from data_models.shared import add_schema_to_task_config
 from tools.incident_retrieval_tool import IncidentAnalysisTool
 
 # Load environment variables

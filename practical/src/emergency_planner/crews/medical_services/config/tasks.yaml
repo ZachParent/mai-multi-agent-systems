@@ -1,24 +1,61 @@
-receive_report:
-  description: Receive the medical assessment of the fire incident.
-  expected_output: Key information such as location, number of injured, and severity of injuries.
-  agent: medical_services_operator
+fetch_hospital_information:
+  description: >
+    1. Use the Hospital Reader Tool to fetch the information of all hospitals from the database.
+    2. Return the hospital information in a structured output.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
+  agent: hospital_coordinator
 
 rank_hospitals:
-  description: Rank the city's hospitals based on distance to the emergency location.
-  expected_output: A ranked list of hospitals.
+  description: >
+    1. Receive input containing the Medical Assessment: {medical_assessment} and the hospital information from the previous task.
+    2. For each hospital, calculate the distance to the emergency location using the Route Distance Tool.
+    3. Return the list of hospital information you received, but substitute location for distance to emergency. Include as well a timestamp.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: hospital_coordinator
+  context:
+    - fetch_hospital_information
 
 allocate_hospital_resources:
-  description: Assess available resources at hospitals and allocate them according to the emergency needs.
-  expected_output: Allocation plan for hospital resources.
+  description: >
+    1. Read the ranked list of hospitals and the Medical Assessment: {medical_assessment}.
+    2. Assess available resources at the given hospitals, including beds, medical staff, and equipment. Know that each element of the 'injured_details' list of the Medical Assessment corresponds to a single injured person.
+    3. Allocate resources according to the emergency needs and based on the hospital ranking, ensuring optimal distribution. Do not over-allocate resources, as other emergencies may arise. There can be hospitals with no resources allocated.
+    4. Create an allocation plan that details how resources will be utilized to address the emergency.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: hospital_coordinator
+  context:
+    - rank_hospitals
 
 deploy_paramedics:
-  description: Plan the deployment of paramedics to the incident location.
-  expected_output: Number of paramedics and ambulances dispatched, estimated times of arrival, and any special equipment needed.
+  description: >
+    1. Read the Hospital Resource Allocation plan and the Medical Assessment: {medical_assessment}.
+    2. Calculate the total number of paramedics to be deployed and ambulances to be dispatched by adding up the resources allocated from each hospital.
+    3. Determine the estimated times of arrival of each of the allocated ambulance.
+    4. Identify any special equipment required and ensure it is dispatched with the paramedics.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: paramedics
+  context:
+    - allocate_hospital_resources
 
 report_medical_response:
-  description: Report a comprehensive summary of the medical response plan.
-  expected_output: Summary of the response plan.
+  description: >
+    1. Read the Hospital Resource Allocation plan, the Paramedic Deployment plan, and the Medical Assessment: {medical_assessment}.
+    2. Update the database using the Hospital Updater Tool to account for the allocated resources of each hospital.
+    3. Compile a comprehensive summary of the medical response plan, including the resource allocation and the paramedic deployment plan.
+    4. Highlight key actions to be taken and outcomes expected.
+    5. Provide a detailed report that can be used for future reference and continuous improvement.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: medical_services_operator
+  context:
+    - allocate_hospital_resources
+    - deploy_paramedics

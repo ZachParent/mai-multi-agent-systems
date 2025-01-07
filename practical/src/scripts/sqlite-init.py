@@ -75,6 +75,68 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
         conn.close()
         print(f"INCIDENTS TABLE CREATED")
 
+def populate_hospital_table(db_path: str):
+    """
+    Populates the database with 3 instances of hospitals.
+    Each hospital has attributes: hospital_id, location_x, location_y, available_beds, available_ambulances, available_paramedics.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+    """
+    if os.path.exists(db_path):
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # Create table
+        cursor.execute("""
+        CREATE TABLE hospitals (
+            hospital_id TEXT,
+            location_x REAL,
+            location_y REAL,
+            available_beds INTEGER,
+            available_ambulances INTEGER,
+            available_paramedics INTEGER
+        )
+        """)
+
+        # Predefined hospital data
+        hospitals = [
+            {
+                "hospital_id": "H1",
+                "location_x": 2.80,
+                "location_y": 41.67,
+                "available_beds": 10,
+                "available_ambulances": 3,
+                "available_paramedics": 6
+            },
+            {
+                "hospital_id": "H2",
+                "location_x": 2.89,
+                "location_y": 41.67,
+                "available_beds": 20,
+                "available_ambulances": 5,
+                "available_paramedics": 9
+            },
+            {
+                "hospital_id": "H3",
+                "location_x": 2.84,
+                "location_y": 41.79,
+                "available_beds": 15,
+                "available_ambulances": 4,
+                "available_paramedics": 8
+            }
+        ]
+
+        for hospital in hospitals:
+            cursor.execute("""
+            INSERT INTO hospitals (hospital_id, location_x, location_y, available_beds, available_ambulances, available_paramedics)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """, (hospital["hospital_id"], hospital["location_x"], hospital["location_y"], hospital["available_beds"], hospital["available_ambulances"], hospital["available_paramedics"]))
+
+        conn.commit()
+        conn.close()
+        print(f"HOSPITALS TABLE CREATED")
+
 def main(reset=True):
     # Load environment variables
     load_dotenv(os.path.join("practical", "src", ".env"))
@@ -96,6 +158,7 @@ def main(reset=True):
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
 
     populate_incident_table(db_path)
+    populate_hospital_table(db_path)
 
 if __name__ == "__main__":
     main()

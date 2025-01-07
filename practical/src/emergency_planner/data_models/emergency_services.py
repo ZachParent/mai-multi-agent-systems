@@ -41,6 +41,7 @@ class FireAssessment(BaseModel):
 
 class MedicalAssessment(BaseModel):
     location: Location
+    injured_count: int
     injured_details: List[InjuryType]
     fire_severity: FireSeverity
     hazards: List[HazardType]
