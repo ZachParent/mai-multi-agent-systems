@@ -30,24 +30,21 @@ class FirefightersCrew:
     @task
     def allocate_firefighting_resources(self) -> Task:
         config = add_schema_to_task_config(
-            self.tasks_config["allocate_firefighting_resources"],
-            AllocatedFirefightingResources.model_json_schema(),
+            self.tasks_config["allocate_firefighting_resources"], AllocatedFirefightingResources.model_json_schema()
         )
-        return Task(config=config, output_pydantic=AllocatedFirefightingResources)
+        return Task(config=config)
 
     @task
     def deploy_fire_combatants(self) -> Task:
         config = add_schema_to_task_config(
-            self.tasks_config["deploy_fire_combatants"],
-            DeployedFireCombatants.model_json_schema(),
+            self.tasks_config["deploy_fire_combatants"], DeployedFireCombatants.model_json_schema()
         )
-        return Task(config=config, output_pydantic=DeployedFireCombatants)
+        return Task(config=config)
 
     @task
     def report_firefighting_response(self) -> Task:
         config = add_schema_to_task_config(
-            self.tasks_config["report_firefighting_response"],
-            FirefightersResponseReport.model_json_schema(),
+            self.tasks_config["report_firefighting_response"], FirefightersResponseReport.model_json_schema()
         )
         return Task(config=config, output_pydantic=FirefightersResponseReport)
 
