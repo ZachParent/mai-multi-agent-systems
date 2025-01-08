@@ -1,11 +1,12 @@
 import logging
+import json
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
 
-from .crews.emergency_services.emergency_services import EmergencyServicesCrew
-from .crews.firefighters.firefighters import FirefightersCrew
-from .crews.medical_services.medical_services import MedicalServicesCrew
-from .crews.public_communication.public_communication import PublicCommunicationCrew
-from .data_models import (
+from crews.emergency_services.emergency_services import EmergencyServicesCrew
+from crews.firefighters.firefighters import FirefightersCrew
+from crews.medical_services.medical_services import MedicalServicesCrew
+from crews.public_communication.public_communication import PublicCommunicationCrew
+from data_models import (
     EmergencyPlannerState,
     FireAssessment,
     MedicalAssessment,
@@ -16,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 # TODO: use a more sophisticated call transcript
 EMERGENCY_CALL = (
-    "There's been a fire at 123 Main St, 12345. I think there are people trapped."
+    "A fire of electrical origin has broken out at coordinates (x: 41.71947, y: 2.84031). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are 5 people currently trapped. Additionally, there are 2 injured individuals with minor and severe injuries respectively requiring immediate attention."
 )
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
@@ -48,36 +49,35 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             .crew()
             .kickoff(inputs={"transcript": EMERGENCY_CALL})
         )
-        self.state.call_assessment = result.raw
+        self.state.call_assessment = json.loads(result.raw)
         logger.info("Emergency call received", result.raw)
 
     @listen(emergency_services)
     def firefighters(self):
         logger.info("Dispatching fire fighters")
-        fire_assessment = FireAssessment(**self.state.call_assessment.model_dump())
+        fire_assessment = FireAssessment(**self.state.call_assessment)
         result = (
             FirefightersCrew()
             .crew()
             .kickoff(inputs={"fire_assessment": fire_assessment})
         )
-        self.state.firefighters_response_report = result.raw
+        self.state.firefighters_response_report = json.loads(result.raw)
         logger.info("Fire fighters dispatched", result.raw)
 
     @listen(emergency_services)
     def medical_services(self):
-        if not self.state.call_assessment.medical_services_required:
+        if not self.state.call_assessment['medical_services_required']:
             logger.info("Medical services not required")
             return
         logger.info("Dispatching medical services")
-        medical_assessment = MedicalAssessment(
-            **self.state.call_assessment.model_dump()
-        )
+        self.state.call_assessment['injured_count'] = len(self.state.call_assessment['injured_details'])
+        medical_assessment = MedicalAssessment(**self.state.call_assessment)
         result = (
             MedicalServicesCrew()
             .crew()
             .kickoff(inputs={"medical_assessment": medical_assessment})
         )
-        self.state.medical_response_report = result.raw
+        self.state.medical_response_report = json.loads(result.raw)
         logger.info("Medical services dispatched", result.raw)
 
     @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
@@ -87,16 +87,18 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
             medical_response_report=self.state.medical_response_report,
-            fire_severity=self.state.call_assessment.fire_severity,
-            location_x=self.state.call_assessment.location[0],
-            location_y=self.state.call_assessment.location[1],
+            timestamp=self.state.firefighters_response_report['timestamp'],
+            fire_type=self.state.call_assessment['fire_type'],
+            fire_severity=self.state.call_assessment['fire_severity'],
+            location_x=self.state.call_assessment['location'][0],
+            location_y=self.state.call_assessment['location'][1]
         )
         result = (
             PublicCommunicationCrew()
             .crew()
             .kickoff(inputs={"emergency_report": emergency_report})
         )
-        self.state.public_communication_report = result.raw
+        self.state.public_communication_report = json.loads(result.raw)
         logger.info("Public communication handled", result.raw)
 
     @router(public_communication)

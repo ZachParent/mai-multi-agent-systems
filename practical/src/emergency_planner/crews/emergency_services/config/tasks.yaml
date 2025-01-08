@@ -1,23 +1,10 @@
 # tasks.yaml
 receive_call:
   description: >
-    Process the emergency call transcript and extract structured information:
-    1. Type of fire (ordinary, electrical, gas)
-    2. Location coordinates (x, y)
-    3. List of injured people and their conditions
-    4. Fire severity (low, medium, high)
-    5. List of hazards present
-    6. Whether the fire is indoor or outdoor
-    7. Number of trapped people
+    Process the emergency call transcript and extract structured information. The transcript is, {transcript}.
   expected_output: >
-    A structured EmergencyDetails object containing:
-    - fire_type: The type of fire (ordinary, electrical, gas)
-    - location: Coordinates (x, y)
-    - injured_details: List of injury types (minor, moderate, critical)
-    - fire_severity: Level of severity (low, medium, high)
-    - hazards: List of present hazards
-    - indoor: Boolean indicating if fire is indoors
-    - trapped_people: Number of people trapped
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: emergency_call_agent
 
 notify_other_crews:
@@ -25,8 +12,10 @@ notify_other_crews:
     Analyze the emergency details and determine which emergency services are required.
     Firefighters are always required for fires.
     Medical services are required if there are injuries or trapped people.
+    Return the unchanged call assessment from the previous task, adding only the required services (firefighters_required and medical_services_required).
   expected_output: >
-    A CallAssessment object containing all emergency details plus:
-    - firefighters_required: Always true for fires
-    - medical_services_required: True if there are injuries or trapped people
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: notification_agent
+  context:
+    - receive_call

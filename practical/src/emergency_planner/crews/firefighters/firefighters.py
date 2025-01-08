@@ -5,15 +5,7 @@ from crewai.project import CrewBase, agent, task, crew
 from data_models import FireAssessment
 
 from data_models.firefighters import AllocatedFirefightingResources, DeployedFireCombatants, FirefightersResponseReport
-
-
-def add_schema_to_task_config(task_config, schema):
-    """
-    Add the schema JSON to the expected output of the task configuration.
-    """
-    task_config = task_config.copy()
-    task_config["expected_output"] += f"\n {json.dumps(schema['properties']).replace('{','{{').replace('}','}}')}"
-    return task_config
+from data_models.shared import add_schema_to_task_config
 
 
 @CrewBase
