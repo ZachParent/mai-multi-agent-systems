@@ -1,14 +1,24 @@
 allocate_firefighting_resources:
-  description: Determine the necessary firefighting materials based on the fire assessment.
-  expected_output: A list of required materials with their quantities.
+  description: Determine the necessary firefighting materials based on the Fire Assessment, {fire_assessment}.
+  expected_output: >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: equipment_technician
 
 deploy_fire_combatants:
-  description: Plan and execute the deployment of firefighters to the fire location.
-  expected_output: Number of firefighters deployed, estimated arrival time, and prioritized firefighting activities.
+  description: Plan and execute the deployment of firefighters to the fire location, based on the Fire Assessment, {fire_assessment}, and the resource allocation.
+  expected_output:  >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: firefighter
+  context:
+    - allocate_firefighting_resources
 
 report_firefighting_response:
   description: Report a comprehensive summary of the firefighting response and actions taken.
-  expected_output: A summary of firefighting activities and outcomes.
+  expected_output:  >
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: fire_chief
+  context:
+    - deploy_fire_combatants
