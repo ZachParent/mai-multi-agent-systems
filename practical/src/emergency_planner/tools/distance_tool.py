@@ -5,6 +5,7 @@ from typing import Type
 from pydantic import BaseModel, Field
 import osmnx as ox
 
+CITY_NAME = 'Lloret de Mar, Spain'
 
 class RouteDistanceSchema(BaseModel):
     """Input for the RouteDistanceTool."""
@@ -32,8 +33,7 @@ class RouteDistanceTool(BaseTool):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        city_map = 'practical/src/data/lloretDeMar.graphml'
-        self.city_map = ox.load_graphml(city_map)
+        self.city_map = ox.graph_from_place(CITY_NAME, network_type='drive')
         self.city_map = ox.routing.add_edge_speeds(self.city_map)
         self.city_map = ox.routing.add_edge_travel_times(self.city_map)
 
