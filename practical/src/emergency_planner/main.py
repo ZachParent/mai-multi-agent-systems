@@ -2,11 +2,11 @@ import logging
 import json
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
 
-from crews.emergency_services.emergency_services import EmergencyServicesCrew
-from crews.firefighters.firefighters import FirefightersCrew
-from crews.medical_services.medical_services import MedicalServicesCrew
-from crews.public_communication.public_communication import PublicCommunicationCrew
-from data_models import (
+from .crews.emergency_services.emergency_services import EmergencyServicesCrew
+from .crews.firefighters.firefighters import FirefightersCrew
+from .crews.medical_services.medical_services import MedicalServicesCrew
+from .crews.public_communication.public_communication import PublicCommunicationCrew
+from .data_models import (
     EmergencyPlannerState,
     FireAssessment,
     MedicalAssessment,
@@ -14,8 +14,8 @@ from data_models import (
 )
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
-# TODO: use a more sophisticated call transcript
 EMERGENCY_CALL = (
     "A fire of electrical origin has broken out at coordinates (x: 41.71947, y: 2.84031). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are 5 people currently trapped. Additionally, there are 2 injured individuals with minor and severe injuries respectively requiring immediate attention."
 )
