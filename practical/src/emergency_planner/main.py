@@ -1,5 +1,4 @@
 import logging
-import json
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
 
 from .crews.emergency_services.emergency_services import EmergencyServicesCrew
@@ -49,7 +48,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             .crew()
             .kickoff(inputs={"transcript": EMERGENCY_CALL})
         )
-        self.state.call_assessment = json.loads(result.raw)
+        self.state.call_assessment = result.pydantic
         logger.info("Emergency call received", result.raw)
 
     @listen(emergency_services)
@@ -61,23 +60,23 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             .crew()
             .kickoff(inputs={"fire_assessment": fire_assessment})
         )
-        self.state.firefighters_response_report = json.loads(result.raw)
+        self.state.firefighters_response_report = result.pydantic
         logger.info("Fire fighters dispatched", result.raw)
 
     @listen(emergency_services)
     def medical_services(self):
-        if not self.state.call_assessment['medical_services_required']:
+        if not self.state.call_assessment.medical_services_required:
             logger.info("Medical services not required")
             return
         logger.info("Dispatching medical services")
-        self.state.call_assessment['injured_count'] = len(self.state.call_assessment['injured_details'])
-        medical_assessment = MedicalAssessment(**self.state.call_assessment)
+        medical_assessment = MedicalAssessment(injured_count=len(self.state.call_assessment.injured_details),
+                                               **self.state.call_assessment)
         result = (
             MedicalServicesCrew()
             .crew()
             .kickoff(inputs={"medical_assessment": medical_assessment})
         )
-        self.state.medical_response_report = json.loads(result.raw)
+        self.state.medical_response_report = result.pydantic
         logger.info("Medical services dispatched", result.raw)
 
     @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
@@ -87,18 +86,18 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
             medical_response_report=self.state.medical_response_report,
-            timestamp=self.state.firefighters_response_report['timestamp'],
-            fire_type=self.state.call_assessment['fire_type'],
-            fire_severity=self.state.call_assessment['fire_severity'],
-            location_x=self.state.call_assessment['location'][0],
-            location_y=self.state.call_assessment['location'][1]
+            timestamp=self.state.firefighters_response_report.timestamp,
+            fire_type=self.state.call_assessment.fire_type,
+            fire_severity=self.state.call_assessment.fire_severity,
+            location_x=self.state.call_assessment.location[0],
+            location_y=self.state.call_assessment.location[1]
         )
         result = (
             PublicCommunicationCrew()
             .crew()
             .kickoff(inputs={"emergency_report": emergency_report})
         )
-        self.state.public_communication_report = json.loads(result.raw)
+        self.state.public_communication_report = result.pydantic
         logger.info("Public communication handled", result.raw)
 
     @router(public_communication)
