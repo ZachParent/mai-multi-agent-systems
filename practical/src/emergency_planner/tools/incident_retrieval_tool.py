@@ -1,6 +1,8 @@
 from datetime import datetime
+import os
 import sqlite3
 from crewai.tools import BaseTool
+from dotenv import load_dotenv
 from ..data_models.public_communication import RelatedCase, RelatedCases, FireSeverity, FireType
 
 
@@ -12,7 +14,7 @@ class IncidentAnalysisTool(BaseTool):
     )
     db_path: str = "incidents.db"
 
-    def __init__(self, db_path: str, result_as_answer: bool):
+    def __init__(self, result_as_answer: bool):
         """
         Initialize the IncidentAnalysisTool with a default database path.
 
@@ -21,7 +23,16 @@ class IncidentAnalysisTool(BaseTool):
             result_as_answer (bool): Directly returns tool output
         """
         super().__init__(result_as_answer=result_as_answer)
-        self.db_path = db_path
+        # Load environment variables
+        load_dotenv()
+
+        # Get DB path and file from environment variables
+        raw_db_path = os.getenv("DB_PATH")
+        db_file = os.getenv("DB_FILE")
+
+        # Ensure cross-platform compatibility by normalizing paths
+        normalized_path = os.path.normpath(raw_db_path)
+        self.db_path = os.path.join(normalized_path, db_file)
         self.result_as_answer = result_as_answer
 
     def _run(
