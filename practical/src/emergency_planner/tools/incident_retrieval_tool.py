@@ -1,6 +1,6 @@
 from datetime import datetime
 import sqlite3
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from ..data_models.public_communication import RelatedCase, RelatedCases, FireSeverity, FireType
 
 
