@@ -14,13 +14,7 @@ search_related_cases:
        (e.g., same location, similar fire type).
     3. Compile a list of relevant past cases, highlighting any consistent trends or reoccurring issues.
     4. Elaborate a medium size summary for the new incident described in Fire and Medical report.
-    Context:
-    - location_x: {emergency_report[location_x]}
-    - location_y: {emergency_report[location_y]}
-    - fire_severity: {emergency_report[fire_severity]}
-    - fire_type: {emergency_report[fire_type]}
-    - Fire report: {emergency_report[firefighters_response_report][summary]}
-    - Medical report: {emergency_report[medical_response_report][summary]}
+    Emergency Report: {emergency_report}
   expected_output: >
    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
     Example: 
@@ -34,12 +28,7 @@ draft_initial_article:
     1. Take the structured incident data.
     2. Write a clear, concise article draft intended for the public, focusing on facts and immediate safety information.
     3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
-    Context:
-    - location_x coordinate: {emergency_report[location_x]}
-    - location_y coordinate: {emergency_report[location_y]}
-    - timestamp: {emergency_report[timestamp]}
-    - Fire report: {emergency_report[firefighters_response_report][summary]}
-    - Medical report: {emergency_report[medical_response_report][summary]}
+    Emergency Report: {emergency_report}
   expected_output: >
     You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
     Example: 

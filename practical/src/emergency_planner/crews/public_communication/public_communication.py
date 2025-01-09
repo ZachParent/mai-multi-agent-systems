@@ -8,7 +8,7 @@ from ...data_models.shared import add_schema_to_task_config
 from ...tools.incident_retrieval_tool import IncidentAnalysisTool
 
 # Load environment variables
-load_dotenv(os.path.join("practical", "src", ".env"))
+load_dotenv()
 
 # Get DB path and file from environment variables
 raw_db_path = os.getenv("DB_PATH")
