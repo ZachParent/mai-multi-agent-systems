@@ -1,7 +1,7 @@
 import logging
 import json
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
-
+from pathlib import Path
 from .crews.emergency_services.emergency_services import EmergencyServicesCrew
 from .crews.firefighters.firefighters import FirefightersCrew
 from .crews.medical_services.medical_services import MedicalServicesCrew
@@ -16,9 +16,9 @@ from .data_models import (
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
-EMERGENCY_CALL = (
-    "A fire of electrical origin has broken out at coordinates (x: 41.71947, y: 2.84031). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are 5 people currently trapped. Additionally, there are 2 injured individuals with minor and severe injuries respectively requiring immediate attention."
-)
+EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent / "data/call_transcripts.txt"
+TRANSCRIPT_COUNT = 2
+TRANSCRIPT_INDEX = 0
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
 
@@ -35,11 +35,9 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     @start()
     def get_call_transcript(self):
         logger.info("Getting call transcript")
-        self.state.call_transcript = EMERGENCY_CALL
+        with open(EMERGENCY_CALL_TRANSCRIPTS_FILENAME, "r") as f:
+            self.state.call_transcript = f.readlines()[TRANSCRIPT_INDEX]
         logger.info("Call transcript received", self.state.call_transcript)
-
-        # Read public input
-        # publicannouncements.kickoff()
 
     @listen(get_call_transcript)
     def emergency_services(self):
@@ -47,7 +45,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         result = (
             EmergencyServicesCrew()
             .crew()
-            .kickoff(inputs={"transcript": EMERGENCY_CALL})
+            .kickoff(inputs={"transcript": self.state.call_transcript})
         )
         self.state.call_assessment = json.loads(result.raw)
         logger.info("Emergency call received", result.raw)
