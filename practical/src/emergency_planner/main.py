@@ -14,7 +14,7 @@ from .data_models import (
 )
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent / "data/call_transcripts.txt"
 TRANSCRIPT_COUNT = 2
@@ -57,7 +57,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         result = (
             FirefightersCrew()
             .crew()
-            .kickoff(inputs={"fire_assessment": fire_assessment})
+            .kickoff(inputs={"fire_assessment": fire_assessment.model_dump_json()})
         )
         self.state.firefighters_response_report = json.loads(result.raw)
         logger.info("Fire fighters dispatched", result.raw)
@@ -73,7 +73,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         result = (
             MedicalServicesCrew()
             .crew()
-            .kickoff(inputs={"medical_assessment": medical_assessment})
+            .kickoff(inputs={"medical_assessment": medical_assessment.model_dump_json()})
         )
         self.state.medical_response_report = json.loads(result.raw)
         logger.info("Medical services dispatched", result.raw)
@@ -94,7 +94,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         result = (
             PublicCommunicationCrew()
             .crew()
-            .kickoff(inputs={"emergency_report": emergency_report})
+            .kickoff(inputs={"emergency_report": emergency_report.model_dump_json()})
         )
         self.state.public_communication_report = json.loads(result.raw)
         logger.info("Public communication handled", result.raw)

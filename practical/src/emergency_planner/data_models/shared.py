@@ -10,7 +10,7 @@ FireSeverity = Literal["low", "medium", "high"]
 
 InjuryType = Literal["minor", "moderate", "severe"]
 
-HazardType = Literal["gas cylinders", "chemicals"]
+HazardType = Literal["gas cylinders", "chemicals", "flammable chemicals"]
 
 def add_schema_to_task_config(task_config, schema):
     """

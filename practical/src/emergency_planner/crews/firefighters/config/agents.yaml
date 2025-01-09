@@ -3,7 +3,7 @@ fire_chief:
   goal: Facilitate communication and coordination within the Firefighter Agent Crew and with the Emergency Service Operator, ensuring the crew has accurate and timely information to respond effectively.
   backstory: Experienced in managing fire emergencies, skilled in decision-making under pressure, and adept at maintaining clear communication with both the crew and emergency services.
   llm: ollama/llama3.1
-  temperature: 0.7
+  temperature: 0.6
   max_tokens: 1200
   verbose: True
 
