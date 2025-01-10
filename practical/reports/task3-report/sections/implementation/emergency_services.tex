@@ -1,15 +1,55 @@
 \subsubsection{Implementation}
 
 \paragraph{Emergency Call Agent}
+The \texttt{emergency\_call\_agent} uses the configuration specified in \newline \texttt{self.agents\_config["emergency\_call\_agent"]} to ensure proper handling of call data. It acts as the first step in the emergency response workflow, extracting and structuring information from the calls.
 
-An explanation of the code.
 \begin{lstlisting}[language=Python]
-demo code
+@agent
+def emergency_call_agent(self) -> Agent:
+    return Agent(config=self.agents_config["emergency_call_agent"])
 \end{lstlisting}
 
 \paragraph{Notification Agent}
-An explanation of the code.
+The \texttt{notification\_agent} uses the configuration provided in \newline \texttt{self.agents\_config["notification\_agent"]}. This agent ensures that only the relevant teams are alerted, streamlining the response process and avoiding unnecessary notifications.
 
 \begin{lstlisting}[language=Python]
-demo code
+@agent
+def notification_agent(self) -> Agent:
+    return Agent(config=self.agents_config["notification_agent"])
 \end{lstlisting}
+
+
+\paragraph{Receive Call Task}
+This task processes the incoming call details and structures them according to the schema provided by the \texttt{EmergencyDetails} model. This ensures data consistency and validity.
+
+\begin{lstlisting}[language=Python]
+@task
+def receive_call(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["receive_call"], EmergencyDetails.model_json_schema()
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Notify Other Crews Task}
+This task uses the processed emergency details to notify other relevant crews. It structures its output using the \texttt{CallAssessment} schema, ensuring clarity in communication.
+
+\begin{lstlisting}[language=Python]
+@task
+def notify_other_crews(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["notify_other_crews"], CallAssessment.model_json_schema()
+    )
+    return Task(config=config, output_pydantic=CallAssessment)
+\end{lstlisting}
+
+\paragraph{Crew Construction}
+The agents and tasks are combined into a sequential process using the \texttt{Crew} class. This design ensures an orderly workflow from receiving calls to notifying the appropriate teams, where the Emergency Services Crew acts as a critical component for initial emergency assessment and coordination across multiple teams within the system.
+
+\begin{lstlisting}[language=Python]
+@crew
+def crew(self) -> Crew:
+    """Creates the Emergency Services Crew"""
+    return Crew(agents=self.agents, tasks=self.tasks, process=Process.sequential)
+\end{lstlisting}
+
