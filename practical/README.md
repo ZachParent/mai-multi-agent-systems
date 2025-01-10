@@ -17,7 +17,12 @@ conda activate mas
 pip install 'crewai[tools]==0.95.0'
 ```
 
-4. run the flow
+4. install the dependencies
+```
+crewai install
+```
+
+5. run the flow
 ```
 crewai flow kickoff
 ```
