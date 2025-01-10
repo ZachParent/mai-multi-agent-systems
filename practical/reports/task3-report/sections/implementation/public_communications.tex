@@ -1,1 +1,130 @@
 \subsubsection{Implementation}
+
+\paragraph{Communication Operator Agent}
+The \texttt{communication\_operator} agent uses the configuration specified in \newline \texttt{self.agents\_config["communication\_operator"]}. This agent facilitates communication between emergency crews and public communication teams, ensuring clarity and accuracy in information flow.
+
+\begin{lstlisting}[language=Python]
+@agent
+def communication_operator(self) -> Agent:
+    return Agent(config=self.agents_config["communication_operator"])
+\end{lstlisting}
+
+\paragraph{Archive Keeper Agent}
+The \texttt{archive\_keeper} agent leverages the configuration from \newline \texttt{self.agents\_config["archive\_keeper"]} to manage historical data archives, providing quick access to relevant past incident reports and trends.
+
+\begin{lstlisting}[language=Python]
+@agent
+def archive_keeper(self) -> Agent:
+    return Agent(config=self.agents_config["archive_keeper"])
+\end{lstlisting}
+
+\paragraph{Article Writer Agent}
+The \texttt{article\_writer} agent is configured through \newline \texttt{self.agents\_config["article\_writer"]} to draft, refine, and integrate informative articles for public dissemination.
+
+\begin{lstlisting}[language=Python]
+@agent
+def article_writer(self) -> Agent:
+    return Agent(config=self.agents_config["article_writer"])
+\end{lstlisting}
+
+\paragraph{Mayor Agent}
+The \texttt{mayor} agent ensures oversight by reviewing and authorizing final communications, as configured in \newline \texttt{self.agents\_config["mayor"]}.
+
+\begin{lstlisting}[language=Python]
+@agent
+def mayor(self) -> Agent:
+    return Agent(config=self.agents_config["mayor"])
+\end{lstlisting}
+
+\paragraph{Social Media Commentator Agent}
+The \texttt{social\_media\_commentator} agent, configured via \newline \texttt{self.agents\_config["social\_media\_commentator"]}, provides witty yet constructive commentary for social media engagement.
+
+\begin{lstlisting}[language=Python]
+@agent
+def social_media_commentator(self) -> Agent:
+    return Agent(config=self.agents_config["social_media_commentator"])
+\end{lstlisting}
+
+\paragraph{Search Related Cases Task}
+This task utilizes the \texttt{RelatedCases} model to analyze historical data and identify trends or reoccurring issues. To force the tool output as the result of an agent's task, the \texttt{result\_as\_answer} parameter is set to \texttt{True}, ensuring the tool output is captured and returned as the task result without modifications by the agent.
+
+\begin{lstlisting}[language=Python]
+@task
+def search_related_cases(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["search_related_cases"], RelatedCases.model_json_schema()
+    )
+    return Task(config=config, tools=[IncidentAnalysisTool(result_as_answer=True)])
+\end{lstlisting}
+
+\paragraph{Draft Initial Article Task}
+The task generates an initial draft for public dissemination based on structured incident data.
+
+\begin{lstlisting}[language=Python]
+@task
+def draft_initial_article(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["draft_initial_article"], DraftArticle.model_json_schema()
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Integrate Additional Information Task}
+This task integrates supplementary historical data and refines the article for professional publication.
+
+\begin{lstlisting}[language=Python]
+@task
+def integrate_additional_information(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["integrate_additional_information"],
+        IntegratedArticle.model_json_schema(),
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Review and Authorize Publication Task}
+The \texttt{review\_and\_authorize\_publication} task ensures that communications adhere to policies and meet quality standards.
+
+\begin{lstlisting}[language=Python]
+@task
+def review_and_authorize_publication(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["review_and_authorize_publication"],
+        ReviewedArticle.model_json_schema(),
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Provide Social Media Feedback Task}
+This task evaluates the public-facing content and adds a lighthearted commentary for engagement.
+
+\begin{lstlisting}[language=Python]
+@task
+def provide_social_media_feedback(self) -> Task:
+    return Task(config=self.tasks_config["provide_social_media_feedback"])
+\end{lstlisting}
+
+\paragraph{Publish Final Communication Task}
+The final task consolidates and publishes the refined article along with mayoral approval and social media feedback.
+
+\begin{lstlisting}[language=Python]
+@task
+def publish_final_communication(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["publish_final_communication"],
+        PublicCommunicationReport.model_json_schema(),
+    )
+    return Task(config=config, output_pydantic=PublicCommunicationReport)
+\end{lstlisting}
+
+\paragraph{Crew Construction}
+The Public Communication Crew is constructed as a sequential process to manage tasks and agents cohesively.
+
+\begin{lstlisting}[language=Python]
+@crew
+def crew(self) -> Crew:
+    """Creates the Public Communication Crew"""
+    return Crew(
+        agents=self.agents, tasks=self.tasks, process=Process.sequential, verbose=True
+    )
+\end{lstlisting}
