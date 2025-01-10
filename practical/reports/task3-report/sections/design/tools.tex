@@ -1,0 +1,46 @@
+\subsection{Tools}\label{sec:tools}
+
+In this section, we describe the various tools developed for the Emergency Planner system. These tools are designed to facilitate different aspects of emergency management, including calculating route distances and managing database entries related to hospitals and incidents. Each tool is implemented with specific functionalities to address different requirements in emergency scenarios.
+
+\subsubsection{Route Distance Tool}
+
+\paragraph{Purpose}
+The Route Distance Tool calculates the driving route distance between an origin and a destination based on their coordinates. This is essential for determining the quickest routes for emergency response teams.
+
+\paragraph{Implementation}
+\begin{itemize}
+    \item \textbf{Input:} The tool requires the x and y coordinates of both the origin and destination locations.
+    \item \textbf{Execution:} The city map graph is loaded from a GraphML file, and the shortest path is calculated using the travel time as the weight. The total distance is then computed.
+    \item \textbf{Output:} The tool returns the total driving distance in kilometers.
+\end{itemize}
+
+The Route Distance Tool is a critical component to bring the Emergency Planner system closer to the real world. It gives the agents access to accurate geographical information, enabling them to make informed decisions about resource allocation and response times.
+
+\subsubsection{Database Management Tools}
+
+\paragraph{Purpose}
+The Database Management Tools include the Hospital Reader, Hospital Updater, and Incident Retrieval tools. These tools manage and update the database entries related to hospitals and incidents, ensuring that the information is current and accurate.
+
+\paragraph{Implementation}
+\begin{itemize}
+    \item \textbf{Hospital Reader Tool:}
+        \begin{itemize}
+            \item \textbf{Input:} No input parameters are required for this tool.
+            \item \textbf{Execution:} The tool connects to the SQLite database and executes a query to fetch all hospital records.
+            \item \textbf{Output:} The tool returns a list of hospitals, including their IDs, locations, and available resources.
+        \end{itemize}
+    \item \textbf{Hospital Updater Tool:}
+        \begin{itemize}
+            \item \textbf{Input:} The tool requires the hospital ID, number of beds reserved, number of ambulances dispatched, and number of paramedics deployed.
+            \item \textbf{Execution:} The tool connects to the SQLite database and executes an update query to modify the hospital's available resources.
+            \item \textbf{Output:} The tool returns a confirmation of the update operation.
+        \end{itemize}
+    \item \textbf{Incident Retrieval Tool:}
+        \begin{itemize}
+            \item \textbf{Input:} The tool requires the x and y coordinates of the location, fire severity, fire type, and a summary of the new incident.
+            \item \textbf{Execution:} The tool connects to the SQLite database, retrieves related incidents based on proximity, fire severity, and fire type, and inserts the new incident into the database.
+            \item \textbf{Output:} The tool returns a list of related incidents.
+        \end{itemize}
+\end{itemize}
+
+The Database Management Tools are essential for maintaining up-to-date and accurate information on hospitals and incidents. By efficiently managing and updating the database, these tools ensure that the data is consistent throughout crews and runs, thus helping mitigate the hallucinative nature of the LLM-based agents.
