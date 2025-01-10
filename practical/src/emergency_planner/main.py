@@ -17,7 +17,7 @@ from pydantic_core import from_json
 
 logger = logging.getLogger(__name__)
 
-EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent / "data/call_transcripts.txt"
+EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent.parent / "data" / "inputs" / "call_transcripts.txt"
 TRANSCRIPT_COUNT = 2
 TRANSCRIPT_INDEX = 0
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
@@ -129,32 +129,31 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def save_full_emergency_report(self):
         logger.info("Saving full emergency report")
         full_emergency_report = f"""
-        # Emergency Report
+# Emergency Report
 
-        ## Call Transcript
-        {self.state.call_transcript}
+## Call Transcript
+{self.state.call_transcript}
 
-        ## Firefighters Response
-        *{self.state.firefighters_response_report.timestamp}*
-        {self.state.firefighters_response_report.summary}
+## Firefighters Response
+*{self.state.firefighters_response_report.timestamp}*
+{self.state.firefighters_response_report.summary}
 
-        ## Medical Response
-        *{self.state.medical_response_report.timestamp}*
-        {self.state.medical_response_report.summary}
+## Medical Response
+*{self.state.medical_response_report.timestamp}*
+{self.state.medical_response_report.summary}
 
-        ## Public Communication Report
-        {self.state.public_communication_report.public_communication_report}
+## Public Communication Report
+{self.state.public_communication_report.public_communication_report}
 
-        ### Approved by Mayor
-        {self.state.public_communication_report.mayor_approved}
+### Approved by Mayor
+{self.state.public_communication_report.mayor_approved}
 
-        ### Mayor's Comments
-        {self.state.public_communication_report.mayor_comments}
+### Mayor's Comments
+{self.state.public_communication_report.mayor_comments}
 
-        ### Social Media Feedback
-        {self.state.public_communication_report.social_media_feedback}
-
-        """
+### Social Media Feedback
+{self.state.public_communication_report.social_media_feedback}
+"""
         with open("data/outputs/emergency_report.md", "w") as f:
             f.write(full_emergency_report)
         logger.info("Emergency report saved")
