@@ -1,99 +1,49 @@
 \section{Crew Interactions and Flow}
 \label{sec:crew_interaction}
-\subsection{Interaction Design}
-% Discuss how crews interact and the rationale behind these interactions.
-\subsection{CrewAI Flow}
-% Detailed explanation of the flow and code implementation.
+
+\subsection{Design and Coordination}
+The Emergency Planner Flow is designed to handle emergency situations by coordinating multiple crews. The flow begins with the retrieval of a call transcript, followed by the processing of the call by emergency services. Based on the assessment, firefighters and medical services are dispatched in parallel. Public communication is managed after both teams report or during approval retries. Once the emergency is resolved, the flow concludes with the generation of a comprehensive emergency report, which includes summaries and timestamps from all participating crews.
+
+\subsubsection{State Management}
+The system maintains a centralized state using a Pydantic model \footnote{\url{https://docs.crewai.com/concepts/flows\#structured-state-management}}, `EmergencyPlannerState`, which tracks all aspects of the emergency response. This includes the call transcript, assessments, and response reports. The state model ensures type-safe storage and accommodates partial updates.
+
+\subsection{Implementation}
+The flow is orchestrated using CrewAI's decorators, which define the sequence and conditions for crew operations. Key flow control points include:
+
+\begin{itemize}
+    \item \texttt{@start()}\footnote{\url{https://docs.crewai.com/concepts/flows\#start}} for initiating the call transcript retrieval.
+    \item \texttt{@listen()}\footnote{\url{https://docs.crewai.com/concepts/flows\#listen}} for establishing dependencies between operations, such as emergency services processing and the dispatch of firefighters and medical services.
+    \item \texttt{@router()}\footnote{\url{https://docs.crewai.com/concepts/flows\#router}} for handling conditional flow control, particularly for public communication approval.
+\end{itemize}
+
+
+\subsubsection{Router}
+The router manages public communication approval, checking if the mayor has approved the communication. If not, it retries up to a maximum count. This ensures that public communication is handled appropriately and efficiently.
+This includes the use of \texttt{and\_} and \texttt{or\_} to combine multiple conditions. This is key for the retry mechanism for public communication approval.
+
+\paragraph{Complex Logic for Public Communications}
+\texttt{and\_} \footnote{\url{https://docs.crewai.com/concepts/flows\#conditional-logic-and}} and \texttt{or\_} \footnote{\url{https://docs.crewai.com/concepts/flows\#conditional-logic-or}} are used to combine multiple conditions. This is key for the retry mechanism for public communication approval.
+
+\begin{lstlisting}[language=Python]
+@listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
+def public_communication(self):
+    # ...
+\end{lstlisting}
+
+\paragraph{Router Logic for Public Communication Approval}
+The router emits different messages based on the conditions, either triggering a retry or saving the full emergency report.
+
+\begin{lstlisting}[language=Python]
+@router(public_communication)
+def check_approval(self):
+    logger.info("Checking approval")
+    if self.state.public_communication_report.mayor_approved:
+        return "save full emergency report"
+    elif self.state.mayor_approval_retry_count >= MAX_MAYOR_APPROVAL_RETRY_COUNT:
+        return "save full emergency report"
+    self.state.mayor_approval_retry_count += 1
+    return "retry_public_communication"
+\end{lstlisting}
+
 \subsection{Justification of Design Choices}
-% Justify the design and implementation choices made for crew interactions.
-
-
-% The Emergency Planner Flow implements a sophisticated flow-based approach for crew interactions:
-% \begin{itemize}
-%     \item Emergency Services Crew processes initial call transcripts and produces assessments
-%     \item Medical Services and Firefighters Crews operate in parallel based on the assessment
-%     \item A Public Communication Crew activates only after both response teams have reported or during approval retries
-% \end{itemize}
-
-% \begin{figure}[ht!]
-%     \centering
-%     \includegraphics[width=0.8\textwidth]{figures/coordination_flow.png}
-%     \caption{Emergency Response Flow showing parallel processing paths and conditional triggers}
-%     \label{fig:interaction}
-% \end{figure}
-
-% As illustrated in Figure~\ref{fig:interaction}, the system uses logical operators (\texttt{and\_}, \texttt{or\_}) to create complex flow dependencies.
-
-% The flow is orchestrated using CrewAI's decorators, with complex triggering conditions:
-
-% \begin{lstlisting}[caption={Key Flow Control Points in Emergency Response}]
-% @start()
-% def get_call_transcript():
-%     # Initial entry point
-
-% @listen(get_call_transcript)
-% def emergency_services():
-%     # Processes emergency call
-
-% @listen(emergency_services)
-% def firefighters():
-%     # Parallel response team
-
-% @listen(emergency_services)
-% def medical_services():
-%     # Parallel response team
-
-% @listen(or_(and_(firefighters, medical_services), "retry public communication"))
-% def public_communication():
-%     # Activates after both teams report or during retries
-
-% @listen("save full emergency report")
-% def save_full_emergency_report():
-%     # Generates final report with all crew responses
-% \end{lstlisting}
-
-% \subsection{State Management}
-% The system maintains a centralized state using a Pydantic model that tracks all aspects of the emergency response:
-
-% \begin{lstlisting}[caption={Emergency Planner State Model}]
-% class EmergencyPlannerState(BaseModel):
-%     call_transcript: Optional[str]
-%     call_assessment: Optional[CallAssessment]
-%     firefighters_response_report: Optional[FirefightersResponseReport]
-%     medical_response_report: Optional[MedicalResponseReport]
-%     public_communication_report: Optional[PublicCommunicationReport]
-%     mayor_approval_retry_count: int = 0
-% \end{lstlisting}
-
-% This state model ensures:
-% \begin{itemize}
-%     \item Complete tracking of the emergency call lifecycle
-%     \item Type-safe storage of crew assessments and reports
-%     \item Monitoring of mayoral approval attempts
-%     \item Optional fields to accommodate partial state updates
-% \end{itemize}
-
-% In addition to basic state management, the flow also performs basic data transformations, such as deciding whether to activate the medical services crew based on the call assessment, and extracting relevant data to pass to subsequent crews.
-
-% \subsection{Router Implementation}
-% The system employs a router specifically for managing public communications:
-% \begin{lstlisting}[caption={Router Implementation for Public Communication Approval}]
-% @router(public_communication)
-% def check_approval():
-%     if public_communication_report.mayor_approved:
-%         return "save full emergency report"
-%     elif mayor_approval_retry_count >= MAX_MAYOR_APPROVAL_RETRY_COUNT:
-%         return "save full emergency report"
-%     mayor_approval_retry_count += 1
-%     return "retry public communication"
-% \end{lstlisting}
-
-% \subsection{Coordination Mechanism}
-% The system implements a message-passing protocol using CrewAI's flow decorators:
-% \begin{itemize}
-%     \item \texttt{@start()} marks the entry point for emergency call processing
-%     \item \texttt{@listen()} establishes dependencies between crew operations
-%     \item \texttt{@router()} handles conditional flow control
-% \end{itemize}
-
-% Parallel processing is achieved through independent \texttt{@listen} decorators, allowing medical and firefighter responses to operate concurrently. The flow concludes with a comprehensive emergency report that includes timestamps and summaries from all participating crews.
+The design choices are justified by the need for a robust and flexible system that can handle complex emergency scenarios. The use of CrewAI's flow decorators allows for clear and maintainable code, while the parallel processing capabilities ensure timely responses from different crews.
