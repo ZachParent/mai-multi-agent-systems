@@ -1,13 +1,13 @@
 \section{Crew Interactions and Flow}
 \label{sec:crew_interaction}
 
-\subsection{Flow Design and Coordination}
+\subsection{Design and Coordination}
 The Emergency Planner Flow is designed to handle emergency situations by coordinating multiple crews. The flow begins with the retrieval of a call transcript, followed by the processing of the call by emergency services. Based on the assessment, firefighters and medical services are dispatched in parallel. Public communication is managed after both teams report or during approval retries. Once the emergency is resolved, the flow concludes with the generation of a comprehensive emergency report, which includes summaries and timestamps from all participating crews.
 
 \subsubsection{State Management}
 The system maintains a centralized state using a Pydantic model \footnote{\url{https://docs.crewai.com/concepts/flows\#structured-state-management}}, `EmergencyPlannerState`, which tracks all aspects of the emergency response. This includes the call transcript, assessments, and response reports. The state model ensures type-safe storage and accommodates partial updates.
 
-\subsection{Technical Implementation}
+\subsection{Implementation}
 The flow is orchestrated using CrewAI's decorators, which define the sequence and conditions for crew operations. Key flow control points include:
 
 \begin{itemize}
@@ -17,7 +17,7 @@ The flow is orchestrated using CrewAI's decorators, which define the sequence an
 \end{itemize}
 
 
-\subsubsection{Router Implementation}
+\subsubsection{Router}
 The router manages public communication approval, checking if the mayor has approved the communication. If not, it retries up to a maximum count. This ensures that public communication is handled appropriately and efficiently.
 This includes the use of \texttt{and\_} and \texttt{or\_} to combine multiple conditions. This is key for the retry mechanism for public communication approval.
 
