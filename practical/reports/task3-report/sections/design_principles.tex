@@ -1,3 +1,40 @@
 \subsection{General Design Principles}
 \label{subsec:design_principles}
 
+For each crew in our system, a corresponding Python file is used to instantiate the configuration. These configurations are structured based on CrewAI's YAML schema recommendations for crews\footnote{\url{https://docs.crewai.com/concepts/crews#yaml-configuration-recommended}}, tasks\footnote{\url{https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended}}, and agents\footnote{\url{https://docs.crewai.com/concepts/agents\#yaml-configuration-recommended}}.
+
+These files were generated using CrewAI CLI, a universal tool for creating configurations. The following command demonstrates how to initialize a new crew configuration:\newline
+\texttt{crewai create crew my\_new\_crew}\footnote{\url{https://docs.crewai.com/concepts/cli\#1-create}}.
+
+The Python file is structured to include the following key elements:
+
+\begin{itemize}
+    \item \textbf{Imports}: Required modules, including CrewAI components such as `Agent', `Task', `Crew', and `Process'.
+    \item \textbf{Tool Instantiation}: Creation of tools for task-specific functionalities.
+    \item \textbf{Agent Configuration}: Agents are defined with specific properties, including their roles, goals, delegation capabilities, verbosity, and parameters for interacting with the language model (e.g., temperature settings).
+    \item \textbf{Task Configuration}: Tasks are defined with descriptions, expected outputs, dependencies, and execution modes. These configurations ensure tasks are properly structured and validated. Last task of each crew includes \texttt{output\_pydantic} to ensure that the dictionaries returned to the crew are consistent.
+    \item \textbf{Schema Augmentation}: Pydantic schemas can be added to the expected output of tasks using utility functions such as \texttt{add\_schema\_to\_task\_config}. This function modifies the task configuration by appending the schema JSON to the expected output property, ensuring that the LLM can take it into account.
+    \item \textbf{Crew Composition}: The crew integrates agents and tasks into a defined process, executed sequentially, to accomplish its objectives.
+\end{itemize}
+
+
+The YAML configurations for agents and tasks specify several general properties:
+
+\paragraph{Agent Configuration:} Agents are defined using YAML properties to specify:
+\begin{itemize}
+    \item \textbf{Role:} The role the agent plays within the crew.
+    \item \textbf{Goal:} The overarching objective or mission assigned to the agent.
+    \item \textbf{Delegation Capabilities:} Whether the agent is allowed to delegate tasks.
+    \item \textbf{Language Model Parameters:} Specific settings such as the model used and the temperature to control the randomness of the output.
+\end{itemize}
+
+\paragraph{Task Configuration:} Tasks are defined in YAML with properties that include:
+\begin{itemize}
+    \item \textbf{Description:} A clear explanation of the purpose and workflow of the task.
+    \item \textbf{Expected Output:} The structure and format of the task output, often validated against a schema.
+    \item \textbf{Dependencies:} Other tasks that provide context for the task.
+    \item \textbf{Execution Mode:} Specifies whether the task is executed synchronously or asynchronously (e.g., `async\_execution: true`).
+\end{itemize}
+
+This modular and schema-driven approach ensures flexibility, reusability, and validation throughout the configuration process.
+
