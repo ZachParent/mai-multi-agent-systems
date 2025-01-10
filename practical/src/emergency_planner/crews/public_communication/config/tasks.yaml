@@ -14,13 +14,14 @@ search_related_cases:
        (e.g., same location, similar fire type).
     3. Compile a list of relevant past cases, highlighting any consistent trends or reoccurring issues.
     4. Elaborate a medium size summary for the new incident described in Fire and Medical report.
-    Context:
-    - location_x: {emergency_report[location_x]}
-    - location_y: {emergency_report[location_y]}
-    - fire_severity: {emergency_report[fire_severity]}
-    - fire_type: {emergency_report[fire_type]}
-    - Fire report: {emergency_report[firefighters_response_report][summary]}
-    - Medical report: {emergency_report[medical_response_report][summary]}
+    Emergency Report: {emergency_report}
+    Extract this context:
+    - location_x: emergency_report[location_x]
+    - location_y: emergency_report[location_y]
+    - fire_severity: emergency_report[fire_severity]
+    - fire_type: emergency_report[fire_type]
+    - Fire report: emergency_report[firefighters_response_report][summary]
+    - Medical report: emergency_report[medical_response_report][summary]
   expected_output: >
    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
     Example: 
@@ -34,12 +35,7 @@ draft_initial_article:
     1. Take the structured incident data.
     2. Write a clear, concise article draft intended for the public, focusing on facts and immediate safety information.
     3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
-    Context:
-    - location_x coordinate: {emergency_report[location_x]}
-    - location_y coordinate: {emergency_report[location_y]}
-    - timestamp: {emergency_report[timestamp]}
-    - Fire report: {emergency_report[firefighters_response_report][summary]}
-    - Medical report: {emergency_report[medical_response_report][summary]}
+    Emergency Report: {emergency_report}
   expected_output: >
     You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
     Example: 
@@ -53,7 +49,7 @@ integrate_additional_information:
     1. Review the initial article draft alongside the historical or supplementary information discovered.
     2. Integrate pertinent details-such as similar past incidents or recommended safety protocols.
     3. Refine the language and structure of the article to ensure clarity and coherence.
-    4. Provide a professional and informative article in markdown format.
+    4. Provide a professional and informative article in markdown format. Don't use any tools.
     5. Don't include any placeholder, this text should be DEFINITIVE. You will be punished if it has something that is not ready for the publish.
   expected_output: >
     Provide a profesional, clear and ready to publish article.
@@ -105,6 +101,7 @@ publish_final_communication:
        - The social media comment.
     3. Ensure no duplication of content and that all referenced items are included in the final schema.
     4. This is the definitive version to be distributed publicly or stored as the final record.
+    5. Ensure any weird character or emoji is removed from the output.
   expected_output: >
     Return a JSON object that includes:
       - The final article (unmodified from integrate_additional_information). Replace placeholders if any.
@@ -113,10 +110,12 @@ publish_final_communication:
       - The social media comment (unmodified from provide_social_media_feedback).
     Do not alter the text of any of these elements. Only compile them into one complete output in JSON.
     Don't complete title either, it is normally not a property and you must be really sure to include this.
-    Ensure that the format is correct before returning the final answer.
+    Ensure that the format is correct before returning the final answer. It should be a valid JSON
+    Provide a compact JSON without any newlines.
     Example: 
     JSON schema: {{"temperature": {{"title": "Temperature in Celsius", "type": "float"}}}}
     Generated string: {{"temperature": 24.3}}
+    JSON schema: 
   agent: communication_operator
   context:
     - integrate_additional_information

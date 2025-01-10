@@ -83,66 +83,66 @@ def populate_hospital_table(db_path: str):
     Args:
         db_path (str): Path to the SQLite database.
     """
-    if os.path.exists(db_path):
-        conn = sqlite3.connect(db_path)
-        cursor = conn.cursor()
+    
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
 
-        # Create table
+    # Create table
+    cursor.execute("""
+    CREATE TABLE hospitals (
+        hospital_id TEXT,
+        location_x REAL,
+        location_y REAL,
+        available_beds INTEGER,
+        available_ambulances INTEGER,
+        available_paramedics INTEGER
+    )
+    """)
+
+    # Predefined hospital data
+    hospitals = [
+        {
+            "hospital_id": "H1",
+            "location_x": 2.80,
+            "location_y": 41.67,
+            "available_beds": 10,
+            "available_ambulances": 3,
+            "available_paramedics": 6
+        },
+        {
+            "hospital_id": "H2",
+            "location_x": 2.89,
+            "location_y": 41.67,
+            "available_beds": 20,
+            "available_ambulances": 5,
+            "available_paramedics": 9
+        },
+        {
+            "hospital_id": "H3",
+            "location_x": 2.84,
+            "location_y": 41.79,
+            "available_beds": 15,
+            "available_ambulances": 4,
+            "available_paramedics": 8
+        }
+    ]
+
+    for hospital in hospitals:
         cursor.execute("""
-        CREATE TABLE hospitals (
-            hospital_id TEXT,
-            location_x REAL,
-            location_y REAL,
-            available_beds INTEGER,
-            available_ambulances INTEGER,
-            available_paramedics INTEGER
-        )
-        """)
+        INSERT INTO hospitals (hospital_id, location_x, location_y, available_beds, available_ambulances, available_paramedics)
+        VALUES (?, ?, ?, ?, ?, ?)
+        """, (hospital["hospital_id"], hospital["location_x"], hospital["location_y"], hospital["available_beds"], hospital["available_ambulances"], hospital["available_paramedics"]))
 
-        # Predefined hospital data
-        hospitals = [
-            {
-                "hospital_id": "H1",
-                "location_x": 2.80,
-                "location_y": 41.67,
-                "available_beds": 10,
-                "available_ambulances": 3,
-                "available_paramedics": 6
-            },
-            {
-                "hospital_id": "H2",
-                "location_x": 2.89,
-                "location_y": 41.67,
-                "available_beds": 20,
-                "available_ambulances": 5,
-                "available_paramedics": 9
-            },
-            {
-                "hospital_id": "H3",
-                "location_x": 2.84,
-                "location_y": 41.79,
-                "available_beds": 15,
-                "available_ambulances": 4,
-                "available_paramedics": 8
-            }
-        ]
-
-        for hospital in hospitals:
-            cursor.execute("""
-            INSERT INTO hospitals (hospital_id, location_x, location_y, available_beds, available_ambulances, available_paramedics)
-            VALUES (?, ?, ?, ?, ?, ?)
-            """, (hospital["hospital_id"], hospital["location_x"], hospital["location_y"], hospital["available_beds"], hospital["available_ambulances"], hospital["available_paramedics"]))
-
-        conn.commit()
-        conn.close()
-        print(f"HOSPITALS TABLE CREATED")
+    conn.commit()
+    conn.close()
+    print(f"HOSPITALS TABLE CREATED")
 
 def main(reset=True):
     # Load environment variables
-    load_dotenv(os.path.join("practical", "src", ".env"))
+    load_dotenv()
 
     # Get DB path and file from environment variables
-    raw_db_path = os.getenv("DB_PATH")
+    raw_db_path = os.path.join("practical", os.getenv("DB_PATH"))
     db_file = os.getenv("DB_FILE")
 
     # Ensure cross-platform compatibility by normalizing paths

@@ -1,10 +1,10 @@
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from data_models import RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport, HospitalsInformation
-from data_models.shared import add_schema_to_task_config
-from tools.distance_tool import RouteDistanceTool
-from tools.hospital_reader_tool import HospitalReaderTool
-from tools.hospital_updater_tool import HospitalUpdaterTool
+from ...data_models import RankedHospitals, AllocatedHospitalResources, DeployedParamedics, MedicalResponseReport, HospitalsInformation
+from ...data_models.shared import add_schema_to_task_config
+from ...tools.distance_tool import RouteDistanceTool
+from ...tools.hospital_reader_tool import HospitalReaderTool
+from ...tools.hospital_updater_tool import HospitalUpdaterTool
 
 route_distance_tool = RouteDistanceTool()
 hospital_reader_tool = HospitalReaderTool()
@@ -64,7 +64,7 @@ class MedicalServicesCrew:
         config = add_schema_to_task_config(
             self.tasks_config["report_medical_response"], MedicalResponseReport.model_json_schema()
         )
-        return Task(config=config)
+        return Task(config=config, output_pydantic=MedicalResponseReport)
 
     @crew
     def crew(self) -> Crew:

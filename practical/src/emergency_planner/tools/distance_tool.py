@@ -1,10 +1,12 @@
 import networkx
 
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from typing import Type
 from pydantic import BaseModel, Field
 import osmnx as ox
+from pathlib import Path
 
+GRAPHML_FILENAME = Path(__file__).parent.parent.parent.parent / "data" / "inputs" / "lloretDeMar.graphml"
 
 class RouteDistanceSchema(BaseModel):
     """Input for the RouteDistanceTool."""
@@ -32,8 +34,7 @@ class RouteDistanceTool(BaseTool):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        city_map = 'practical/src/data/lloretDeMar.graphml'
-        self.city_map = ox.load_graphml(city_map)
+        self.city_map = ox.load_graphml(GRAPHML_FILENAME)
         self.city_map = ox.routing.add_edge_speeds(self.city_map)
         self.city_map = ox.routing.add_edge_travel_times(self.city_map)
 

@@ -1,5 +1,5 @@
 import sqlite3
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from pydantic import BaseModel, Field
 from typing import Type
 from dotenv import load_dotenv
@@ -23,7 +23,7 @@ class HospitalUpdaterTool(BaseTool):
         Initialize the HospitalUpdaterTool with a default database path.
         """
         super().__init__()
-        load_dotenv(os.path.join("practical", "src", ".env"))
+        load_dotenv()
         raw_db_path = os.getenv("DB_PATH")
         db_file = os.getenv("DB_FILE")
         normalized_path = os.path.normpath(raw_db_path)

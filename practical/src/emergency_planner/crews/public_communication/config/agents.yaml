@@ -10,7 +10,7 @@ communication_operator:
     condensing complex updates into actionable insights for both operational teams and the general public.
   allow_delegation: false
   verbose: true
-  llm: ollama/falcon3:10b
+  llm: ollama/llama3.1
   temperature: 0
 
 archive_keeper:
@@ -25,7 +25,7 @@ archive_keeper:
     documents and providing concise summaries of past cases for comparative analysis.
   allow_delegation: false
   verbose: true
-  llm: ollama/falcon3:10b
+  llm: ollama/llama3.1
   temperature: 0.2
 
 article_writer:
@@ -40,7 +40,7 @@ article_writer:
     instilling community awareness and trust during critical situations.
   allow_delegation: false
   verbose: true
-  llm: ollama/falcon3:10b
+  llm: ollama/llama3.1
   temperature: 0.8
 
 mayor:
@@ -55,7 +55,7 @@ mayor:
     city's standards and values.
   allow_delegation: false
   verbose: true
-  llm: ollama/falcon3:10b
+  llm: ollama/llama3.1
   temperature: 0.5
 
 social_media_commentator:
@@ -70,5 +70,5 @@ social_media_commentator:
     everyone informed in a less formal, more relatable manner.
   allow_delegation: false
   verbose: true
-  llm: ollama/falcon3:10b
+  llm: ollama/llama3.1
   temperature: 0.9

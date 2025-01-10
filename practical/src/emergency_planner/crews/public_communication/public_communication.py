@@ -1,24 +1,12 @@
 import json
-import os
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, task, crew
-from dotenv import load_dotenv
-from data_models.public_communication import DraftArticle, EmergencyReport, IntegratedArticle, PublicCommunicationReport, RelatedCases, ReviewedArticle
-from data_models.shared import add_schema_to_task_config
-from tools.incident_retrieval_tool import IncidentAnalysisTool
+from ...data_models.public_communication import DraftArticle, EmergencyReport, IntegratedArticle, PublicCommunicationReport, RelatedCases, ReviewedArticle
+from ...data_models.shared import add_schema_to_task_config
+from ...tools.incident_retrieval_tool import IncidentAnalysisTool
 
-# Load environment variables
-load_dotenv(os.path.join("practical", "src", ".env"))
 
-# Get DB path and file from environment variables
-raw_db_path = os.getenv("DB_PATH")
-db_file = os.getenv("DB_FILE")
-
-# Ensure cross-platform compatibility by normalizing paths
-normalized_path = os.path.normpath(raw_db_path)
-db_path = os.path.join(normalized_path, db_file)
-
-incident_analysis_tool = IncidentAnalysisTool(db_path, result_as_answer=True)
+incident_analysis_tool = IncidentAnalysisTool(result_as_answer=True)
 
 def add_schema_to_task_config(task_config, schema):
     """
@@ -96,7 +84,7 @@ class PublicCommunicationCrew:
         config = add_schema_to_task_config(
             self.tasks_config["publish_final_communication"], PublicCommunicationReport.model_json_schema()
         )
-        return Task(config=config)
+        return Task(config=config, output_pydantic=PublicCommunicationReport)
 
     @crew
     def crew(self) -> Crew:

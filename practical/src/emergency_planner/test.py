@@ -117,6 +117,7 @@ def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: i
     #     logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
 
     # Final result after all tasks
+    crew_inputs = json.dumps(crew_inputs) if type(crew_inputs)==dict else crew_inputs
     final_result = crew.crew().kickoff(inputs=crew_inputs)
     logger.info("[Test #%d] %s finished. Final Result: %s", test_index, crew_name, final_result.raw)
 

@@ -1,29 +1,37 @@
 import logging
 import json
 from crewai.flow.flow import Flow, listen, start, router, and_, or_
-
-from crews.emergency_services.emergency_services import EmergencyServicesCrew
-from crews.firefighters.firefighters import FirefightersCrew
-from crews.medical_services.medical_services import MedicalServicesCrew
-from crews.public_communication.public_communication import PublicCommunicationCrew
-from data_models import (
+from pathlib import Path
+from .crews.emergency_services.emergency_services import EmergencyServicesCrew
+from .crews.firefighters.firefighters import FirefightersCrew
+from .crews.medical_services.medical_services import MedicalServicesCrew
+from .crews.public_communication.public_communication import PublicCommunicationCrew
+from .data_models import (
+    CallAssessment,
     EmergencyPlannerState,
     FireAssessment,
+    FirefightersResponseReport,
     MedicalAssessment,
+    MedicalResponseReport,
+    PublicCommunicationReport,
     EmergencyReport,
+    EMERGENCY_PLANNER_STATE_DEMO
 )
+from pydantic_core import from_json
 
 logger = logging.getLogger(__name__)
 
-# TODO: use a more sophisticated call transcript
-EMERGENCY_CALL = (
-    "A fire of electrical origin has broken out at coordinates (x: 41.71947, y: 2.84031). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are 5 people currently trapped. Additionally, there are 2 injured individuals with minor and severe injuries respectively requiring immediate attention."
-)
+EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent.parent / "data" / "inputs" / "call_transcripts.txt"
+TRANSCRIPT_COUNT = 2
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
+TRANSCRIPT_INDEX = 1
+INIT_POPULATED_STATE = False
 
 class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def _create_initial_state(self) -> EmergencyPlannerState:
+        if INIT_POPULATED_STATE:
+            return EMERGENCY_PLANNER_STATE_DEMO
         return EmergencyPlannerState(
             call_transcript=None,
             call_assessment=None,
@@ -35,11 +43,9 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     @start()
     def get_call_transcript(self):
         logger.info("Getting call transcript")
-        self.state.call_transcript = EMERGENCY_CALL
+        with open(EMERGENCY_CALL_TRANSCRIPTS_FILENAME, "r") as f:
+            self.state.call_transcript = f.readlines()[TRANSCRIPT_INDEX]
         logger.info("Call transcript received", self.state.call_transcript)
-
-        # Read public input
-        # publicannouncements.kickoff()
 
     @listen(get_call_transcript)
     def emergency_services(self):
@@ -47,37 +53,37 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         result = (
             EmergencyServicesCrew()
             .crew()
-            .kickoff(inputs={"transcript": EMERGENCY_CALL})
+            .kickoff(inputs={"transcript": self.state.call_transcript})
         )
-        self.state.call_assessment = json.loads(result.raw)
+        self.state.call_assessment = CallAssessment.model_validate_json(result.raw)
         logger.info("Emergency call received", result.raw)
+
 
     @listen(emergency_services)
     def firefighters(self):
         logger.info("Dispatching fire fighters")
-        fire_assessment = FireAssessment(**self.state.call_assessment)
+        fire_assessment = FireAssessment.model_validate(self.state.call_assessment.model_dump())
         result = (
             FirefightersCrew()
             .crew()
-            .kickoff(inputs={"fire_assessment": fire_assessment})
+            .kickoff(inputs={"fire_assessment": fire_assessment.model_dump_json()})
         )
-        self.state.firefighters_response_report = json.loads(result.raw)
+        self.state.firefighters_response_report = FirefightersResponseReport.model_validate_json(result.raw)
         logger.info("Fire fighters dispatched", result.raw)
 
     @listen(emergency_services)
     def medical_services(self):
-        if not self.state.call_assessment['medical_services_required']:
+        if not self.state.call_assessment.medical_services_required:
             logger.info("Medical services not required")
             return
         logger.info("Dispatching medical services")
-        self.state.call_assessment['injured_count'] = len(self.state.call_assessment['injured_details'])
-        medical_assessment = MedicalAssessment(**self.state.call_assessment)
+        medical_assessment = MedicalAssessment.model_validate({**self.state.call_assessment.model_dump(), "injured_count": len(self.state.call_assessment.injured_details)})
         result = (
             MedicalServicesCrew()
             .crew()
-            .kickoff(inputs={"medical_assessment": medical_assessment})
+            .kickoff(inputs={"medical_assessment": medical_assessment.model_dump_json()})
         )
-        self.state.medical_response_report = json.loads(result.raw)
+        self.state.medical_response_report = MedicalResponseReport.model_validate_json(result.raw)
         logger.info("Medical services dispatched", result.raw)
 
     @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
@@ -87,18 +93,18 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
             medical_response_report=self.state.medical_response_report,
-            timestamp=self.state.firefighters_response_report['timestamp'],
-            fire_type=self.state.call_assessment['fire_type'],
-            fire_severity=self.state.call_assessment['fire_severity'],
-            location_x=self.state.call_assessment['location'][0],
-            location_y=self.state.call_assessment['location'][1]
+            timestamp=self.state.firefighters_response_report.timestamp,
+            fire_type=self.state.call_assessment.fire_type,
+            fire_severity=self.state.call_assessment.fire_severity,
+            location_x=self.state.call_assessment.location[0],
+            location_y=self.state.call_assessment.location[1]
         )
         result = (
             PublicCommunicationCrew()
             .crew()
-            .kickoff(inputs={"emergency_report": emergency_report})
+            .kickoff(inputs={"emergency_report": emergency_report.model_dump_json()})
         )
-        self.state.public_communication_report = json.loads(result.raw)
+        self.state.public_communication_report = PublicCommunicationReport.model_validate_json(result.raw)
         logger.info("Public communication handled", result.raw)
 
     @router(public_communication)
@@ -124,36 +130,34 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def save_full_emergency_report(self):
         logger.info("Saving full emergency report")
         full_emergency_report = f"""
-        # Emergency Report
+# Emergency Report
 
-        ## Call Transcript
-        {self.state.call_transcript}
+## Call Transcript
+{self.state.call_transcript}
 
-        ## Firefighters Response
-        *{self.state.firefighters_response_report.timestamp}*
-        {self.state.firefighters_response_report.summary}
+## Firefighters Response
+*{self.state.firefighters_response_report.timestamp}*
+{self.state.firefighters_response_report.summary}
 
-        ## Medical Response
-        *{self.state.medical_response_report.timestamp}*
-        {self.state.medical_response_report.summary}
+## Medical Response
+*{self.state.medical_response_report.timestamp}*
+{self.state.medical_response_report.summary}
 
-        ## Public Communication Report
-        *{self.state.public_communication_report.timestamp}*
-        {self.state.public_communication_report.public_communication_report}
+## Public Communication Report
+{self.state.public_communication_report.public_communication_report}
 
-        ### Approved by Mayor
-        {self.state.public_communication_report.mayor_approved}
+### Approved by Mayor
+{self.state.public_communication_report.mayor_approved}
 
-        ### Mayor's Comments
-        {self.state.public_communication_report.mayor_comments}
+### Mayor's Comments
+{self.state.public_communication_report.mayor_comments}
 
-        ### Social Media Feedback
-        {self.state.public_communication_report.social_media_feedback}
-
-        """
-        with open("data/outputs/full_emergency_report.md", "w") as f:
+### Social Media Feedback
+{self.state.public_communication_report.social_media_feedback}
+"""
+        with open("data/outputs/emergency_report.md", "w") as f:
             f.write(full_emergency_report)
-        logger.info("Full emergency report saved")
+        logger.info("Emergency report saved")
 
 
 def kickoff():
