@@ -7,12 +7,12 @@ G = nx.DiGraph()
 
 # Define tasks and their dependencies
 tasks = {
-    "Receive Report": {"depends_on": [], "agent": "Communication Operator"},
-    "Search Related Cases": {"depends_on": ["Receive Report"], "agent": "Archive Keeper"},
-    "Draft Initial Article": {"depends_on": ["Receive Report"], "agent": "Article Writer"},
+    "Search Related Cases": {"depends_on": [], "agent": "Archive Keeper"},
+    "Draft Initial Article": {"depends_on": [], "agent": "Article Writer"},
     "Integrate Additional Information": {"depends_on": ["Search Related Cases", "Draft Initial Article"], "agent": "Article Writer"},
     "Review and Authorize Publication": {"depends_on": ["Integrate Additional Information"], "agent": "Mayor"},
-    "Provide Social Media Feedback": {"depends_on": ["Review and Authorize Publication"], "agent": "Social Media Commentator"}
+    "Provide Social Media Feedback": {"depends_on": ["Integrate Additional Information"], "agent": "Social Media Commentator"},
+    "Publish Final Report": {"depends_on": ["Integrate Additional Information", "Review and Authorize Publication", "Provide Social Media Feedback"], "agent": "Communication Operator"},
 }
 
 # Add nodes and edges to the graph
