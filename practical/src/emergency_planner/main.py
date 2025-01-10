@@ -17,15 +17,15 @@ from .data_models import (
     EmergencyReport,
     EMERGENCY_PLANNER_STATE_DEMO
 )
-from pydantic_core import from_json
 
 logger = logging.getLogger(__name__)
 
 EMERGENCY_CALL_TRANSCRIPTS_FILENAME = Path(__file__).parent.parent.parent / "data" / "inputs" / "call_transcripts.txt"
+EMERGENCY_REPORT_FILENAME = Path(__file__).parent.parent.parent / "data" / "outputs" / "emergency_report.md"
 TRANSCRIPT_COUNT = 2
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
-TRANSCRIPT_INDEX = 1
+TRANSCRIPT_INDEX = 0
 INIT_POPULATED_STATE = False
 
 class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
@@ -155,7 +155,7 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
 ### Social Media Feedback
 {self.state.public_communication_report.social_media_feedback}
 """
-        with open("data/outputs/emergency_report.md", "w") as f:
+        with open(EMERGENCY_REPORT_FILENAME, "w") as f:
             f.write(full_emergency_report)
         logger.info("Emergency report saved")
 
