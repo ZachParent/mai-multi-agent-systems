@@ -1,6 +1,0 @@
-crewai==0.83.0
-crewai-tools==0.14.0
-osmnx==2.0.1
-numpy==2.2.1
-
--e .
