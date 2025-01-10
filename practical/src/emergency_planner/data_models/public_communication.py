@@ -49,6 +49,7 @@ class ReviewedArticle(BaseModel):
     mayor_approved: bool
     mayor_comments: str
 
+
 # Final Output
 class PublicCommunicationReport(BaseModel):
     public_communication_report: str

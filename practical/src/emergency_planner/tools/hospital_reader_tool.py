@@ -5,9 +5,12 @@ from typing import List
 from dotenv import load_dotenv
 import os
 
+
 class HospitalReaderTool(BaseTool):
     name: str = "Hospital Information Reader"
-    description: str = "This tool retrieves information of all hospitals from the database."
+    description: str = (
+        "This tool retrieves information of all hospitals from the database."
+    )
     db_path: str = None
 
     def __init__(self):
@@ -55,7 +58,7 @@ class HospitalReaderTool(BaseTool):
                 location=(row[1], row[2]),
                 available_beds=row[3],
                 available_ambulances=row[4],
-                available_paramedics=row[5]
+                available_paramedics=row[5],
             )
             for row in rows
         ]

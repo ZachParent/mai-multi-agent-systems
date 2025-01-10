@@ -3,7 +3,12 @@ import os
 import sqlite3
 from crewai.tools import BaseTool
 from dotenv import load_dotenv
-from ..data_models.public_communication import RelatedCase, RelatedCases, FireSeverity, FireType
+from ..data_models.public_communication import (
+    RelatedCase,
+    RelatedCases,
+    FireSeverity,
+    FireType,
+)
 
 
 class IncidentAnalysisTool(BaseTool):
@@ -36,12 +41,12 @@ class IncidentAnalysisTool(BaseTool):
         self.result_as_answer = result_as_answer
 
     def _run(
-        self, 
-        location_x: float, 
-        location_y: float, 
-        fire_severity: FireSeverity, 
+        self,
+        location_x: float,
+        location_y: float,
+        fire_severity: FireSeverity,
         fire_type: FireType,
-        summary: str
+        summary: str,
     ) -> RelatedCases:
         """
         Connects to a SQL database, retrieves related incidents, and saves the new case.
@@ -80,7 +85,7 @@ class IncidentAnalysisTool(BaseTool):
                 fire_severity=row[2],
                 fire_type=row[3],
                 location_x=row[4],
-                location_y=row[5]
+                location_y=row[5],
             )
             for row in rows_distance
         ]
@@ -103,7 +108,7 @@ class IncidentAnalysisTool(BaseTool):
                 fire_severity=row[2],
                 fire_type=row[3],
                 location_x=row[4],
-                location_y=row[5]
+                location_y=row[5],
             )
             for row in rows_severity
         ]
@@ -115,12 +120,21 @@ class IncidentAnalysisTool(BaseTool):
             INSERT INTO incidents (summary, timestamp, fire_severity, fire_type, location_x, location_y)
             VALUES (?, ?, ?, ?, ?, ?)
             """,
-            (summary, new_case_timestamp.isoformat(), fire_severity, fire_type, location_x, location_y),
+            (
+                summary,
+                new_case_timestamp.isoformat(),
+                fire_severity,
+                fire_type,
+                location_x,
+                location_y,
+            ),
         )
 
         conn.commit()
         conn.close()
         if self.result_as_answer:
-            return RelatedCases(related_cases=related_by_distance + related_by_severity).model_dump_json(indent=2)
+            return RelatedCases(
+                related_cases=related_by_distance + related_by_severity
+            ).model_dump_json(indent=2)
         else:
             return RelatedCases(related_cases=related_by_distance + related_by_severity)

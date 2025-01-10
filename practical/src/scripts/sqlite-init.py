@@ -4,6 +4,7 @@ import random
 from datetime import timedelta, datetime
 from dotenv import load_dotenv
 
+
 def populate_incident_table(db_path: str, number_of_incidents=20):
     """
     Populates the database with at least 20 incidents if they do not exist.
@@ -19,7 +20,8 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
         cursor = conn.cursor()
 
         # Create table
-        cursor.execute("""
+        cursor.execute(
+            """
         CREATE TABLE incidents (
             summary TEXT,
             timestamp TEXT,
@@ -28,7 +30,8 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
             location_x REAL,
             location_y REAL
         )
-        """)
+        """
+        )
 
         # Five predefined summary templates
         summary_templates = [
@@ -36,7 +39,7 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
             "The area experienced a {fire_type} fire that led to {injured} people injured. Fire severity: {severity}.",
             "A {fire_type} fire broke out, leaving {injured} individuals injured. Fire severity: {severity}.",
             "An outbreak of {fire_type} fire was reported, with {injured} injuries. Severity level: {severity}.",
-            "A {fire_type} fire incident has been recorded, resulting in {injured} injuries. Severity: {severity}."
+            "A {fire_type} fire incident has been recorded, resulting in {injured} injuries. Severity: {severity}.",
         ]
 
         base_time = datetime.now()
@@ -47,16 +50,14 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
             # Randomly choose fire attributes
             fire_type = random.choice(fire_types)
             fire_severity = random.choice(fire_severities)
-            
+
             # Randomly determine number of injured people
             injured_people = random.randint(0, 20)
-            
+
             # Pick one of the predefined summaries
             summary_template = random.choice(summary_templates)
             summary = summary_template.format(
-                fire_type=fire_type, 
-                injured=injured_people, 
-                severity=fire_severity
+                fire_type=fire_type, injured=injured_people, severity=fire_severity
             )
 
             # Random date within the last 30 days
@@ -66,14 +67,18 @@ def populate_incident_table(db_path: str, number_of_incidents=20):
             location_x = random.uniform(-100, 100)
             location_y = random.uniform(-100, 100)
 
-            cursor.execute("""
+            cursor.execute(
+                """
             INSERT INTO incidents (summary, timestamp, fire_severity, fire_type, location_x, location_y)
             VALUES (?, ?, ?, ?, ?, ?)
-            """, (summary, timestamp, fire_severity, fire_type, location_x, location_y))
+            """,
+                (summary, timestamp, fire_severity, fire_type, location_x, location_y),
+            )
 
         conn.commit()
         conn.close()
         print(f"INCIDENTS TABLE CREATED")
+
 
 def populate_hospital_table(db_path: str):
     """
@@ -83,12 +88,13 @@ def populate_hospital_table(db_path: str):
     Args:
         db_path (str): Path to the SQLite database.
     """
-    
+
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     # Create table
-    cursor.execute("""
+    cursor.execute(
+        """
     CREATE TABLE hospitals (
         hospital_id TEXT,
         location_x REAL,
@@ -97,7 +103,8 @@ def populate_hospital_table(db_path: str):
         available_ambulances INTEGER,
         available_paramedics INTEGER
     )
-    """)
+    """
+    )
 
     # Predefined hospital data
     hospitals = [
@@ -107,7 +114,7 @@ def populate_hospital_table(db_path: str):
             "location_y": 41.67,
             "available_beds": 10,
             "available_ambulances": 3,
-            "available_paramedics": 6
+            "available_paramedics": 6,
         },
         {
             "hospital_id": "H2",
@@ -115,7 +122,7 @@ def populate_hospital_table(db_path: str):
             "location_y": 41.67,
             "available_beds": 20,
             "available_ambulances": 5,
-            "available_paramedics": 9
+            "available_paramedics": 9,
         },
         {
             "hospital_id": "H3",
@@ -123,19 +130,30 @@ def populate_hospital_table(db_path: str):
             "location_y": 41.79,
             "available_beds": 15,
             "available_ambulances": 4,
-            "available_paramedics": 8
-        }
+            "available_paramedics": 8,
+        },
     ]
 
     for hospital in hospitals:
-        cursor.execute("""
+        cursor.execute(
+            """
         INSERT INTO hospitals (hospital_id, location_x, location_y, available_beds, available_ambulances, available_paramedics)
         VALUES (?, ?, ?, ?, ?, ?)
-        """, (hospital["hospital_id"], hospital["location_x"], hospital["location_y"], hospital["available_beds"], hospital["available_ambulances"], hospital["available_paramedics"]))
+        """,
+            (
+                hospital["hospital_id"],
+                hospital["location_x"],
+                hospital["location_y"],
+                hospital["available_beds"],
+                hospital["available_ambulances"],
+                hospital["available_paramedics"],
+            ),
+        )
 
     conn.commit()
     conn.close()
     print(f"HOSPITALS TABLE CREATED")
+
 
 def main(reset=True):
     # Load environment variables
@@ -159,6 +177,7 @@ def main(reset=True):
 
     populate_incident_table(db_path)
     populate_hospital_table(db_path)
+
 
 if __name__ == "__main__":
     main()

@@ -6,7 +6,13 @@ from pydantic import BaseModel, Field
 import osmnx as ox
 from pathlib import Path
 
-GRAPHML_FILENAME = Path(__file__).parent.parent.parent.parent / "data" / "inputs" / "lloretDeMar.graphml"
+GRAPHML_FILENAME = (
+    Path(__file__).parent.parent.parent.parent
+    / "data"
+    / "inputs"
+    / "lloretDeMar.graphml"
+)
+
 
 class RouteDistanceSchema(BaseModel):
     """Input for the RouteDistanceTool."""
@@ -62,4 +68,4 @@ class RouteDistanceTool(BaseTool):
         )
         edge_lengths = ox.routing.route_to_gdf(self.city_map, route)["length"]
 
-        return round(sum(edge_lengths))/1000 # in km
+        return round(sum(edge_lengths)) / 1000  # in km

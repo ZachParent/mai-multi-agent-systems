@@ -20,6 +20,7 @@ from data_models import (
     CallAssessment,
     EmergencyPlannerState,
 )
+
 # Map snake_case keys to their corresponding data models
 MODEL_MAP = {
     "emergency_report": EmergencyReport,
@@ -42,11 +43,11 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 # Create formatters
-formatter = logging.Formatter('%(asctime)s %(levelname)s:%(message)s')
+formatter = logging.Formatter("%(asctime)s %(levelname)s:%(message)s")
 
 # Create handlers:
 # 1) File handler (append mode)
-file_handler = logging.FileHandler(LOG_FILENAME, mode='a')
+file_handler = logging.FileHandler(LOG_FILENAME, mode="a")
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(formatter)
 
@@ -72,16 +73,17 @@ INPUTS_FOLDER = os.path.join(os.path.dirname(__file__), "test", "inputs")
 # JSON_FILE = os.path.join(INPUTS_FOLDER, "test_crews.json")
 JSON_FILE = os.path.join(INPUTS_FOLDER, "test_PC.json")
 
+
 def load_test_cases(json_path: str) -> List[Dict[str, Any]]:
     """
     Loads a JSON file containing multiple test cases.
     Expects a top-level 'test_cases' array of objects.
     """
-    with open(json_path, 'r') as f:
+    with open(json_path, "r") as f:
         data = json.load(f)
-    if not isinstance(data, dict) or 'test_cases' not in data:
+    if not isinstance(data, dict) or "test_cases" not in data:
         raise ValueError("Invalid JSON. Must contain a top-level 'test_cases' list.")
-    return data['test_cases']
+    return data["test_cases"]
 
 
 def instantiate_crew(crew_name: str) -> Any:
@@ -99,11 +101,16 @@ def instantiate_crew(crew_name: str) -> Any:
         raise ValueError(f"No matching crew found for: {crew_name}")
     return CrewClass()
 
-def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: int) -> None:
+
+def process_crew_test(
+    crew_name: str, crew_inputs: Dict[str, Any], test_index: int
+) -> None:
     """
     Instantiate the chosen crew, pass the inputs, log, and save the result.
     """
-    logger.info("[Test #%d] Starting %s with inputs: %s", test_index, crew_name, crew_inputs)
+    logger.info(
+        "[Test #%d] Starting %s with inputs: %s", test_index, crew_name, crew_inputs
+    )
 
     crew = instantiate_crew(crew_name)
     logger.info("Agents loaded")
@@ -117,17 +124,23 @@ def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: i
     #     logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
 
     # Final result after all tasks
-    crew_inputs = json.dumps(crew_inputs) if type(crew_inputs)==dict else crew_inputs
+    crew_inputs = json.dumps(crew_inputs) if type(crew_inputs) == dict else crew_inputs
     final_result = crew.crew().kickoff(inputs=crew_inputs)
-    logger.info("[Test #%d] %s finished. Final Result: %s", test_index, crew_name, final_result.raw)
+    logger.info(
+        "[Test #%d] %s finished. Final Result: %s",
+        test_index,
+        crew_name,
+        final_result.raw,
+    )
 
     # Save result in results folder
     output_file = os.path.join(RESULTS_FOLDER, f"{crew_name}_output_{test_index}.txt")
-    with open(output_file, 'w', encoding="utf-16") as f:
+    with open(output_file, "w", encoding="utf-16") as f:
         f.write(f"=== Results for Test #{test_index} | {crew_name} ===\n")
         f.write(str(final_result.raw))
 
     logger.info("[Test #%d] Result saved to %s", test_index, output_file)
+
 
 def main() -> None:
     """Main entry point for running one or multiple crew tests based on JSON input."""
@@ -135,16 +148,17 @@ def main() -> None:
     test_cases = load_test_cases(JSON_FILE)
 
     for i, test_case in enumerate(test_cases, start=1):
-        crew_name = test_case.get('crew_to_test')
-        crew_inputs = test_case.get('crew_inputs', {})
+        crew_name = test_case.get("crew_to_test")
+        crew_inputs = test_case.get("crew_inputs", {})
         # Include model validation
         crew_inputs_parsed = {
-            key: MODEL_MAP[key](**value) if key in MODEL_MAP else value 
+            key: MODEL_MAP[key](**value) if key in MODEL_MAP else value
             for key, value in crew_inputs.items()
         }
         process_crew_test(crew_name, crew_inputs, i)
 
     logger.info("=== Multi-Crew Test Completed ===")
+
 
 if __name__ == "__main__":
     main()

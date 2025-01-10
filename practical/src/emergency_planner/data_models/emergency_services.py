@@ -2,9 +2,11 @@ from pydantic import BaseModel
 from typing import List
 from .shared import Location, FireType, FireSeverity, InjuryType, HazardType
 
+
 # Receive and Assess Call Task Input
 class EmergencyCall(BaseModel):
     transcript: str
+
 
 # Receive and Assess Call Task Output
 class EmergencyDetails(BaseModel):
@@ -27,7 +29,9 @@ class CallAssessment(BaseModel):
     indoor: bool
     trapped_people: int
     firefighters_required: bool  # True if firefighters are required, False otherwise
-    medical_services_required: bool  # True if medical services are required, False otherwise
+    medical_services_required: (
+        bool  # True if medical services are required, False otherwise
+    )
 
 
 class FireAssessment(BaseModel):
