@@ -155,9 +155,9 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
         {self.state.public_communication_report.social_media_feedback}
 
         """
-        with open("data/outputs/full_emergency_report.md", "w") as f:
+        with open("data/outputs/emergency_report.md", "w") as f:
             f.write(full_emergency_report)
-        logger.info("Full emergency report saved")
+        logger.info("Emergency report saved")
 
 
 def kickoff():
