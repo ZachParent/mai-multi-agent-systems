@@ -24,12 +24,12 @@ EMERGENCY_CALL_TRANSCRIPTS_FILENAME = (
     Path(__file__).parent.parent.parent / "data" / "inputs" / "call_transcripts.txt"
 )
 EMERGENCY_REPORT_FILENAME = (
-    Path(__file__).parent.parent.parent / "data" / "outputs" / "emergency_report.md"
+    Path(__file__).parent.parent.parent / "data" / "outputs" / "emergency_report_2.md"
 )
 TRANSCRIPT_COUNT = 2
 MAX_MAYOR_APPROVAL_RETRY_COUNT = 3
 
-TRANSCRIPT_INDEX = 0
+TRANSCRIPT_INDEX = 1
 INIT_POPULATED_STATE = False
 
 
@@ -83,6 +83,10 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
     def medical_services(self):
         if not self.state.call_assessment.medical_services_required:
             logger.info("Medical services not required")
+            self.state.medical_response_report = MedicalResponseReport(
+                summary="Medical services not required",
+                timestamp=self.state.firefighters_response_report.timestamp
+            )
             return
         logger.info("Dispatching medical services")
         medical_assessment = MedicalAssessment.model_validate(
