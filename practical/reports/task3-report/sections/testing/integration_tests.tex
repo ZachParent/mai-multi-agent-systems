@@ -1,2 +1,29 @@
 \subsection{Integration Tests}
 \label{subsec:integration_tests}
+
+The integration testing of the Emergency Planner system is conducted to ensure that all components, such as the crews and the flow, work together seamlessly to handle emergency scenarios. The testing process involves simulating real-world operations using test transcripts and verifying the generation of comprehensive emergency reports.
+
+\paragraph{Flow Simulation}
+The system is initiated using the `crewai flow kickoff` command, which triggers the entire flow from start to finish. This command simulates the intake of an emergency call, processing by various crews, and the generation of a final report. The test transcripts, stored in `call\_transcripts.txt`, provide detailed scenarios that the system must handle, including fires with specific hazards and the presence of injured individuals.
+
+\paragraph{Component Processing and Report Generation}
+During the integration tests, the system reads a selected transcript and processes it through the emergency services, firefighters, medical services, and public communication teams. Each crew generates a response report, which is compiled into a full emergency report saved to `emergency\_report.md`. This report includes the call transcript, response summaries, and public communication details, providing a comprehensive overview of the incident and response efforts.
+
+\paragraph{Test Cases}
+Two test cases were designed to test the possible scenarios that the system can handle. One with the presence of injured individuals and one without. We also were interested in observing if the retry system worked when the mayor did not immediately approve the public communication message.
+
+\begin{enumerate}
+    \item \textbf{Test Case 1: Fire with Injured Individuals}
+    \paragraph{Transcript}
+    A fire of electrical origin has broken out at coordinates (x: 41.71947, y: 2.84031). The fire is classified as high severity, posing significant danger to the area. Hazards present include gas cylinders and flammable chemicals, further escalating the risk. The fire is indoors, and there are 5 people currently trapped. Additionally, there are 2 injured individuals with minor and severe injuries respectively requiring immediate attention.
+    \paragraph{Expected Output}
+    The medical team should be dispatched to the scene to attend to the injured individuals. The firefighters should be dispatched to the scene to extinguish the fire. The public communication team should craft a message to inform the public about the emergency.
+    \item \textbf{Test Case 2: Large-Scale Fire without Injured Individuals}
+    \paragraph{Transcript}
+    A gas fire has broken out at coordinates (x: 41.71892, y: 2.84127). The fire is classified as high severity at an abandoned warehouse facility. The hazard present is a storage area containing multiple industrial gas cylinders, which poses a significant risk of explosion. The fire is indoors, but the building has been confirmed empty and unused for several months. No individuals are trapped or at risk, and a security check of the premises has confirmed no squatters or unauthorized persons are present. The fire poses a risk of spreading to neighboring structures if not contained quickly.
+    \paragraph{Expected Output}
+    No medical assistance is required. The firefighters should be dispatched to the scene to extinguish the fire. The public communication team should craft a message to inform the public about the emergency.
+\end{enumerate}
+
+\paragraph{Verification and Readiness}
+The integration tests verify that each component of the system functions correctly and that the overall flow produces the expected outputs. By simulating real-world scenarios, the tests ensure that the Emergency Planner is robust, efficient, and ready for deployment in actual emergency situations.
