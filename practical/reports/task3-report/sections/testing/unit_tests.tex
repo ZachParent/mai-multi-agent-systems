@@ -1,2 +1,52 @@
 \subsection{Unit Tests}
 \label{subsec:unit_tests}
+
+The unit testing framework for evaluating different agent crews is structured to be modular and scalable, accommodating diverse agents with varying input requirements. Below, we outline the folder structure, testing script, and execution process to ensure a comprehensive and systematic evaluation.
+
+\subsubsection*{Folder Structure}
+The directory structure of the project is as follows:
+
+\begin{description}
+    \item[\texttt{test/}] The main testing folder containing inputs, logs, and results.
+    \begin{description}
+        \item[\texttt{inputs/}] Contains JSON files defining the test cases, e.g., \texttt{test\_PC.json} for Public Communication Crew.
+        \item[\texttt{logs/}] Stores execution logs, including \texttt{test.log} for detailed information about each test run.
+        \item[\texttt{results/}] Saves the output of each test, such as \texttt{PublicCommunicationCrew\_output\_1.txt}.
+    \end{description}
+    \item[\texttt{test.py}] The main script responsible for loading, testing, and logging results.
+\end{description}
+
+\subsubsection*{Testing Script}
+The testing script, \texttt{test.py}, is the core of the framework and is responsible for loading test cases, executing the corresponding agents, and logging the results. Key features include:
+
+\begin{itemize}
+    \item \textbf{Dynamic Crew Mapping}: The script dynamically maps crew names (e.g., \texttt{PublicCommunicationCrew}) to their respective Python classes for instantiation.
+    \item \textbf{Logging}: Logs are stored in \texttt{test/logs/test.log} and include detailed information about each test case, intermediate results, and final outputs.
+    \item \textbf{Input Validation}: Inputs are validated using Pydantic models from the \texttt{data\_models} package to ensure consistency and type safety.
+    \item \textbf{Result Storage}: Results of each test are saved in \texttt{test/results/} with a structured format for easy review.
+\end{itemize}
+
+\subsubsection*{Execution Process}
+The process for running the tests is as follows:
+
+\begin{enumerate}
+    \item \textbf{Prepare Input JSON}: Create or modify test cases in \texttt{test/inputs/}. Each JSON file should contain an array of test cases with fields specifying the crew to test and the inputs required.
+    \item \textbf{Run the Script}: Execute \texttt{test.py} using Python. For example:
+    \begin{verbatim}
+    python test.py
+    \end{verbatim}
+    \item \textbf{Review Logs}: Check the log file in \texttt{test/logs/test.log} for detailed execution information.
+    \item \textbf{Review Results}: Inspect output files in \texttt{test/results/} for the results of each test case.
+\end{enumerate}
+
+\subsubsection*{Advantages}
+This framework offers the following advantages:
+
+\begin{itemize}
+    \item \textbf{Modular Design}: Each agent crew is implemented and tested independently, ensuring modularity and ease of debugging.
+    \item \textbf{Type Safety}: Pydantic models enforce input validation, reducing runtime errors and ensuring consistent data structure.
+    \item \textbf{Scalability}: New agent crews can be added by implementing their logic and updating the crew mapping in \texttt{test.py}.
+    \item \textbf{Traceability}: Detailed logging captures both intermediate and final outputs, enhancing reproducibility.
+\end{itemize}
+
+This structure ensures a clear, efficient, and scientifically rigorous approach to unit testing multi-agent systems.
