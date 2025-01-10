@@ -1,10 +1,30 @@
 \subsubsection{Design}
-
 \paragraph{Purpose}
-The Emergency Services crew is responsible for the initial assessment of the emergency situation and the dispatch of the appropriate response teams.
+The Emergency Services Crew is tasked with the critical responsibility of assessing emergency situations and ensuring the appropriate response teams are dispatched effectively. This foundational role involves processing incoming emergency calls, structure the received information and decide which crews should be notified.
 
 \paragraph{Changes}
-In the initial design, the emergency services crew was responsible for directly notifying the other crews
-and generating separate assessments for the firefighters crew and the medical services crew, but we
-chose to instead generate a single call assessment, which includes the evaluation of whether firefighters
-and medical services are required. This assessment is then programmetically used by the flow to call the subsequent crews.
+In the initial design, the Emergency Services Crew was intended to utilize two specialized tools:
+\begin{itemize}
+    \item \textit{Database Management:} A system for systematically entering and recording emergency details.
+    \item \textit{GPS Mapping:} Software for locating and verifying the caller’s position, assessing the scene, and prioritizing the severity of the incident if necessary.
+\end{itemize}
+However, after evaluation, it was determined that the core purpose of the crew was receiving the already transcribed incoming calls and deciding which team should receive the information, so both task could be accomplished without these tools. Removing them simplified the workflow, reduced overhead, and maintained focus on the essential tasks of the crew.
+
+\paragraph{Structure and Components}
+The Emergency Services Crew leverages the \texttt{CrewBase} framework to orchestrate its agents and tasks in a sequential process, ensuring efficient and orderly operations. The key components of the design are:
+
+\begin{itemize}
+    \item \textbf{Agents:}
+    \begin{itemize}
+        \item \texttt{emergency\_call\_agent}: Processes incoming emergency calls using a predefined configuration, ensuring the accurate extraction of relevant details.
+        \item \texttt{notification\_agent}: Decides which crews need to be notified about the emergency, based on the nature and severity of the situation. This ensures the appropriate response teams are activated in a timely manner.
+    \end{itemize}
+    \item \textbf{Tasks:}
+    \begin{itemize}
+        \item \texttt{receive\_call}: Captures and processes the details of emergency calls using schemas derived from the \texttt{EmergencyDetails} model, ensuring structured and consistent data handling.
+        \item \texttt{notify\_other\_crews}: Evaluates the information detailed in the \texttt{EmergencyDetails} and decides if other crews are needed, utilizing the \texttt{CallAssessment} schema to ensure clarity and comprehensiveness in the communication.
+    \end{itemize}
+    \item \textbf{Crew:}
+    The crew is constructed using the \texttt{Crew} class, integrating the agents and tasks into a seamless workflow. This design ensures the efficient progression from receiving an emergency call to notifying the relevant response teams.
+\end{itemize}
+The modular design of the Emergency Services Crew enables it to integrate seamlessly with other components of the multi-agent system while maintaining flexibility for updates or extensions.
