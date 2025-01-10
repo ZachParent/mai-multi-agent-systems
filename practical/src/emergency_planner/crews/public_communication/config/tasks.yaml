@@ -23,10 +23,8 @@ search_related_cases:
     - Fire report: emergency_report[firefighters_response_report][summary]
     - Medical report: emergency_report[medical_response_report][summary]
   expected_output: >
-   You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
-    Example: 
-    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
-    Generated string: {{"temperature": 24.3}}
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: archive_keeper
   async_execution: true
 
@@ -37,10 +35,8 @@ draft_initial_article:
     3. Ensure the draft meets journalistic standards, maintaining an informative yet approachable tone.
     Emergency Report: {emergency_report}
   expected_output: >
-    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
-    Example: 
-    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
-    Generated string: {{"temperature": 24.3}}
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: article_writer
   async_execution: true
 
@@ -52,11 +48,9 @@ integrate_additional_information:
     4. Provide a professional and informative article in markdown format. Don't use any tools.
     5. Don't include any placeholder, this text should be DEFINITIVE. You will be punished if it has something that is not ready for the publish.
   expected_output: >
-    Provide a profesional, clear and ready to publish article.
-    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
-    Example: 
-    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
-    Generated string: {{"temperature": 24.3}}
+    Provide a profesional, clear and ready to publish article.>
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: article_writer
   context:
     - draft_initial_article
@@ -70,10 +64,8 @@ review_and_authorize_publication:
   expected_output: >
     You should copy the original article and afterwards approve it or not and provide feedback.
     Return the article in the context without any modification as part of the output in the corresponding property.
-    You need to complete the following schema using the provided information in JSON format and the specified types. Don't include the title nor the type.
-    Example: 
-    JSON schema: {{"temperature": {{"title": "Temperature in Celcius", "type": "float"}}}}
-    Generated string: {{"temperature": 24.3}}
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: mayor
   async_execution: true
   context:
@@ -87,6 +79,8 @@ provide_social_media_feedback:
        on the emergency response or communication approach.
   expected_output: >
     A funny and short social media post with a constructive critique to the emergency services actuation.
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: social_media_commentator
   async_execution: true
   context:
@@ -111,11 +105,8 @@ publish_final_communication:
     Do not alter the text of any of these elements. Only compile them into one complete output in JSON.
     Don't complete title either, it is normally not a property and you must be really sure to include this.
     Ensure that the format is correct before returning the final answer. It should be a valid JSON
-    Provide a compact JSON without any newlines.
-    Example: 
-    JSON schema: {{"temperature": {{"title": "Temperature in Celsius", "type": "float"}}}}
-    Generated string: {{"temperature": 24.3}}
-    JSON schema: 
+    You need to complete in JSON format the following schema, by filling the properties in the schema and using the definitions in $defs.
+    Do not include the schema itself nor the definitions in your response, only the values of the properties in the object.
   agent: communication_operator
   context:
     - integrate_additional_information
