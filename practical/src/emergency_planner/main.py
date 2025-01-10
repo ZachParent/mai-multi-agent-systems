@@ -7,12 +7,17 @@ from .crews.firefighters.firefighters import FirefightersCrew
 from .crews.medical_services.medical_services import MedicalServicesCrew
 from .crews.public_communication.public_communication import PublicCommunicationCrew
 from .data_models import (
+    CallAssessment,
     EmergencyPlannerState,
     FireAssessment,
+    FirefightersResponseReport,
     MedicalAssessment,
+    MedicalResponseReport,
+    PublicCommunicationReport,
     EmergencyReport,
     EMERGENCY_PLANNER_STATE_DEMO
 )
+from pydantic_core import from_json
 
 logger = logging.getLogger(__name__)
 
@@ -50,36 +55,35 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             .crew()
             .kickoff(inputs={"transcript": self.state.call_transcript})
         )
-        self.state.call_assessment = json.loads(result.raw)
+        self.state.call_assessment = CallAssessment.model_validate_json(result.raw)
         logger.info("Emergency call received", result.raw)
 
 
     @listen(emergency_services)
     def firefighters(self):
         logger.info("Dispatching fire fighters")
-        fire_assessment = FireAssessment(**self.state.call_assessment)
+        fire_assessment = FireAssessment.model_validate(self.state.call_assessment.model_dump())
         result = (
             FirefightersCrew()
             .crew()
             .kickoff(inputs={"fire_assessment": fire_assessment.model_dump_json()})
         )
-        self.state.firefighters_response_report = json.loads(result.raw)
+        self.state.firefighters_response_report = FirefightersResponseReport.model_validate_json(result.raw)
         logger.info("Fire fighters dispatched", result.raw)
 
     @listen(emergency_services)
     def medical_services(self):
-        if not self.state.call_assessment['medical_services_required']:
+        if not self.state.call_assessment.medical_services_required:
             logger.info("Medical services not required")
             return
         logger.info("Dispatching medical services")
-        self.state.call_assessment['injured_count'] = len(self.state.call_assessment['injured_details'])
-        medical_assessment = MedicalAssessment(**self.state.call_assessment)
+        medical_assessment = MedicalAssessment.model_validate({**self.state.call_assessment.model_dump(), "injured_count": len(self.state.call_assessment.injured_details)})
         result = (
             MedicalServicesCrew()
             .crew()
             .kickoff(inputs={"medical_assessment": medical_assessment.model_dump_json()})
         )
-        self.state.medical_response_report = json.loads(result.raw)
+        self.state.medical_response_report = MedicalResponseReport.model_validate_json(result.raw)
         logger.info("Medical services dispatched", result.raw)
 
     @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
@@ -89,18 +93,18 @@ class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
             call_assessment=self.state.call_assessment,
             firefighters_response_report=self.state.firefighters_response_report,
             medical_response_report=self.state.medical_response_report,
-            timestamp=self.state.firefighters_response_report['timestamp'],
-            fire_type=self.state.call_assessment['fire_type'],
-            fire_severity=self.state.call_assessment['fire_severity'],
-            location_x=self.state.call_assessment['location'][0],
-            location_y=self.state.call_assessment['location'][1]
+            timestamp=self.state.firefighters_response_report.timestamp,
+            fire_type=self.state.call_assessment.fire_type,
+            fire_severity=self.state.call_assessment.fire_severity,
+            location_x=self.state.call_assessment.location[0],
+            location_y=self.state.call_assessment.location[1]
         )
         result = (
             PublicCommunicationCrew()
             .crew()
             .kickoff(inputs={"emergency_report": emergency_report.model_dump_json()})
         )
-        self.state.public_communication_report = json.loads(result.raw)
+        self.state.public_communication_report = PublicCommunicationReport.model_validate_json(result.raw)
         logger.info("Public communication handled", result.raw)
 
     @router(public_communication)
