@@ -1,7 +1,7 @@
 \subsection{Unit Tests}
 \label{subsec:unit_tests}
 
-The unit testing framework for evaluating different agent crews is structured to be modular and scalable, accommodating diverse agents with varying input requirements. Below, we outline the folder structure, testing script, and execution process to ensure a comprehensive and systematic evaluation.
+The unit testing framework for evaluating different agent crews is structured to be modular and scalable, accommodating diverse agents with varying input requirements. Below, we outline the folder structure, testing script, execution process, and input configuration to ensure a comprehensive and systematic evaluation.
 
 \subsubsection*{Folder Structure}
 The directory structure of the project is as follows:
@@ -38,6 +38,32 @@ The process for running the tests is as follows:
     \item \textbf{Review Logs}: Check the log file in \texttt{test/logs/test.log} for detailed execution information.
     \item \textbf{Review Results}: Inspect output files in \texttt{test/results/} for the results of each test case.
 \end{enumerate}
+
+\subsubsection*{Input Configuration}
+The inputs for testing are defined in JSON format, where each test case specifies the crew to be executed and the required inputs. Below is an example:
+
+\begin{lstlisting}[language=json, caption={Example Input JSON for Testing Crews}]
+{
+    "test_cases": [
+        {
+            "crew_to_test": "EmergencyServicesCrew",
+            "crew_inputs": {
+                "transcript": "There's a small fire at 456 Elm St. People might be trapped."
+            }
+        },
+        {
+            "crew_to_test": "FirefightersCrew",
+            "crew_inputs": {
+                "fire_assessment": {
+                    "fire_severity": 2,
+                    "medical_services_required": true,
+                    "location": [123.45, 678.90]
+                }
+            }
+        }        
+    ]
+}
+\end{lstlisting}
 
 \subsubsection*{Advantages}
 This framework offers the following advantages:

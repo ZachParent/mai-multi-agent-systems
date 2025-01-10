@@ -33,6 +33,42 @@
     captionpos=b
 }
 
+% Define vibrant colors for white background
+\definecolor{numb}{rgb}{0, 0.5, 1}       % Bright blue for numbers
+\definecolor{punct}{rgb}{0.5, 0.5, 0.5}  % Medium gray for punctuation
+\definecolor{delim}{rgb}{0.8, 0.1, 0.1}  % Bright red for delimiters
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    literate=
+	    *{0}{{{\color{numb}0}}}{1}
+	    {1}{{{\color{numb}1}}}{1}
+	    {2}{{{\color{numb}2}}}{1}
+	    {3}{{{\color{numb}3}}}{1}
+	    {4}{{{\color{numb}4}}}{1}
+	    {5}{{{\color{numb}5}}}{1}
+	    {6}{{{\color{numb}6}}}{1}
+	    {7}{{{\color{numb}7}}}{1}
+	    {8}{{{\color{numb}8}}}{1}
+	    {9}{{{\color{numb}9}}}{1}
+	    {:}{{{\color{punct}{:}}}}{1}
+	    {,}{{{\color{punct}{,}}}}{1}
+	    {\{}{{{\color{delim}{\{}}}}{1}
+	    {\}}{{{\color{delim}{\}}}}}{1}
+	    {[}{{{\color{delim}{[}}}}{1}
+	    {]}{{{\color{delim}{]}}}}{1}
+	    {true}{{{\color{numb}{true}}}}{1}
+	    {false}{{{\color{numb}{false}}}}{1},
+}
+
+
 \title{Emergency Response: A Multi-Agent System}
 \author{Sheena Maria Lang, Antonio Lobo Santos, Zachary Parent, \\ María del Carmen Ramírez Trujillo and Bruno Sánchez Gómez}
 \date{\today}
