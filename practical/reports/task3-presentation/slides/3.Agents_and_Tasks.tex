@@ -1,23 +1,40 @@
-\section{Agents and Tasks}
-\begin{frame}{Agents and Tasks}
+\begin{frame}[fragile]{\texttt{Agents and Tasks}}
     \begin{itemize}
-        \item For each crew, we define agents and tasks using \texttt{.yaml} files
-        \item Each crew is represented as a Python class, with agents and tasks defined as methods within the class
-        \item Agents are instantiated with configuration settings, and tasks are created by linking them with specific tools and data models
+        \item For each crew, we define agents and tasks using \texttt{.yaml} files.
+        \item Each crew is represented as a Python class, with agents and tasks defined as methods within the class.
+        \item Agents are instantiated with configuration settings, and tasks are created by linking them with specific tools and data models.
     \end{itemize}
-    \begin{block}{Example Code: MedicalServicesCrew}
-        \begin{minipage}[t]{0.48\textwidth}
+    \begin{block}{Example Code: Medical Services Crew}
+        \begin{minipage}[t]{0.48\textwidth} % 48% width for the first listing
             \centering
-            \vspace{0pt}  % Forces the image to start from the top of the minipage
-            \includegraphics[width=\textwidth]{task3-presentation/figures/agent-example-code.png}
-            \caption{Agent Example Code}
+            \begin{lstlisting}[language=Python, breaklines=true]
+hospital_coordinator:
+  role: Hospital Coordinator
+  goal: >
+    ...
+  backstory: >
+    ...
+  allow_delegation: false
+  verbose: true
+  llm: ollama/llama3.1
+  temperature: 0.4
+  max_tokens: 800
+
+            \end{lstlisting}
         \end{minipage}
-        \hfill
-        \begin{minipage}[t]{0.48\textwidth}
+        \hfill % Space between the two minipages
+        \begin{minipage}[t]{0.48\textwidth} % 48% width for the second listing
             \centering
-            \vspace{0pt}  % Forces the image to start from the top of the minipage
-            \includegraphics[width=\textwidth]{task3-presentation/figures/task-example-code.png}
-            \caption{Task Example Code}
+            \begin{lstlisting}[language=Python, breaklines=true]
+rank_hospitals:
+  description: >
+  ...
+  expected_output: >
+  ...
+  agent: hospital_coordinator
+  context:
+    - fetch_hospital_information
+            \end{lstlisting}
         \end{minipage}
     \end{block}
 \end{frame}
