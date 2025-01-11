@@ -1,0 +1,56 @@
+\begin{frame}[fragile]{Scripts}
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \textbf{Map Analysis}
+
+        \begin{lstlisting}[language=Python, breaklines=true]
+places = ["Barcelona, Spain",
+    "Seville, Spain",
+    "Salamanca, Spain",
+    "Tossa de Mar, Spain",
+    "Lloret de Mar, Spain",
+    "New York, NY, USA"]
+...
+columns = ["n",
+    "m",
+    "k_avg",
+    "edge_length_total",
+    "edge_length_avg",
+    "streets_per_node_avg",
+    "intersection_count",
+    "edge_density_km",
+    "street_density_km",
+    "clean_intersection_density_km"]
+...
+df = pd.DataFrame(mapp_stats, index=places)
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\textwidth}
+        \centering
+        \textbf{Database Initialization}
+        \vspace{0.5em}
+
+        \texttt{populate\_incident\_table()}
+        \begin{lstlisting}[language=Python, breaklines=true]
+CREATE TABLE incidents (
+    summary TEXT,
+    timestamp TEXT,
+    fire_severity TEXT,
+    fire_type TEXT,
+    location_x REAL,
+    location_y REAL)
+        \end{lstlisting}
+        \vspace{0.5em}
+        \texttt{populate\_hospital\_table()}
+        \begin{lstlisting}[language=Python, breaklines=true]
+CREATE TABLE hospitals (
+    hospital_id TEXT,
+    location_x REAL,
+    location_y REAL,
+    available_beds INTEGER,
+    available_ambulances INTEGER,
+    available_paramedics INTEGER)
+        \end{lstlisting}
+    \end{minipage}
+\end{frame}
