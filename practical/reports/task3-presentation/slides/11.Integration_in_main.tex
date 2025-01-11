@@ -1,4 +1,26 @@
 \section{Integration in `main.py`}
-\begin{frame}{Emergency Planner Flow}
-    \vspace{2cm}
+\begin{frame}[fragile]{Emergency Planner Flow}
+    \begin{lstlisting}[language=Python]
+class EmergencyPlannerFlow(Flow[EmergencyPlannerState]):
+    @start()
+    def get_call_transcript(self): ...
+
+    @listen(get_call_transcript)
+    def emergency_services(self): ...
+
+    @listen(emergency_services)
+    def firefighters(self): ...
+
+    @listen(emergency_services)
+    def medical_services(self):
+        if not self.state.call_assessment.medical_services_required:
+            return
+        ...
+    
+    @listen(or_(and_(firefighters, medical_services), "retry_public_communication"))
+    def public_communication(self): ...
+    
+    @router(public_communication)
+    def check_approval(self): ...
+\end{lstlisting}
 \end{frame}
