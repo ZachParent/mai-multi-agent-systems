@@ -1,0 +1,127 @@
+% Main Presentation File
+\documentclass{beamer}
+\usepackage{listings}
+\usepackage{multicol}
+
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fontawesome}
+\usepackage{multicol}
+
+\usepackage[utf8]{inputenc}
+
+% Define vibrant colors for white background
+\definecolor{numb}{rgb}{0, 0.5, 1}       % Bright blue for numbers
+\definecolor{punct}{rgb}{0.5, 0.5, 0.5}  % Medium gray for punctuation
+\definecolor{delim}{rgb}{0.8, 0.1, 0.1}  % Bright red for delimiters
+
+\lstdefinelanguage{json}{
+    basicstyle=\normalfont\ttfamily,
+    numbers=left,
+    numberstyle=\scriptsize,
+    stepnumber=1,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frame=lines,
+    literate=
+	    *{0}{{{\color{numb}0}}}{1}
+	    {1}{{{\color{numb}1}}}{1}
+	    {2}{{{\color{numb}2}}}{1}
+	    {3}{{{\color{numb}3}}}{1}
+	    {4}{{{\color{numb}4}}}{1}
+	    {5}{{{\color{numb}5}}}{1}
+	    {6}{{{\color{numb}6}}}{1}
+	    {7}{{{\color{numb}7}}}{1}
+	    {8}{{{\color{numb}8}}}{1}
+	    {9}{{{\color{numb}9}}}{1}
+	    {:}{{{\color{punct}{:}}}}{1}
+	    {,}{{{\color{punct}{,}}}}{1}
+	    {\{}{{{\color{delim}{\{}}}}{1}
+	    {\}}{{{\color{delim}{\}}}}}{1}
+	    {[}{{{\color{delim}{[}}}}{1}
+	    {]}{{{\color{delim}{]}}}}{1}
+	    {true}{{{\color{numb}{true}}}}{1}
+	    {false}{{{\color{numb}{false}}}}{1},
+}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keywordstyle=\color{red}\bfseries,
+    stringstyle=\color{green!60!black},
+    commentstyle=\color{gray},
+    showstringspaces=false,
+    columns=flexible,
+    backgroundcolor=\color{gray!10},
+}
+
+\usetheme{CambridgeUS}
+\setbeamertemplate{footline}{%
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.2\paperwidth,ht=2.5ex,dp=1.125ex,center]{author in head/foot}%
+            \hspace*{2mm}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.7\paperwidth,ht=2.5ex,dp=1.125ex,center]{title in head/foot}%
+            \insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.1\paperwidth,ht=2.5ex,dp=1.125ex,center]{date in head/foot}%
+            \hspace*{-2mm}\insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
+
+\title{Implementation of a Multi-Agent System for \\Emergency Response}
+\author{Team 05}
+\date{\today}
+
+\begin{document}
+
+
+% Slide 1: Title Slide
+\input{slides/1.Title_Slide}
+
+% Slide 2: Overview of the Project
+\input{slides/2.Overview_of_the_Project}
+
+% Slide 3: Agents and Tasks
+\input{slides/3.Agents_and_Tasks}
+
+% Slide 4: Crews Module
+\input{slides/4.Crews_Module}
+
+% Slide 5: Data Models
+\input{slides/5.Data_Models}
+
+% Slide 6: Database and Tools
+\input{slides/6.Database_and_Tools}
+
+% Slide 7: GPS Tools
+\input{slides/7.GPS_Tools}
+
+% Slide 8: Scripts
+\input{slides/8.Scripts}
+
+% Slide 9: Test Script
+\input{slides/9.Test_Script}
+
+% Slide 10: Test Folder
+\input{slides/10.Test_Folder}
+
+\section{Integration}
+% Slide 11: Integration in main.py
+\input{slides/11.Integration_in_main}
+
+% Slide 12: Integration Folder: data
+\input{slides/12.Integration_Folder_Data}
+
+% Slide 13: Thank you
+\input{slides/13.Thank_you}
+
+\end{document}
