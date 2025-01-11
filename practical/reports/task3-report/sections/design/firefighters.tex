@@ -1,1 +1,26 @@
 \subsubsection{Design}
+
+\paragraph{Purpose}
+The Firefighter Agent Crew is tasked with the critical responsibility of responding to fire emergencies by efficiently allocating resources, deploying personnel, and reporting on the actions taken. This crew ensures that firefighting efforts are conducted with precision, safety, and coordination.
+
+\paragraph{Structure and Components}
+The Firefighter Agent Crew leverages the \texttt{CrewBase} framework to orchestrate its agents and tasks in a sequential process, ensuring efficient and orderly operations. The key components of the design are:
+
+\begin{itemize}
+    \item \textbf{Agents:}
+    \begin{itemize}
+        \item \texttt{fire\_chief}: Facilitates communication and coordination within the crew and with emergency service operators, ensuring the team operates effectively.
+        \item \texttt{equipment\_technician}: Manages firefighting resources by determining, packing, and maintaining necessary materials for emergencies.
+        \item \texttt{firefighter}: Deploys to fire scenes, strategizes effective firefighting approaches, and extinguishes fires while ensuring safety.
+    \end{itemize}
+    \item \textbf{Tasks:}
+    \begin{itemize}
+        \item \texttt{allocate\_firefighting\_resources}: Determines the necessary firefighting materials based on the Fire Assessment, ensuring resources are ready and appropriate for the situation.
+        \item \texttt{deploy\_fire\_combatants}: Plans and executes the deployment of firefighters to the fire location, based on the Fire Assessment and allocated resources.
+        \item \texttt{report\_firefighting\_response}: Provides a comprehensive summary of the firefighting response and actions taken, ensuring a clear record of the operation.
+    \end{itemize}
+    \item \textbf{Crew:}
+    The crew is constructed using the \texttt{Crew} class, integrating the agents and tasks into a seamless workflow. This design ensures the efficient progression from resource allocation and deployment to comprehensive reporting of the firefighting response.
+\end{itemize}
+
+The modular design of the Firefighter Agent Crew enables it to operate as an independent yet integrative component within the broader multi-agent system, ensuring a flexible and efficient response to fire emergencies.
