@@ -101,12 +101,9 @@ The system is implemented using CrewAI, a framework that enables the creation an
 
 The implementation builds upon our previous design while introducing several refinements based on practical considerations and testing results. These modifications are documented and justified throughout the report. The complete source code, along with setup instructions and required input files, is provided in the accompanying project repository.
 
-\section{Crew Design and Implementation}
-\label{sec:crew_design}
+\input{sections/design/design_overview}
 
 \input{sections/design_principles}
-
-\input{sections/design/design_overview}
 
 \input{sections/design/tools}
 
@@ -132,34 +129,45 @@ The implementation builds upon our previous design while introducing several ref
 
 \section{Conclusion}
 \label{sec:conclusion}
-% This report presents a comprehensive multi-agent system for emergency response coordination, implementing sophisticated cooperation mechanisms across specialized crews. The key achievements and insights include:
 
-% \begin{itemize}
-%     \item \textbf{Process Definition:} Each crew operates with clearly defined sequential workflows:
-%     \begin{itemize}
-%         \item Emergency Services established structured protocols for initial assessment and crew dispatch
-%         \item Firefighters implemented systematic resource allocation and deployment procedures
-%         \item Medical Services developed efficient hospital ranking and resource coordination
-%         \item Public Communications created an iterative approval workflow with historical case integration
-%     \end{itemize}
-    
-%     \item \textbf{Data Standardization:} Implementation of Pydantic models ensures:
-%     \begin{itemize}
-%         \item Type-safe data transfer between crews
-%         \item Consistent reporting formats
-%         \item Structured storage of emergency response states
-%     \end{itemize}
-    
-%     \item \textbf{Coordination Mechanisms:} The system achieves efficient crew interaction through:
-%     \begin{itemize}
-%         \item Centralized state management
-%         \item Parallel processing capabilities
-%         \item Sophisticated routing mechanisms
-%         \item Retry systems for critical operations
-%     \end{itemize}
-% \end{itemize}
+This report showcased the implementation and testing of a multi-agent system (MAS) for coordinating emergency responses. 
+Using the CrewAI framework, we built a system with specialized agent crews (emergency services, firefighting, medical responses,
+ and public communication), that work together to handle complex scenarios efficiently. 
+ 
+ Testing showed the system’s ability to manage diverse emergencies with strong collaboration between crews, demonstrating both its
+  adaptability and potential. Specifically, two possible test cases were simulated to evaluate the performance of the system under different emergency scenarios. The first involved a
+   fire with injured individuals requiring both medical and firefighting responses, while the second simulated a large-scale fire without 
+   injuries. In both cases, the transcripts used to simulate these scenarios successfully triggered the appropriate workflows, with each agent
+    crew performing its tasks as designed. The system effectively coordinated between teams, processed the inputs correctly, and generated
+     detailed reports, confirming that the workflows function as expected in handling diverse emergencies.
 
-% The framework demonstrates the effectiveness of structured agent cooperation in emergency response scenarios. Future work could explore the integration of additional specialized crews (such as Forensics) and further optimization of the coordination mechanisms for larger-scale emergencies.
+All in all, we consider that the work presented constitutes a strong foundational framework for developing a real-world tool to assist in 
+managing emergency situations; nevertheless, it represents only an initial effort, with several areas requiring further refinement and 
+improvement before it can be deployed in practical scenarios. We will now outline several points for future work.
+
+
+Firstly, regarding the inconsistency in the timestamps due to the agents' inability to access a centralized clock, a custom tool could be 
+developed to provide synchronized timestamps across all agents. This would resolve the issue and ensure accurate temporal coordination,
+ which is essential for real-world deployment where precise timing is critical.
+
+Deploying a voice-to-text transcription tool would greatly improve the system's real-world applicability. Such a tool could transcribe
+ emergency voice calls into structured text, allowing agents to process emergency details more efficiently and reducing reliance on 
+ pre-structured inputs. Additionally, a complementary tool to translate street names or neighborhood descriptions into precise coordinates,
+  while retaining the original address, would address the practical reality that emergency callers are unlikely to provide exact coordinates. 
+  This enhancement would make the system more practical and user-friendly in real-world scenarios. It could also solve the limitation of 
+  placeholder text in the Public Communication Report, as the information regarding the neighborhood or streets could be extracted from 
+  the transcript, as it is likely to be something provided by the caller. Nevertheless, integrating the system with a geolocation service to translate coordinates into meaningful place names would be another way
+ of retrieving that information in case it gets lost in the workflow. This last improvement could be really demanding and beyond the scope 
+ of the project's objectives.
+
+
+By addressing these limitations and implementing these proposed improvements, the system can evolve into a more robust, practical, and reliable
+ tool for real-world emergency response scenarios.
+
+ Overall, this work lays a solid foundation for building smarter emergency response tools. While it’s just the beginning, it’s clear that
+  agent-based systems have huge potential in this field. With continued development, testing, and collaboration, this system could evolve 
+  into a truly powerful tool for managing emergencies in real-world situations.
+
 
 \section{References}
 % \bibliography{references}

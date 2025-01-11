@@ -1,1 +1,112 @@
 \subsubsection{Implementation}
+
+\paragraph{Medical Services Operator Agent}
+The \texttt{medical\_services\_operator} agent uses the configuration specified in \texttt{self.agents\_config["medical\_services\_operator"]}. This agent facilitates communication and coordination within the Medical Services crew and with other crews, ensuring efficient information flow and timely updates during emergencies.
+
+\begin{lstlisting}[language=Python]
+@agent
+def medical_services_operator(self) -> Agent:
+    return Agent(config=self.agents_config["medical_services_operator"])
+\end{lstlisting}
+
+\paragraph{Hospital Coordinator Agent}
+The \texttt{hospital\_coordinator} agent leverages the configuration from \newline \texttt{self.agents\_config["hospital\_coordinator"]} to manage all hospitals, decide each of their responses based on proximity to emergencies, and allocate resources effectively to ensure optimal response during crises.
+
+\begin{lstlisting}[language=Python]
+@agent
+def hospital_coordinator(self) -> Agent:
+    return Agent(config=self.agents_config["hospital_coordinator"])
+\end{lstlisting}
+
+\paragraph{Paramedics Agent}
+The \texttt{paramedics} agent is configured through \texttt{self.agents\_config["paramedics"]} to plan the deployment of paramedics to the emergency site, including the number of paramedics, ambulances, estimated times of arrival, and any special equipment needed to handle the situation effectively.
+
+\begin{lstlisting}[language=Python]
+@agent
+def paramedics(self) -> Agent:
+    return Agent(config=self.agents_config["paramedics"])
+\end{lstlisting}
+
+\paragraph{Fetch Hospital Information Task}
+This task uses the Hospital Reader Tool to fetch the information of all hospitals from the database and returns the hospital information in a structured output.
+
+\begin{lstlisting}[language=Python]
+@task
+def fetch_hospital_information(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["fetch_hospital_information"],
+        HospitalsInformation.model_json_schema(),
+    )
+    return Task(config=config, tools=[hospital_reader_tool])
+\end{lstlisting}
+
+\paragraph{Rank Hospitals Task}
+This task receives input containing the Medical Assessment and the hospital information from the previous task, calculates the distance to the emergency location using the Route Distance Tool, and returns the list of hospital information with distances to the emergency.
+
+\begin{lstlisting}[language=Python]
+@task
+def rank_hospitals(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["rank_hospitals"], RankedHospitals.model_json_schema()
+    )
+    return Task(config=config, tools=[route_distance_tool])
+\end{lstlisting}
+
+\paragraph{Plan Hospital Response Task}
+This task reads the ranked list of hospitals and the Medical Assessment, assesses available resources at the given hospitals, and creates an allocation plan that details how resources will be utilized to address the emergency.
+
+\begin{lstlisting}[language=Python]
+@task
+def plan_hospital_response(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["plan_hospital_response"],
+        AllocatedHospitalResources.model_json_schema(),
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Allocate Hospital Resources Task}
+This task reads the Hospital Resource Allocation plan, uses the Hospital Updater Tool to update the database for all of the hospital resources used in the plan, and confirms that the hospital resources have been successfully allocated.
+
+\begin{lstlisting}[language=Python]
+@task
+def allocate_hospital_resources(self) -> Task:
+    config = self.tasks_config["allocate_hospital_resources"]
+    return Task(config=config, tools=[hospital_updater_tool])
+\end{lstlisting}
+
+\paragraph{Deploy Paramedics Task}
+This task reads the Hospital Resource Allocation plan and the Medical Assessment, calculates the total number of paramedics to be deployed and ambulances to be dispatched, determines the estimated times of arrival, and identifies any special equipment required.
+
+\begin{lstlisting}[language=Python]
+@task
+def deploy_paramedics(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["deploy_paramedics"],
+        DeployedParamedics.model_json_schema(),
+    )
+    return Task(config=config)
+\end{lstlisting}
+
+\paragraph{Report Medical Response Task}
+This task reads the Hospital Resource Allocation plan, the Paramedic Deployment plan, and the Medical Assessment, compiles a comprehensive summary of the medical response plan, and provides a detailed report for future reference and continuous improvement.
+
+\begin{lstlisting}[language=Python]
+@task
+def report_medical_response(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["report_medical_response"],
+        MedicalResponseReport.model_json_schema(),
+    )
+    return Task(config=config, output_pydantic=MedicalResponseReport)
+\end{lstlisting}
+
+\paragraph{Crew Construction}
+The Medical Services Crew is constructed as a sequential process to manage tasks and agents cohesively.
+
+\begin{lstlisting}[language=Python]
+@crew
+def crew(self) -> Crew:
+    """Creates the Medical Services Crew"""
+    return Crew(agents=self.agents, tasks=self.tasks, process=Process.sequential)
+\end{lstlisting}

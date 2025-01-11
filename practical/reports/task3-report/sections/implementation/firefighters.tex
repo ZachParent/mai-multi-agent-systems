@@ -1,1 +1,79 @@
 \subsubsection{Implementation}
+
+\paragraph{Fire Chief Agent}
+The \texttt{fire\_chief} agent uses the configuration specified in \newline \texttt{self.agents\_config["fire\_chief"]}. This agent facilitates communication and coordination within the Firefighter Agent Crew and ensures the team operates effectively during emergencies.
+
+\begin{lstlisting}[language=Python]
+@agent
+def fire_chief(self) -> Agent:
+    return Agent(config=self.agents_config["fire_chief"])
+\end{lstlisting}
+
+\paragraph{Equipment Technician Agent}
+The \texttt{equipment\_technician} agent leverages the configuration from \newline \texttt{self.agents\_config["equipment\_technician"]} to manage firefighting resources effectively by determining, packing, and maintaining necessary materials.
+
+\begin{lstlisting}[language=Python]
+@agent
+def equipment_technician(self) -> Agent:
+    return Agent(config=self.agents_config["equipment_technician"])
+\end{lstlisting}
+
+\paragraph{Firefighter Agent}
+The \texttt{firefighter} agent is configured through \newline \texttt{self.agents\_config["firefighter"]} to deploy to fire scenes, strategize effective firefighting approaches, and ensure safety during operations.
+
+\begin{lstlisting}[language=Python]
+@agent
+def firefighter(self) -> Agent:
+    return Agent(config=self.agents_config["firefighter"])
+\end{lstlisting}
+
+\paragraph{Allocate Firefighting Resources Task}
+This task determines the necessary firefighting materials based on the Fire Assessment, \texttt{\{fire\_assessment\}}.
+
+\begin{lstlisting}[language=Python]
+@task
+def allocate_firefighting_resources(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["allocate_firefighting_resources"],
+        FireResources.model_json_schema()
+    )
+    return Task(config=config, agent="equipment_technician")
+\end{lstlisting}
+
+\paragraph{Deploy Fire Combatants Task}
+This task plans and executes the deployment of firefighters to the fire location, based on the Fire Assessment, \texttt{\{fire\_assessment\}}, and the resource allocation.
+
+\begin{lstlisting}[language=Python]
+@task
+def deploy_fire_combatants(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["deploy_fire_combatants"],
+        FireDeployment.model_json_schema()
+    )
+    return Task(config=config, agent="firefighter", context=["allocate_firefighting_resources"])
+\end{lstlisting}
+
+\paragraph{Report Firefighting Response Task}
+The \texttt{report\_firefighting\_response} task provides a comprehensive summary of the firefighting response and actions taken.
+
+\begin{lstlisting}[language=Python]
+@task
+def report_firefighting_response(self) -> Task:
+    config = add_schema_to_task_config(
+        self.tasks_config["report_firefighting_response"],
+        FireResponseReport.model_json_schema()
+    )
+    return Task(config=config, agent="fire_chief", context=["deploy_fire_combatants"])
+\end{lstlisting}
+
+\paragraph{Crew Construction}
+The Firefighter Agent Crew is constructed as a sequential process to cohesively manage tasks and agents.
+
+\begin{lstlisting}[language=Python]
+@crew
+def crew(self) -> Crew:
+    """Creates the Firefighter Agent Crew"""
+    return Crew(
+        agents=self.agents, tasks=self.tasks, process=Process.sequential, verbose=True
+    )
+\end{lstlisting}
