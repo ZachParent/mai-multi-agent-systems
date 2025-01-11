@@ -1,0 +1,19 @@
+\begin{frame}[fragile]{GPS Tool}
+    \begin{lstlisting}[language=Python, breaklines=true]
+from crewai.tools import BaseTool
+import osmnx as ox
+
+class RouteDistanceTool(BaseTool):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.city_map = ox.load_graphml(GRAPHML_FILENAME)
+
+    def _find_distance(self, x_origin, y_origin, x_destination, y_destination):
+        origin_node = ox.distance.nearest_nodes(self.city_map, x_origin, y_origin)
+        destination_node = ox.distance.nearest_nodes(self.city_map, x_destination, y_destination)
+        route = ox.shortest_path(self.city_map, origin_node, destination_node, weight="travel_time")
+        edge_lengths = ox.routing.route_to_gdf(self.city_map, route)["length"]
+        
+        return round(sum(edge_lengths)) / 1000
+    \end{lstlisting}
+\end{frame}
