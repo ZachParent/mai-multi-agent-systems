@@ -5,14 +5,14 @@ from typing import Any, Dict, List
 
 # ------------------------------------------------------------------------
 # Import your crews:
-from crews.public_communication.public_communication import PublicCommunicationCrew
-from crews.emergency_services.emergency_services import EmergencyServicesCrew
-from crews.firefighters.firefighters import FirefightersCrew
-from crews.medical_services.medical_services import MedicalServicesCrew
+from src.emergency_planner.crews.public_communication.public_communication import PublicCommunicationCrew
+from src.emergency_planner.crews.emergency_services.emergency_services import EmergencyServicesCrew
+from src.emergency_planner.crews.firefighters.firefighters import FirefightersCrew
+from src.emergency_planner.crews.medical_services.medical_services import MedicalServicesCrew
 
 # ------------------------------------------------------------------------
 # Import the Pydantic data models for type usage & consistency:
-from data_models import (
+from src.emergency_planner.data_models import (
     EmergencyReport,
     PublicCommunicationReport,
     FirefightersResponseReport,
@@ -124,7 +124,7 @@ def process_crew_test(
     #     logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
 
     # Final result after all tasks
-    crew_inputs = json.dumps(crew_inputs) if type(crew_inputs) == dict else crew_inputs
+    crew_inputs = {key:json.dumps(value) if type(value) == dict else value for key,value in crew_inputs.items()}
     final_result = crew.crew().kickoff(inputs=crew_inputs)
     logger.info(
         "[Test #%d] %s finished. Final Result: %s",
