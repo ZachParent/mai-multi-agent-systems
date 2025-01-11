@@ -1,6 +1,23 @@
 % Main Presentation File
 \documentclass{beamer}
+\usepackage{listings}
+
 \usepackage[utf8]{inputenc}
+
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    frame=single,
+    numbers=none,
+    keywordstyle=\color{red}\bfseries,
+    stringstyle=\color{green!60!black},
+    commentstyle=\color{gray},
+    showstringspaces=false,
+    columns=flexible,
+    backgroundcolor=\color{gray!10},
+}
+
 \usetheme{CambridgeUS}
 
 \title{Coordination of a Multi-Agent System for Emergency Response}
