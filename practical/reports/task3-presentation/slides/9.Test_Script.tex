@@ -1,3 +1,26 @@
-\begin{frame}{Test Script}
-    \vspace{2cm}
+\begin{frame}[fragile]{\texttt{emergency\_planner/test.py}}
+    \vspace{-0.3cm}
+    \begin{lstlisting}[language=Python]
+def process_crew_test(crew_name: str, crew_inputs: Dict[str, Any], test_index: int) -> None:
+    ...
+    crew = instantiate_crew(crew_name)
+    logger.info("Agents loaded")
+    for agent in crew.crew().agents:
+        logger.info(f"Role: {agent.role}")
+    ...
+    for task in crew.crew().tasks:
+        result = task.execute_sync(agent=task.agent, context=task.context, tools=task.tools)
+    ...
+    final_result = crew.crew().kickoff(inputs=crew_inputs)
+    ...
+def main() -> None:
+    ...
+    test_cases = load_test_cases(JSON_FILE)
+    for i, test_case in enumerate(test_cases, start=1):
+        ...
+        # Input model validation
+        ...
+        process_crew_test(crew_name, crew_inputs, i)
+    ...
+    \end{lstlisting}
 \end{frame}

@@ -117,11 +117,11 @@ def process_crew_test(
     for agent in crew.crew().agents:
         logger.info(f"Role: {agent.role}")
 
-    # Iterate through tasks to log intermediate outputs
-    # for task in crew.crew().tasks:
-    #     logger.info("[Test #%d] Executing task: %s", test_index, task.description)
-    #     result = task.execute_sync(agent=task.agent, context=task.context, tools=task.tools)
-    #     logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
+    # Iterate through tasks to log intermediate outputs (no input loaded)
+    for task in crew.crew().tasks:
+        logger.info("[Test #%d] Executing task: %s", test_index, task.description)
+        result = task.execute_sync(agent=task.agent, context=task.context, tools=task.tools)
+        logger.info("[Test #%d] Task '%s' completed. Intermediate Result: %s", test_index, task.description, result.raw)
 
     # Final result after all tasks
     crew_inputs = {key:json.dumps(value) if type(value) == dict else value for key,value in crew_inputs.items()}

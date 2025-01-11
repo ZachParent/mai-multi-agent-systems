@@ -1,3 +1,24 @@
-\begin{frame}{Test Folder}
-    \vspace{2cm}
+\begin{frame}[fragile]{\texttt{emergency\_planner/test/}}
+    \begin{columns}
+        \begin{column}{0.33\textwidth}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{figures/test_folder_structure.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.67\textwidth}
+            \begin{lstlisting}[language=json,caption={Input Example}]
+{
+"test_cases": [
+    {
+        "crew_to_test": "EmergencyServicesCrew",
+        "crew_inputs": {
+            "transcript": 
+                "A fire of electrical..."
+        }
+    }
+]
+}    
+            \end{lstlisting}
+        \end{column}
+    \end{columns}
 \end{frame}
