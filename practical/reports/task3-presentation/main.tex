@@ -3,6 +3,12 @@
 \usepackage{listings}
 \usepackage{multicol}
 
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fontawesome}
+\usepackage{multicol}
+
 \usepackage[utf8]{inputenc}
 
 \lstset{
@@ -20,6 +26,21 @@
 }
 
 \usetheme{CambridgeUS}
+\setbeamertemplate{footline}{%
+    \leavevmode%
+    \hbox{%
+        \begin{beamercolorbox}[wd=0.2\paperwidth,ht=2.5ex,dp=1.125ex,center]{author in head/foot}%
+            \hspace*{2mm}\insertshortauthor
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.7\paperwidth,ht=2.5ex,dp=1.125ex,center]{title in head/foot}%
+            \insertshorttitle
+        \end{beamercolorbox}%
+        \begin{beamercolorbox}[wd=0.1\paperwidth,ht=2.5ex,dp=1.125ex,center]{date in head/foot}%
+            \hspace*{-2mm}\insertframenumber{} / \inserttotalframenumber
+        \end{beamercolorbox}%
+    }%
+    \vskip0pt%
+}
 
 \title{Implementation of a Multi-Agent System for \\Emergency Response}
 \author{Team 05}
