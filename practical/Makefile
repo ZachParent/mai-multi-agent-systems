@@ -67,8 +67,8 @@ ${PRESENTATION_FILENAME}: $(shell find ${PRESENTATION_DIR} -type f)
 
 ${ZIP_NAME}: remove-zip ${REPORT_FILENAME} ${PRESENTATION_FILENAME}
 	cd .. && \
-	mkdir -p $(SUBMISSION_NAME) && \
-	cp -r $(DIR_NAME) $(SUBMISSION_NAME) && \
+	mkdir $(SUBMISSION_NAME) && \
+	cp -r $(DIR_NAME)/* $(SUBMISSION_NAME) && \
 	zip -r $(ZIP_NAME) $(SUBMISSION_NAME) \
 		-x "*/__pycache__/*" "*.pyc" "*/*.egg-info/*" "*/cache/*" \
 		"*.aux" "*.log" "*.out" "*.toc" "*.bbl" "*.blg" \
