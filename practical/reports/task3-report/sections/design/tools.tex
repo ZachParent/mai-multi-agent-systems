@@ -10,7 +10,7 @@ The Route Distance Tool calculates the driving route distance between an origin 
 \paragraph{Implementation}
 \begin{itemize}
     \item \textbf{Input:} The tool requires the x and y coordinates of both the origin and destination locations.
-    \item \textbf{Execution:} The city map graph is loaded from a GraphML file, and the shortest path is calculated using the travel time as the weight. The total distance is then computed.
+    \item \textbf{Execution:} The city map graph is loaded from a GraphML file using the OSMnx \cite{osmnx} package, and the shortest path is calculated using the travel time as the weight. The total distance is then computed.
     \item \textbf{Output:} The tool returns the total driving distance in kilometers.
 \end{itemize}
 
@@ -26,7 +26,7 @@ The Database Management Tools include the Hospital Reader, Hospital Updater, and
     \item \textbf{Hospital Reader Tool:}
         \begin{itemize}
             \item \textbf{Input:} No input parameters are required for this tool.
-            \item \textbf{Execution:} The tool connects to the SQLite database and executes a query to fetch all hospital records.
+            \item \textbf{Execution:} The tool connects to the SQLite \cite{sqlite} database and executes a query to fetch all hospital records.
             \item \textbf{Output:} The tool returns a list of hospitals, including their IDs, locations, and available resources.
         \end{itemize}
     \item \textbf{Hospital Updater Tool:}
