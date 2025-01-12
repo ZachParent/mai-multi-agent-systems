@@ -4,11 +4,11 @@
         \item Each crew is represented as a Python class, with agents and tasks defined as methods within the class.
         \item Agents are instantiated with configuration settings, and tasks are created by linking them with specific tools and data models.
     \end{itemize}
-    \Large \color{red}Example Code: Medical Services Crew \color{black}
       \begin{columns}
         \begin{column}{0.48\textwidth} % 48% width for the first listing
-            \centering
-            \begin{lstlisting}[language=yaml, breaklines=true]
+            \centering% Disable label for this listing
+
+            \begin{lstlisting}[language=yaml, caption=\scriptsize \texttt{medical\_services/agents.yaml}]
 hospital_coordinator:
   role: Hospital Coordinator
   goal: >
@@ -25,7 +25,7 @@ hospital_coordinator:
         \end{column}
         \begin{column}{0.48\textwidth} % 48% width for the second listing
             \centering
-            \begin{lstlisting}[language=yaml, breaklines=true]
+            \begin{lstlisting}[language=yaml, caption=\scriptsize \texttt{medical\_services/tasks.yaml}]
 rank_hospitals:
   description: >
   ...
