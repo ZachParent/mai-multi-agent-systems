@@ -10,6 +10,12 @@ PYTHON_INTERPRETER = python
 SUBMISSION_NAME = SheenaLang_AntonioLoboSantos_ZacharyParent_MaríaDelCarmenRamirezTrujillo_BrunoSánchezGómez_$(PROJECT_NAME)
 ZIP_NAME = $(SUBMISSION_NAME).zip
 
+REPORT_FILENAME = $(SUBMISSION_NAME)_report.pdf
+REPORT_DIR = reports/task3-report
+
+PRESENTATION_FILENAME = $(SUBMISSION_NAME)_presentation.pdf
+PRESENTATION_DIR = reports/task3-presentation
+
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
@@ -35,18 +41,31 @@ lint:
 format:
 	black --config pyproject.toml src
 
+.PHONY: docs
+docs: ${REPORT_FILENAME} ${PRESENTATION_FILENAME}
+
 .PHONY: remove-zip
 remove-zip:
 	rm -f ${ZIP_NAME}
 
 .PHONY: zip
-zip: remove-zip ${ZIP_NAME}
+zip: ${ZIP_NAME}
 
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
 
-${ZIP_NAME}:
+${REPORT_FILENAME}: $(shell find ${REPORT_DIR} -type f)
+	cd ${REPORT_DIR} && \
+	pdflatex main.tex && \
+	cp main.pdf ../../${REPORT_FILENAME}
+
+${PRESENTATION_FILENAME}: $(shell find ${PRESENTATION_DIR} -type f)
+	cd ${PRESENTATION_DIR} && \
+	pdflatex main.tex && \
+	cp main.pdf ../../${PRESENTATION_FILENAME}
+
+${ZIP_NAME}: remove-zip ${REPORT_FILENAME} ${PRESENTATION_FILENAME}
 	cd .. && \
 	mkdir -p $(SUBMISSION_NAME) && \
 	cp -r $(DIR_NAME) $(SUBMISSION_NAME) && \
