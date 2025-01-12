@@ -1,4 +1,4 @@
-\begin{frame}[fragile]{\texttt{emergency\_planner/test/}}
+\begin{frame}[fragile]{\texttt{src/emergency\_planner/test/}}
     \begin{columns}
         \begin{column}{0.33\textwidth}
             \begin{figure}
@@ -6,17 +6,20 @@
             \end{figure}
         \end{column}
         \begin{column}{0.67\textwidth}
-            \begin{lstlisting}[language=json,caption={Input Example}]
+            \centering
+            \texttt{test\_crews.json}
+            \begin{lstlisting}[language=json]
 {
-"test_cases": [
-    {
-        "crew_to_test": "EmergencyServicesCrew",
-        "crew_inputs": {
-            "transcript": 
-                "A fire of electrical..."
+    "test_cases": [
+        {
+            "crew_to_test": "EmergencyServicesCrew",
+            "crew_inputs": {
+                "transcript": 
+                    "A fire of electrical..."
+            }
         }
-    }
-]
+    ]
+    ...
 }    
             \end{lstlisting}
         \end{column}
